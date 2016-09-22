@@ -13,8 +13,8 @@ group :development do
   gem 'rename'
 end
 group :production do
-  #gem 'pg'
-  #gem 'rails_12factor'
+  gem 'pg'
+  gem 'rails_12factor'
 end
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 group :assets do
