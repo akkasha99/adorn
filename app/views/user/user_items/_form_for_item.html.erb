@@ -1,0 +1,113 @@
+<div class="modal-header" style="text-align: center;">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+  <h4 class="modal-title">Adoorn Upload Item</h4>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <%# @item = UserItem.new %>
+    <%= form_for @item, :url => '/user/user_items/create', :html => {:multipart => true, :onsubmit => "return false", :id => 'user_item_form', :method => 'post'} do |f| %>
+
+        <div class="clearfix">
+          <%= f.label :title %>
+          <%= f.text_field :title, :class => "form-control placeholder-no-fix", :placeholder => "Item Name" %>
+          <%= f.hidden_field :user_id, :value => (current_user.id if current_user.present?) %>
+        </div>
+
+        <div class="clearfix">
+          <%= f.label :description %>
+          <%= f.text_area :description, :class => "form-control placeholder-no-fix", :placeholder => "Enter Description ..." %>
+        </div>
+
+        <div class="clearfix">
+          <%= f.label :price %>
+          <%= f.text_field :price, :class => "form-control placeholder-no-fix", :placeholder => "Item Price" %>
+          <%= f.hidden_field :user_id, :value => (current_user.id if current_user.present?) %>
+        </div>
+
+        <div class="clearfix">
+          <%= f.label :image %>
+          <%= image_tag @item.image.url(:thumb), :class => 'thumbnail' unless f.object.new_record? %>
+          <%= f.file_field :image, :capture => "camera" %>
+        </div>
+
+        <div class="clearfix">
+          <%= f.label :private_flag %>
+          <%= f.check_box :private_flag, :class => "form-control placeholder-no-fix" %>
+        </div>
+        <br>
+
+        <!--<div class="clearfix">-->
+        <!--<%#= link_to "submit", "javascript:;", :onclick => "", :class => "btn green pull-left" %>-->
+        <!--</div>-->
+        </div>
+        </div>
+        <div class="modal-footer">
+          <% if f.object.new_record? %>
+              <a href="/user" class="btn default">Back</a>
+              <!--<button type="button" class="btn default" onclick="close_partial()">Close</button>-->
+              <button type="button" class="btn blue" data-dismiss="modal" onclick="save_item();">Add Item</button>
+          <% else %>
+              <a href="/user/item/show/<%= @item.id %>" class="btn default">Back</a>
+              <button type="button" class="btn blue" onclick="update_item(<%= @item.id %>);">Update Item</button>
+          <% end %>
+    <% end %>
+    </div>
+
+
+    <script>
+
+        function save_item() {
+            if ($('#user_item_form').valid() == true)
+                $(".background_shadow").show()
+            $("#user_item_form").ajaxSubmit({
+                success: function (data) {
+                    if (data != 'error')
+                        window.location.href = data;
+//                    $(".background_shadow").hide()
+//                        $('#details_partial').html(data);
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+
+        function update_item(item_id) {
+            if ($('#user_item_form').valid() == true)
+                $("#user_item_form").ajaxSubmit({
+                    url: '/user/user_items/update_item?id=' + item_id,
+                    success: function (data) {
+                        if (data != 'error')
+//                            window.location.href = data;
+                        $('#main_div').html(data);
+                    },
+                    error: function (data) {
+
+                    }
+                });
+        }
+
+        function close_partial() {
+            $('#item_partial').hide();
+        }
+
+        $('#user_item_form').validate({
+                    rules: {
+                        "user_item[title]": {
+                            maxlength: 255,
+//                            minlength: 3,
+                            required: true
+                        },
+
+                        "user_item[price]": {
+//                            maxlength: 255,
+                            minlength: 1,
+                            required: true,
+                            number: true
+                        }
+                    }
+
+                }
+        );
+
+    </script>

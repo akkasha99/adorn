@@ -1,0 +1,227 @@
+<header class=" basic-tees-h-s-new">
+  <div class="h-con">
+    <div class="user-main-con">
+      <div class="h-heading2">Basic <%= truncate(name, :length => 12) %></div>
+    </div>
+    <div class="backBtn">
+      <a href="javascript:;" onclick="return_basics();"><img src="/assets/setting-errow.png" alt=""></a>
+    </div>
+    <div class="clear-fix"></div>
+  </div>
+</header>
+
+<div class="w_100 mrg20 padbot100 tess-main-con-new">
+  <% items.each do |item| %>
+      <div class="pro-border w_100">
+        <div id="tee_temp_<%= item.id %>" class="outfits-left">
+          <%= render :partial => 'image_template', :locals => {:item => item.basic_items.where(:color => "#000").first} %>
+        </div>
+        <div class="outfits-r" id="parent_<%= item.id %>">
+          <div class="color-hd">colors</div>
+          <div class="w-100">
+
+            <% (0..3).each do |i| %>
+
+                <a href="javascript:;" onclick="show_item('<%= item.id %>', '<%= BasicItem.colours[i][1] %>')">
+                  <% if BasicItem.colours[i][0] == 'Stripe' %>
+                      <div id="stripe<%= item.id %>" class="white-box corlor-border color-black">
+                        <img src="/assets/color-img.jpg" alt=""></div>
+                  <% else %>
+                      <div id="<%= BasicItem.colours[i][1] + item.id.to_s %>" style="background-color: <%= BasicItem.colours[i][1] %>" class="white-box <%= "active" if BasicItem.colours[i][0].to_s == "Black" %><%= " white-box09" if (i == 3) %>"></div>
+                  <% end %>
+                </a>
+
+            <% end %>
+
+
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#000')">-->
+            <!--<div id="000<%#= item.id %>" class="white-box corlor-border color-black"></div>-->
+            <!--</a>-->
+
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#48484A')">-->
+            <!--<div id="737373<%#= item.id %>" class="white-box corlor-border color-gray"></div>-->
+            <!--</a>-->
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#B9B9B9')">-->
+            <!--<div id="cccccc<%#= item.id %>" class="white-box corlor-border color-ccc"></div>-->
+            <!--</a>-->
+          </div>
+
+          <div class="w-100">
+
+            <% (4..7).each do |i| %>
+
+                <a href="javascript:;" onclick="show_item('<%= item.id %>', '<%= BasicItem.colours[i][1] %>')">
+                  <% if BasicItem.colours[i][0] == 'Stripe' %>
+                      <div id="stripe<%= item.id %>" class="white-box corlor-border color-black">
+                        <img src="/assets/color-img.jpg" alt=""></div>
+                  <% else %>
+
+                      <div id="<%= BasicItem.colours[i][1] + item.id.to_s %>" style="background-color: <%= BasicItem.colours[i][1] %>" class="white-box<%= " white-box09" if (i == 7) %>"></div>
+                  <% end %>
+                </a>
+            <% end %>
+
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#stripe')">-->
+            <!--<div id="stripe<%#= item.id %>" class="white-box corlor-border color-black">-->
+            <!--<img src="/assets/color-img.jpg" alt=""></div>-->
+            <!--</a>-->
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#4C3730')">-->
+            <!--<div id="9c792f<%#= item.id %>" class="white-box corlor-border color-o-da"></div>-->
+            <!--</a>-->
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#625944')">-->
+            <!--<div id="f0dbae<%#= item.id %>" class="white-box corlor-border light-o"></div>-->
+            <!--</a>-->
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#E9AB7C')">-->
+            <!--<div id="fac272<%#= item.id %>" class="white-box corlor-border light-o-o"></div>-->
+            <!--</a>-->
+          </div>
+
+          <div class="w-100">
+            <% (8..11).each do |i| %>
+
+                <a href="javascript:;" onclick="show_item('<%= item.id %>', '<%= BasicItem.colours[i][1] %>')">
+                  <% if BasicItem.colours[i][0] == 'Stripe' %>
+                      <div id="stripe<%= item.id %>" class="white-box corlor-border color-black">
+                        <img src="/assets/color-img.jpg" alt=""></div>
+                  <% else %>
+
+                      <div id="<%= BasicItem.colours[i][1] + item.id.to_s %>" style="background-color: <%= BasicItem.colours[i][1] %>" class="white-box<%= " white-box09" if (i == 11) %>"></div>
+                  <% end %>
+                </a>
+            <% end %>
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#E4D27E')">-->
+            <!--<div id="fff47b<%#= item.id %>" class="white-box corlor-border light-y"></div>-->
+            <!--</a>-->
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#E71E1B')">-->
+            <!--<div id="ee3e3e<%#= item.id %>" class="white-box corlor-border light-re"></div>-->
+            <!--</a>-->
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#52141A')">-->
+            <!--<div id="a31a1a<%#= item.id %>" class="white-box corlor-border light-d-re"></div>-->
+            <!--</a>-->
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#EA569D')">-->
+            <!--<div id="f44895<%#= item.id %>" class="white-box corlor-border light-pink"></div>-->
+            <!--</a>-->
+          </div>
+
+          <div class="w-100">
+            <% (12..15).each do |i| %>
+
+                <a href="javascript:;" onclick="show_item('<%= item.id %>', '<%= BasicItem.colours[i][1] %>')">
+                  <% if BasicItem.colours[i][0] == 'Stripe' %>
+                      <div id="stripe<%= item.id %>" class="white-box corlor-border color-black">
+                        <img src="/assets/color-img.jpg" alt=""></div>
+                  <% else %>
+
+                      <div id="<%= BasicItem.colours[i][1] + item.id.to_s %>" style="background-color: <%= BasicItem.colours[i][1] %>" class="white-box<%= " white-box09" if (i == 15) %>"></div>
+                  <% end %>
+                </a>
+            <% end %>
+
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#fdc4dc')">-->
+            <!--<div id="fdc4dc<%#= item.id %>" class="white-box corlor-border light-l-pink"></div>-->
+            <!--</a>-->
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#bb59db')">-->
+            <!--<div id="bb59db<%#= item.id %>" class="white-box corlor-border light-li-per"></div>-->
+            <!--</a>-->
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#414489')">-->
+            <!--<div id="414489<%#= item.id %>" class="white-box corlor-border light-d-per"></div>-->
+            <!--</a>-->
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#4498f7')">-->
+            <!--<div id="4498f7<%#= item.id %>" class="white-box corlor-border light-sky-b"></div>-->
+            <!--</a>-->
+          </div>
+
+          <div class="w-100">
+
+            <% (16..19).each do |i| %>
+                <a href="javascript:;" onclick="show_item('<%= item.id %>', '<%= BasicItem.colours[i][1] %>')">
+                  <% if BasicItem.colours[i][0] == 'Stripe' %>
+                      <div id="stripe<%= item.id %>" class="white-box corlor-border color-black">
+                        <img src="/assets/color-img.jpg" alt=""></div>
+                  <% else %>
+
+                      <div id="<%= BasicItem.colours[i][1] + item.id.to_s %>" style="background-color: <%= BasicItem.colours[i][1] %>" class="white-box<%= " white-box09" if (i == 19) %>"></div>
+                  <% end %>
+                </a>
+            <% end %>
+
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#bde2ff')">-->
+            <!--<div id="bde2ff<%#= item.id %>" class="white-box corlor-border light-li-sky"></div>-->
+            <!--</a>-->
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#16bcbe')">-->
+            <!--<div id="16bcbe<%#= item.id %>" class="white-box corlor-border light-c-b"></div>-->
+            <!--</a>-->
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#47c73e')">-->
+            <!--<div id="47c73e<%#= item.id %>" class="white-box corlor-border light-c-g"></div>-->
+            <!--</a>-->
+            <!--<a href="javascript:;" onclick="show_item('<%#= item.id %>','#2a7325')">-->
+            <!--<div id="2a7325<%#= item.id %>" class="white-box corlor-border light-d-g"></div>-->
+            <!--</a>-->
+          </div>
+        </div>
+      </div>
+  <% end %>
+
+</div>
+
+<script>
+    var color = '';
+    var item = '';
+    var itemID = '';
+
+    $(function () {
+        window.scrollTo(0, 0);
+        $("#wrapper").removeClass('create-outfitbg');
+    });
+
+    function show_item(id, clr) {
+//        alert(clr);
+        $(".background_shadow").show()
+        color = clr;
+        itemID = id;
+        $.ajax({
+            url: '/user/user_outfits/show_basic_item?id=' + id + '&color=' + encodeURIComponent(clr),
+            processData: false,
+            success: function (data) {
+                if (data) {
+                    $(".background_shadow").hide();
+                    chil = $($('#parent_' + id).find('div'));
+                    chil.removeClass('active');
+                    var idd = '#' + clr.substring(1, clr.length) + id;
+                    $('div[id*= "' + idd + '" ]').addClass("active");
+                    $('#tee_temp_' + id).html(data);
+                }
+            }
+        });
+    }
+
+    function add_to_outfit(id) {
+        $('.background_shadow').show();
+        itemID = id;
+        var url = document.getElementById('img_' + itemID).src
+        selected_item(url, itemID, 'basic')
+        $('#outfit_partial').show();
+        $('#basics_add').hide();
+        $("#basics_add_subcategories").hide()
+        $('#tee_basics').hide();
+        show_outfit_footer();
+        $('.background_shadow').hide();
+    }
+
+    function return_basics_subcategories() {
+        $('#basics_add').hide();
+        $('#basics_add_subcategories').show()
+        $('#tee_basics').hide();
+        $('#outfit_partial').hide();
+        $('#outfit_save').hide();
+    }
+
+    function return_basics() {
+        $('#basics_add').show();
+        $('#basics_add_subcategories').hide()
+        $('#tee_basics').hide();
+        $('#outfit_partial').hide();
+        $('#outfit_save').hide();
+    }
+
+</script>

@@ -1,0 +1,363 @@
+<div class="page-content" style="min-height:1215px">
+
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title">
+      Users
+    </h3>
+    <ul class="page-breadcrumb breadcrumb">
+      <li>
+        <i class="fa fa-home"></i>
+        <a href="/">Home</a>
+        <i class="fa fa-angle-right"></i>
+      </li>
+      <li>
+        <a href="/">Users</a>
+        <i class="fa fa-angle-right"></i>
+      </li>
+      <li>
+        <a href="/">All Users</a>
+      </li>
+      <li class="pull-right">
+        <div data-original-title="Change dashboard date range" data-placement="top" class="dashboard-date-range tooltips" id="dashboard-report-range">
+          <i class="icon-calendar"></i>
+          <span></span>
+          <i class="fa fa-angle-down"></i>
+        </div>
+      </li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB-->
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box grey-cascade">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-globe"></i> Active Users
+        </div>
+        <div class="tools">
+          <a class="collapse" href="javascript:;">
+          </a>
+          <a class="config" data-toggle="modal" href="#portlet-config">
+          </a>
+          <a class="reload" href="javascript:;">
+          </a>
+          <a class="remove" href="javascript:;">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="table-toolbar">
+          <div class="btn-group">
+            <%#= link_to "Create User", :class => "btn green" %>
+            <a href="#" onclick="create_user('users/new')" class="btn green">Create User</a>
+          </div>
+
+        </div>
+        <div id="sample_1_wrapper" class="dataTables_wrapper no-footer">
+          <!--<div class="table-scrollable">-->
+          <table id="sample_1" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="sample_1_info">
+            <thead>
+            <tr role="row">
+              <th>
+                #
+              </th>
+              <th class="sorting_asc" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width: 143px;" aria-sort="ascending" aria-label="Username: activate to sort column ascending">
+                Email
+              </th>
+              <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 248px;" aria-label="Email">
+                Name
+              </th>
+              <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 91px;" aria-label="Points">
+                Username
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width: 120px;" aria-label="Joined: activate to sort column ascending">
+                Created
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width: 120px;" aria-label="Joined: activate to sort column ascending">
+                Action
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @active_users.each_with_index do |user, index| %>
+                <tr class="">
+                  <td>
+                    <%= index+1 %>
+                  </td>
+                  <td>
+                    <%= user.email %>
+                  </td>
+                  <td>
+                    <%= [user.first_name, user.last_name].join(" ") %>
+                  </td>
+                  <td>
+                    <%= user.user_name %>
+                  </td>
+                  <td>
+                    <%= time_ago_in_words(user.created_at) %>
+                  </td>
+                  <td>
+                    <%= link_to "Edit", 'javascript:;', :onclick => "edit_user('#{user.id}');" %> |
+                    <%#= link_to "Delete", 'javascript:;', :onclick => "del_user('#{user.id}');" %>
+                    <%= link_to "Deactivate", 'javascript:;', :onclick => "activate_deactivate_user('#{user.id}');" %>
+                  </td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+          <!--</div>-->
+        </div>
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box grey-cascade">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-globe"></i> InActive Users
+        </div>
+        <div class="tools">
+          <a class="collapse" href="javascript:;">
+          </a>
+          <a class="config" data-toggle="modal" href="#portlet-config">
+          </a>
+          <a class="reload" href="javascript:;">
+          </a>
+          <a class="remove" href="javascript:;">
+          </a>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="table-toolbar">
+          <div class="btn-group">
+          </div>
+
+        </div>
+        <div id="sample_2_wrapper" class="dataTables_wrapper no-footer">
+          <!--<div class="table-scrollable">-->
+          <table id="sample_2" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="sample_2_info">
+            <thead>
+            <tr role="row">
+              <th>
+                #
+              </th>
+              <th class="sorting_asc" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 143px;" aria-sort="ascending" aria-label="Username: activate to sort column ascending">
+                Email
+              </th>
+              <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 248px;" aria-label="Email">
+                Name
+              </th>
+              <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 91px;" aria-label="Points">
+                Username
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 120px;" aria-label="Joined: activate to sort column ascending">
+                Created
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" style="width: 120px;" aria-label="Joined: activate to sort column ascending">
+                Action
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @inactive_users.each_with_index do |user, index| %>
+                <tr class="">
+                  <td>
+                    <%= index+1 %>
+                  </td>
+                  <td>
+                    <%= user.email %>
+                  </td>
+                  <td>
+                    <%= [user.first_name, user.last_name].join(" ") %>
+                  </td>
+                  <td>
+                    <%= user.user_name %>
+                  </td>
+                  <td>
+                    <%= time_ago_in_words(user.created_at) %>
+                  </td>
+                  <td>
+                    <%= link_to "Edit", 'javascript:;', :onclick => "edit_user('#{user.id}');" %> |
+                    <%#= link_to "Delete", 'javascript:;', :onclick => "del_user('#{user.id}');" %>
+                    <%= link_to "Activate", 'javascript:;', :onclick => "activate_deactivate_user('#{user.id}');" %>
+                  </td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+          <!--</div>-->
+        </div>
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+  </div>
+</div>
+</div>
+
+<script>
+
+    function create_user(action) {
+        $.ajax({
+            url: '/admin/' + action,
+            processData: false,
+            success: function (data) {
+                $("#panel_body").html(data);
+            }
+        });
+    }
+    function edit_user(id) {
+        $.ajax({
+            url: '/admin/users/edit?id=' + id,
+            processData: false,
+            success: function (data) {
+                $("#panel_body").html(data);
+            }
+        });
+    }
+
+    function del_user(id) {
+        apprise("Are you sure You want to Delete User", {'verify': true}, function (r) {
+            if (r == true) {
+                $.ajax({
+                    url: '/admin/users/delete?id=' + id,
+                    processData: false,
+                    success: function (data) {
+                        $("#panel_body").html(data);
+                    }
+                });
+            }
+        });
+    }
+    function activate_deactivate_user(id) {
+        apprise("Are you sure You want to do this action", {'verify': true}, function (r) {
+            if (r == true) {
+                $.ajax({
+                    url: '/admin/users/activate_deactivate_user?id=' + id,
+                    processData: false,
+                    success: function (data) {
+                        $("#panel_body").html(data);
+                    }
+                });
+            }
+        });
+    }
+
+    var table = $('#sample_1');
+    table.dataTable({
+        "columns": [
+            {
+                "orderable": true
+            },
+            {
+                "orderable": true
+            },
+            {
+                "orderable": false
+            },
+            {
+                "orderable": true
+            },
+            {
+                "orderable": true
+            },
+            {
+                "orderable": false
+            }
+        ],
+        "lengthMenu": [
+            [5, 10, 15, 20, -1],
+            [5, 10, 15, 20, "All"] // change per page values here
+        ],
+        // set the initial value
+        "pageLength": 10,
+        "pagingType": "bootstrap_full_number",
+        "language": {
+            "lengthMenu": "_MENU_ records",
+            "paginate": {
+                "previous": "Prev",
+                "next": "Next",
+                "last": "Last",
+                "first": "First"
+            }
+        },
+        "columnDefs": [
+            {  // set default column settings
+                'orderable': true,
+                'targets': [1]
+            },
+            {
+                "searchable": true,
+                "targets": [1]
+            }
+        ],
+        "order": [
+            [5, "asc"]
+        ] // set first column as a default sort by asc
+    });
+
+    var table = $('#sample_2');
+    table.dataTable({
+        "columns": [
+            {
+                "orderable": true
+            },
+            {
+                "orderable": true
+            },
+            {
+                "orderable": false
+            },
+            {
+                "orderable": true
+            },
+            {
+                "orderable": true
+            },
+            {
+                "orderable": false
+            }
+        ],
+        "lengthMenu": [
+            [5, 10, 15, 20, -1],
+            [5, 10, 15, 20, "All"] // change per page values here
+        ],
+        // set the initial value
+        "pageLength": 10,
+        "pagingType": "bootstrap_full_number",
+        "language": {
+            "lengthMenu": "_MENU_ records",
+            "paginate": {
+                "previous": "Prev",
+                "next": "Next",
+                "last": "Last",
+                "first": "First"
+            }
+        },
+        "columnDefs": [
+            {  // set default column settings
+                'orderable': true,
+                'targets': [1]
+            },
+            {
+                "searchable": true,
+                "targets": [1]
+            }
+        ],
+        "order": [
+            [5, "asc"]
+        ] // set first column as a default sort by asc
+    });
+
+</script>

@@ -1,0 +1,53 @@
+<% if @blog != nil %>
+    <%# if user.hide_as_user == false %>
+    <!--<div class="w-100">-->
+    <!--<div class="user-con" onclick="view_partial('icon_closet','/user/users/user_closet?id=<%#= user.id %>')">-->
+    <!--<div class="w100 stmynez">-->
+      <!--<div class="outifit-icon-bt"><a class="soc1" href="javascript:;">Adoorn It</a></div>-->
+    <!--</div>-->
+    <div class="user-con" onclick="<%= user.hide_as_user == false ? "view_partial('icon_closet','/user/users/user_closet?id=#{user.id}')" : '' %>">
+      <%# else %>
+      <!--<div class="user-con">-->
+      <%# end %>
+      <div class="user-image">
+        <%= image_tag user.avatar.present? ? user.avatar.url(:medium) : "/assets/missing.png" %>
+      </div>
+      <div class="user-name">
+        <%= user.user_name %>
+      </div>
+    </div>
+    <div class="time-con">
+      <p><%= time_ago_in_words(@blog.created_at) %> ago</p>
+    </div>
+    <!--<div class="w-100">-->
+    <div class="banner-con dvad">
+      <div class="heading">
+        <%= @blog.title if @blog.title.present? %>
+      </div>
+      <div class="ttttt" id="blog_links_user">
+        <%#= @blog.content.html_safe %>
+        <%= @blog.content.nil? ? @blog.content : @blog.content.html_safe %>
+      </div>
+    </div>
+    <!--</div>-->
+    <div class="w_100" id="blog_<%= @blog.id %>">
+      <%= render :partial => 'blog_view', :locals => {:blog => @blog} %>
+    </div>
+<% end %>
+<script>
+    $(document).ready(function () {
+        $('#blog_links_user a').attr('href', 'javascript: void(0)');
+        $('#blog_links_user a').addClass('not-active');
+
+
+    })
+</script>
+
+<style>
+
+    .not-active {
+        pointer-events: none;
+        cursor: default;
+    }
+
+</style>

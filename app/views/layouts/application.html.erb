@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"/> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"/> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"/> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"/>
+<head>
+  <title>Adoorn</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%#= javascript_include_tag :defaults %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+</head>
+<body>
+
+<% if current_user.present? %>
+    <div class="wrapper" id="wrapper">
+      <div id="main_div">
+<% end %>
+
+<%= yield %>
+
+<% if current_user.present? %>
+    </div>
+    <%= render "/shared/user_footer" %>
+    </div>
+
+<% end %>
+
+<%= render :partial => "/shared/pop_up" %>
+
+</body>
+<div class="background_shadow" style="display: none">
+<!--<div class="background_shadow">-->
+<div class="loader_img"></div>
+</div>
+<!--<div class="background_shadow" style="display: none">-->
+  <!--<div id="floatingBarsG">-->
+    <!--<div class="blockG" id="rotateG_01">-->
+    <!--</div>-->
+    <!--<div class="blockG" id="rotateG_02">-->
+    <!--</div>-->
+    <!--<div class="blockG" id="rotateG_03">-->
+    <!--</div>-->
+    <!--<div class="blockG" id="rotateG_04">-->
+    <!--</div>-->
+    <!--<div class="blockG" id="rotateG_05">-->
+    <!--</div>-->
+    <!--<div class="blockG" id="rotateG_06">-->
+    <!--</div>-->
+    <!--<div class="blockG" id="rotateG_07">-->
+    <!--</div>-->
+    <!--<div class="blockG" id="rotateG_08">-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+</html>
+<% if current_user.present? %>
+    <%= render :partial => '/user/user_items/upload_popup' %>
+<% end %>
+<%= javascript_include_tag "user/wptr.1.0" %>
+<script>
+
+    function close_me_please() {
+        $("#mainapp_popup").hide()
+    }
+    //    if ('ontouchstart' in window) {
+    //        window.addEventListener('load', function () {
+    //            FastClick.attach(document.body);
+    //        }, false);
+    //    }
+
+    //    headerEl.addEventListener('click', function () {
+    //        window.scrollToTop(contentEl);
+    //    });
+
+    var vglnk = { key: '46a80f94e1ecde97928395b4a5aa4b13' };
+
+    (function (d, t) {
+        var s = d.createElement(t);
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = '//cdn.viglink.com/api/vglnk.js';
+        var r = d.getElementsByTagName(t)[0];
+        r.parentNode.insertBefore(s, r);
+    }(document, 'script'));
+
+</script>
+<style>
+    #floatingBarsG {
+
+        position: absolute;
+        width: 30px;
+        height: 37px;
+        left: 50%;
+        top: 50%;
+        margin-left: -20px;
+        margin-top: -25px;
+        opacity: .6;
+
+    }
+
+    .blockG {
+        position: absolute;
+        background-color: #FFFFFF;
+        width: 5px;
+        height: 12px;
+        -moz-border-radius: 4px 4px 0 0;
+        -moz-transform: scale(0.4);
+        -moz-animation-name: fadeG;
+        -moz-animation-duration: 1.2s;
+        -moz-animation-iteration-count: infinite;
+        -moz-animation-direction: normal;
+        -webkit-border-radius: 4px 4px 0 0;
+        -webkit-transform: scale(0.4);
+        -webkit-animation-name: fadeG;
+        -webkit-animation-duration: 1.2s;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-direction: normal;
+        -ms-border-radius: 4px 4px 0 0;
+        -ms-transform: scale(0.4);
+        -ms-animation-name: fadeG;
+        -ms-animation-duration: 1.2s;
+        -ms-animation-iteration-count: infinite;
+        -ms-animation-direction: normal;
+        -o-border-radius: 4px 4px 0 0;
+        -o-transform: scale(0.4);
+        -o-animation-name: fadeG;
+        -o-animation-duration: 1.2s;
+        -o-animation-iteration-count: infinite;
+        -o-animation-direction: normal;
+        border-radius: 4px 4px 0 0;
+        transform: scale(0.4);
+        animation-name: fadeG;
+        animation-duration: 1.2s;
+        animation-iteration-count: infinite;
+        animation-direction: normal;
+    }
+
+    #rotateG_01 {
+        left: 0;
+        top: 13px;
+        -moz-animation-delay: 0.45s;
+        -moz-transform: rotate(-90deg);
+        -webkit-animation-delay: 0.45s;
+        -webkit-transform: rotate(-90deg);
+        -ms-animation-delay: 0.45s;
+        -ms-transform: rotate(-90deg);
+        -o-animation-delay: 0.45s;
+        -o-transform: rotate(-90deg);
+        animation-delay: 0.45s;
+        transform: rotate(-90deg);
+    }
+
+    #rotateG_02 {
+        left: 4px;
+        top: 5px;
+        -moz-animation-delay: 0.6s;
+        -moz-transform: rotate(-45deg);
+        -webkit-animation-delay: 0.6s;
+        -webkit-transform: rotate(-45deg);
+        -ms-animation-delay: 0.6s;
+        -ms-transform: rotate(-45deg);
+        -o-animation-delay: 0.6s;
+        -o-transform: rotate(-45deg);
+        animation-delay: 0.6s;
+        transform: rotate(-45deg);
+    }
+
+    #rotateG_03 {
+        left: 13px;
+        top: 1px;
+        -moz-animation-delay: 0.75s;
+        -moz-transform: rotate(0deg);
+        -webkit-animation-delay: 0.75s;
+        -webkit-transform: rotate(0deg);
+        -ms-animation-delay: 0.75s;
+        -ms-transform: rotate(0deg);
+        -o-animation-delay: 0.75s;
+        -o-transform: rotate(0deg);
+        animation-delay: 0.75s;
+        transform: rotate(0deg);
+    }
+
+    #rotateG_04 {
+        right: 4px;
+        top: 5px;
+        -moz-animation-delay: 0.9s;
+        -moz-transform: rotate(45deg);
+        -webkit-animation-delay: 0.9s;
+        -webkit-transform: rotate(45deg);
+        -ms-animation-delay: 0.9s;
+        -ms-transform: rotate(45deg);
+        -o-animation-delay: 0.9s;
+        -o-transform: rotate(45deg);
+        animation-delay: 0.9s;
+        transform: rotate(45deg);
+    }
+
+    #rotateG_05 {
+        right: 0;
+        top: 13px;
+        -moz-animation-delay: 1.05s;
+        -moz-transform: rotate(90deg);
+        -webkit-animation-delay: 1.05s;
+        -webkit-transform: rotate(90deg);
+        -ms-animation-delay: 1.05s;
+        -ms-transform: rotate(90deg);
+        -o-animation-delay: 1.05s;
+        -o-transform: rotate(90deg);
+        animation-delay: 1.05s;
+        transform: rotate(90deg);
+    }
+
+    #rotateG_06 {
+        right: 4px;
+        bottom: 3px;
+        -moz-animation-delay: 1.2s;
+        -moz-transform: rotate(135deg);
+        -webkit-animation-delay: 1.2s;
+        -webkit-transform: rotate(135deg);
+        -ms-animation-delay: 1.2s;
+        -ms-transform: rotate(135deg);
+        -o-animation-delay: 1.2s;
+        -o-transform: rotate(135deg);
+        animation-delay: 1.2s;
+        transform: rotate(135deg);
+    }
+
+    #rotateG_07 {
+        bottom: 0;
+        left: 13px;
+        -moz-animation-delay: 1.35s;
+        -moz-transform: rotate(180deg);
+        -webkit-animation-delay: 1.35s;
+        -webkit-transform: rotate(180deg);
+        -ms-animation-delay: 1.35s;
+        -ms-transform: rotate(180deg);
+        -o-animation-delay: 1.35s;
+        -o-transform: rotate(180deg);
+        animation-delay: 1.35s;
+        transform: rotate(180deg);
+    }
+
+    #rotateG_08 {
+        left: 4px;
+        bottom: 3px;
+        -moz-animation-delay: 1.5s;
+        -moz-transform: rotate(-135deg);
+        -webkit-animation-delay: 1.5s;
+        -webkit-transform: rotate(-135deg);
+        -ms-animation-delay: 1.5s;
+        -ms-transform: rotate(-135deg);
+        -o-animation-delay: 1.5s;
+        -o-transform: rotate(-135deg);
+        animation-delay: 1.5s;
+        transform: rotate(-135deg);
+    }
+
+    @-moz-keyframes fadeG {
+        0% {
+            background-color: #000000
+        }
+
+        100% {
+            background-color: #FFFFFF
+        }
+
+    }
+
+    @-webkit-keyframes fadeG {
+        0% {
+            background-color: #000000
+        }
+
+        100% {
+            background-color: #FFFFFF
+        }
+
+    }
+
+    @-ms-keyframes fadeG {
+        0% {
+            background-color: #000000
+        }
+
+        100% {
+            background-color: #FFFFFF
+        }
+
+    }
+
+    @-o-keyframes fadeG {
+        0% {
+            background-color: #000000
+        }
+
+        100% {
+            background-color: #FFFFFF
+        }
+
+    }
+
+    @keyframes fadeG {
+        0% {
+            background-color: #000000
+        }
+
+        100% {
+            background-color: #FFFFFF
+        }
+
+    }
+
+</style>
+

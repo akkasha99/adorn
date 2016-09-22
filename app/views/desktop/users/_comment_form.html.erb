@@ -1,0 +1,29 @@
+<div class="w-100" style="margin-top:15px">
+  <div class="desk-add-com-box">
+    <% @comment = Comment.new %>
+    <%= form_for @comment, :url => @outfit == nil ? "/user/user_items/add_comments?item_id=#{@item.id}&item=item" : "/user/user_outfits/add_comments?item_id=#{@outfit.id}&outfit=outfit", :html => {:multipart => true, :onsubmit => "return false", :id => 'item_comment_form', :method => 'post'} do |comment| %>
+        <%= comment.text_field :text, :placeholder => "Add a comment", :id => "item_comment" %>
+        <%= comment.hidden_field :user_item_id, :value => (@item != nil ? @item.id : nil) %>
+        <%= comment.hidden_field :user_outfit_id, :value => (@outfit != nil ? @outfit.id : nil) %>
+        <%= comment.hidden_field :user_id, :value => current_user.id %>
+    <% end %>
+  </div>
+</div>
+
+<script>
+    $('#item_comment').keyup(function (e) {
+        if (e.keyCode == 13) {
+            $(".background_shadow").show();
+            $('#item_comment_form').ajaxSubmit({
+                success: function (data) {
+                    $('#item_comment').val('');
+                    $(".background_shadow").hide();
+                    $('#item_comments').html(data);
+                },
+                error: function (data) {
+                    $(".background_shadow").hide();
+                }
+            });
+        }
+    });
+</script>

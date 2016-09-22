@@ -1,0 +1,76 @@
+<header>
+  <div class="h-con">
+    <div class="user-main-con">
+      <div class="h-heading">Settings</div>
+    </div>
+    <div class="setaro">
+      <a href="#" onclick="back_to_setting()"><img src="/assets/setting-errow.png" alt=""></a>
+    </div>
+  </div>
+</header>
+<div class="acc-main-con">
+  <%= form_for @user, :html => {:id => 'picture_form', :multipart => true, :onsubmit => 'return false;'} do |f| %>
+      <div class="account-h-con">
+        <div class="heading">Change Image</div>
+      </div>
+      <div class="container">
+        <div class="dummyimg-box">
+          <div class="dummyimg-box-content">
+            <% if @user.avatar && File.exists?(@user.avatar.path(:thumb).to_s) %>
+                <%= image_tag @user.avatar(:thumb), :class => 'thumbnail' unless f.object.new_record? %>
+            <% else %>
+                <%= image_tag "missing.png", :class => 'thumbnail' %>
+            <% end %>
+            <!--<img src="/assets/dummy-image.png" alt="">-->
+          </div>
+        </div>
+      </div>
+      <div class="w-100">
+        <!--<form action="#" method="post">-->
+        <div class="upload">
+          <%= f.file_field :avatar %>
+          <!--<input type="file" name="img" id="img">-->
+        </div>
+        <div class="container">
+          <div class="continue-con-btn" onclick="change_picture(<%= @user.id %>);">
+            <a href="javascript:;">Save Picture</a></div>
+          <%#= link_to "Save Picture", "javascript:;", :onclick => "change_picture('#{@user.id}');", :class => "btn green pull-left" %>
+        </div>
+
+        <!--</form>-->
+      </div>
+      <!--W100 end-->
+
+  <% end %>
+</div><!--acc-main-con end-->
+
+
+<script>
+    function change_picture(user_id) {
+        if ($('#picture_form').valid() == true) {
+            $('.background_shadow').show()
+            $("#picture_form").ajaxSubmit({
+                url: '/user/users/picture_update?user_id=' + user_id,
+                success: function (data) {
+                    if (data == 'error') {
+                        $('.background_shadow').hide()
+//                        hudMsg('error', "Try again.")
+                        document.getElementById("mainpop_text").innerHTML = "Try again.";
+                        $("#mainapp_popup").show();
+                        setTimeout(function () {
+                            close_me_please();
+                        }, 4000);
+                    }
+                    else {
+                        $('.background_shadow').hide();
+                        $('#main_div').html(data);
+                    }
+//                    $("#settings").show()
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+    }
+</script>

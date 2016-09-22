@@ -1,0 +1,30 @@
+<div class="animated  fadeInRight ">
+  <div class="btnOut crtOutfit mrgbot100">
+    <% if @adoorned.present? %>
+        <div class="w100">
+
+          <% @adoorned.each do |item| %>
+              <% if item != nil %>
+                  <div class="outfits-l">
+                    <a href="javascript:;" onclick="get_partial('<%= item.id %>', '<%= item.class.name=='UserItem' ? '/user/user_items/show' : '/user/user_outfits/show' %>')">
+                      <% if item.image? && File.exists?(item.image.path(:medium).to_s) %>
+                          <%= image_tag item.image(:medium) %> <%#= item.title if item.title.present? %>
+                          </a>
+                      <% else %>
+                          <%= image_tag "missing_item.jpeg" %>
+                      <% end %>
+                      <a href="#">
+                        <div class="quantity"><%= number_to_human(item.adorns.length) %></div>
+                      </a>
+                      </div>
+
+              <% end %>
+          <% end %>
+        </div>
+    <% else %>
+        <div class="w_100 not-found">
+          Nothing Found.
+        </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,138 @@
+<div id="page-wrap">
+  <div class="tab-main-con">
+    <% if @user != current_user %>
+        <label for="tab1"><span id="span_item_0ther" class="tab-width active" onclick="show_items('<%= @user.id %>', 'span_item_0ther')">Items</span></label>
+        <label for="tab2"><span id="span_outfit_0ther" class="tab-width" onclick="show_outfits('<%= @user.id %>', 'span_outfit_0ther')">Outfits</span></label>
+        <label for="tab3"><span id="span_adoorned_0ther" class="tab-width" onclick="show_user_adoorned('<%= @user.id %>', 'span_adoorned_0ther')">Adoorned</span></label>
+        <label for="tab4"><span id="span_blog_0ther" class="tab-width border-none" onclick="show_user_blogs('<%= @user.id %>', 'span_blog_0ther')">Blog</span></label>
+    <% elsif @user == current_user %>
+        <label for="tab1"><span id="span_item" class="tab-width tab-width3 active" onclick="show_items('<%= @user.id %>', 'span_item')">Items</span></label>
+        <label for="tab2"><span id="span_outfit" class="tab-width tab-width3" onclick="show_outfits('<%= @user.id %>', 'span_outfit')">Outfits</span></label>
+        <label for="tab3"><span id="span_adoorned" class="tab-width tab-width3 border-none" onclick="show_user_adoorned('<%= @user.id %>', 'span_adoorned')">Adoorned</span></label>
+    <% end %>
+  </div>
+
+  <div class="TabBar">
+    <ul class="tabs">
+      <li>
+        <input type="radio" checked name="tabs" id="tab1">
+        <label for="tab1"></label>
+
+        <div id="tab-content1" class="tab-content">
+          <% cur_user = (@user == current_user ? true : false) %>
+          <%= render :partial => "user/user_items/user_items_list", :locals => {:items => @user.items_list(cur_user), :upload => cur_user} %>
+        </div>
+      </li>
+
+      <li>
+        <input type="radio" name="tabs" id="tab2">
+        <label for="tab2"></label>
+
+        <div id="tab-content2" class="tab-content">
+          <%#= render :partial => "user/user_outfits/outfit_list" %>
+        </div>
+      </li>
+
+      <li>
+        <input type="radio" name="tabs" id="tab3">
+        <label for="tab3"></label>
+
+        <div id="tab-content3" class="tab-content">
+          <%#= render :partial => "user_adoorned" %>
+        </div>
+      </li>
+
+      <li>
+        <input type="radio" name="tabs" id="tab4">
+        <label for="tab4"></label>
+
+        <div id="tab-content4" class="tab-content">
+          <%#= render :partial => "user/user_blogs/user_blogs" %>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</div>
+
+
+<script>
+    function show_items(uid, span) {
+        $('.background_shadow').show();
+        $("#" + span).addClass("active");
+        $("#span_outfit_0ther").removeClass("active");
+        $("#span_adoorned_0ther").removeClass("active");
+        $("#span_blog_0ther").removeClass("active");
+//        $("#span_item").addClass("active");
+        $("#span_outfit").removeClass("active");
+        $("#span_adoorned").removeClass("active");
+
+        $.ajax({
+            url: '/user/user_items/user_items_list?id=' + uid,
+            processData: false,
+            success: function (data) {
+                $('.background_shadow').hide();
+                $("#tab-content1").html(data);
+            }
+        });
+    }
+
+    function show_outfits(uid, span) {
+        $('.background_shadow').show();
+        $("#span_item_0ther").removeClass("active");
+        $("#" + span).addClass("active");
+        $("#span_adoorned_0ther").removeClass("active");
+        $("#span_blog_0ther").removeClass("active");
+        $("#span_item").removeClass("active");
+//        $("#span_outfit").addClass("active");
+        $("#span_adoorned").removeClass("active");
+        $.ajax({
+            url: '/user/user_outfits/user_outfits_list?uid=' + uid,
+            processData: false,
+            success: function (data) {
+                $('.background_shadow').hide();
+                $("#tab-content2").html(data);
+            }
+        });
+    }
+
+    function show_user_adoorned(uid, span) {
+        $('.background_shadow').show();
+        $("#span_item_0ther").removeClass("active");
+        $("#span_outfit_0ther").removeClass("active");
+        $("#" + span).addClass("active");
+        $("#span_blog_0ther").removeClass("active");
+        $("#span_item").removeClass("active");
+        $("#span_outfit").removeClass("active");
+//        $("#span_adoorned").addClass("active");
+
+        $.ajax({
+            url: '/user/users/user_adoorned?id=' + uid,
+            processData: false,
+            success: function (data) {
+                $('.background_shadow').hide();
+                $("#tab-content3").html(data);
+            }
+        });
+    }
+
+    function show_user_blogs(user_id, span) {
+        $(".background_shadow").show()
+        $("#span_item_0ther").removeClass("active");
+        $("#span_outfit_0ther").removeClass("active");
+        $("#span_adoorned_0ther").removeClass("active");
+        $("#" + span).addClass("active");
+        $("#span_item").removeClass("active");
+        $("#span_outfit").removeClass("active");
+        $("#span_adoorned").removeClass("active");
+        $.ajax({
+            url: '/user/user_blogs/blogs_list?user_id=' + user_id,
+            processData: false,
+            success: function (data) {
+                $(".background_shadow").hide()
+                $("#tab-content4").html(data);
+            }
+        });
+    }
+
+</script>

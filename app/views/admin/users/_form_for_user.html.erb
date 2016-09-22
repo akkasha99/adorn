@@ -1,0 +1,181 @@
+<%= form_for @user, :url => '/admin/users/', :html => {:id => 'user_form', :multipart => true, :onsubmit => 'return false;'} do |f| %>
+    <div class="errD">
+      <div class="clearfix">
+        <label>First Name:</label>
+        <%= f.text_field :first_name, :placeholder => "First Name", :class => "form-control placeholder-no-fix" %>
+      </div>
+      <div class="clearfix">
+        <label>Last Name:</label>
+        <%= f.text_field :last_name, :placeholder => "Last Name", :class => "form-control placeholder-no-fix" %>
+      </div>
+      <div class="clearfix">
+        <label>User Name:</label>
+        <%= f.text_field :user_name, :placeholder => "User Name", :class => "form-control placeholder-no-fix", :id => "username" %>
+      </div>
+      <div class="clearfix">
+        <label>Email:</label>
+        <%= f.text_field :email, :placeholder => "Email", :class => "form-control placeholder-no-fix" %>
+      </div>
+      <div class="clearfix">
+        <label>Password:</label>
+        <%= f.password_field :password, :placeholder => "Password", :class => "form-control placeholder-no-fix", :id => "pass" %>
+      </div>
+      <div class="clearfix">
+        <label>Password Confirmation:</label>
+        <%= f.password_field :password_confirmation, :placeholder => "Password Confirmation", :class => "form-control placeholder-no-fix" %>
+      </div>
+      <div class="clearfix">
+        <label>About me:</label>
+        <%= f.text_area :about_me, :placeholder => "About me", :class => "form-control placeholder-no-fix" %>
+      </div>
+      <!--<div class="clearfix">-->
+      <!--<label>Hide as user:</label>-->
+      <!--<%#= f.check_box :hide_as_user, :class => "ss-checkbox lrg" %>-->
+      <!--</div>-->
+      <%= f.hidden_field :hide_as_user, :value => 0 %>
+      <div class="clearfix">
+        <label>Location:</label>
+
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-10">
+              <%= f.select :location, options_for_select(['United States', 'Canada'], :selected => f.object.location) %>
+              <%#= f.select :location, options_for_select(['United States', 'United Kingdom', 'France', 'Deutschland', 'Japan', 'Australia', 'Canada'], :selected => f.object.location) %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <% f.object.user_feed ||= UserFeed.new %>
+    <%= f.fields_for :user_feed do |feed| %>
+        <div class="clearfix">
+          <label>Blog url:</label>
+          <%= feed.text_field :url, :placeholder => "BLOG URL", :class => "form-control placeholder-no-fix" %>
+          <%= feed.hidden_field :is_active, :value => 2 %>
+        </div>
+    <% end %>
+    <div class="clearfix">
+      <label>Select Image:</label>
+      <%= image_tag @user.avatar(:thumb), :class => 'thumbnail' unless f.object.new_record? %>
+      <%= f.file_field :avatar %>
+    </div>
+    <br>
+    <div class="clearfix">
+
+      <% if f.object.new_record? %>
+          <%= link_to "submit", "javascript:;", :onclick => "submit_user('create', '');", :class => "btn green pull-left" %>
+      <% else %>
+          <%= link_to "submit", "javascript:;", :onclick => "submit_user('update', '#{@user.id}');", :class => "btn green pull-left" %>
+      <% end %>
+    </div>
+
+<% end %>
+
+<script>
+    jQuery.validator.addMethod("noSpace", function (value, element) {
+        return value.indexOf(" ") < 0 && value != "";
+    }, "No space allowed.");
+    $(function () {
+        $('#username').on('keypress', function (e) {
+            if (e.which == 32)
+                return false;
+        });
+    });
+
+    $("#user_form").validate({
+                rules: {
+                    "user[first_name]": {
+                        maxlength: 255,
+                        minlength: 3
+//                        required: true
+                    },
+                    "user[last_name]": {
+                        maxlength: 255,
+                        minlength: 3
+//                        required: true
+                    },
+                    "user[user_name]": {
+                        maxlength: 255,
+                        minlength: 3,
+                        required: true,
+                        noSpace: true,
+                        remote: {
+                            url: "/user/users/check_username?user_name=" + "user[user_name]",
+                            type: "get"
+                            //                            dataType:'html'
+                        }
+                    },
+                    "user[email]": {
+                        maxlength: 255,
+//                        minlength: 1,
+//                        required: true,
+//                        email: true,
+                        remote: {
+                            url: "/user/users/check_email_admin?email=" + "user[email]",
+                            type: "get"
+                            //                            dataType:'html'
+                        }
+                    },
+                    "user[password]": {
+                        required: true,
+                        maxlength: 255,
+                        minlength: 8
+                    },
+                    "user[password_confirmation]": {
+                        required: true,
+                        maxlength: 255,
+                        minlength: 8,
+                        equalTo: '#pass'
+                    },
+                    "user[location]": {
+                        maxlength: 255,
+                        minlength: 1
+//                        required: true
+                    },
+                    "user[about_me]": {
+                        maxlength: 100
+                        //                        required: true
+                    }
+                },
+                messages: {
+                    "user[email]": {
+                        remote: "Email already exists."
+                    },
+                    "user[user_name]": {
+                        remote: "Username already exists."
+                    }
+
+                }
+
+            }
+    );
+    function submit_user(action, user_id) {
+        if ($('#user_form').valid() == true) {
+            $(".background_shadow").show()
+            $("#user_form").ajaxSubmit({
+                url: $('#user_form').attr("action") + action + '?user_id=' + user_id,
+                success: function (data) {
+                    if (data == 'present') {
+                        $(".background_shadow").hide()
+                        alert("User name or email already present.")
+                        hudMsg('error', 'Try again.')
+                    }
+                    else if (data != 'error') {
+                        $(".background_shadow").hide()
+                        $('#panel_body').html(data);
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+    }
+    //    select class after loading
+    $(document).ready(function () {
+        $("select").addClass('form-control input-medium select2me')
+    })
+</script>
+
+

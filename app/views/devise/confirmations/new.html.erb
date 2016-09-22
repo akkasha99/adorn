@@ -1,0 +1,50 @@
+<body>
+<div class="wrapper setting-bg">
+  <header>
+    <div class="h-con">
+      <div class="user-main-con">
+        <div class="h-heading">adoorn</div>
+      </div>
+      <div class="setaro"><a href="/users/sign_in"><img src="/assets/setting-errow.png" alt=""></a></div>
+    </div>
+  </header>
+
+
+  <div class="acc-main-con">
+    <div class="account-h-con">
+      <div class="heading">Resend confirmation instructions</div>
+    </div>
+    <div class="w100">
+      <!--<h2>Resend confirmation instructions</h2>-->
+
+      <%= form_for(resource, as: resource_name, url: "/users/confirmation", html: {method: :post, :id => 'confirmation_form'}) do |f| %>
+          <%#= devise_error_messages! %>
+
+          <%#= f.label :email %>
+          <!--<br/>-->
+          <div class="form ch-pw">
+            <%= f.email_field :email, autofocus: true, :placeholder => "Email Address" %>
+          </div>
+
+
+          <!--<div><%#= f.submit "Resend confirmation instructions" %></div>-->
+          <div class="container">
+            <a href="javascript:;" class="sign_btn" onclick="$('#confirmation_form').submit()">Resend confirmation</a>
+          </div>
+
+      <% end %>
+
+      <%#= render "devise/shared/links" %>
+
+    </div>
+  </div>
+</div>
+<%= render :partial => "/shared/pop_up" %>
+
+<script>
+    document.getElementById("mainpop_text").innerHTML = "<%= resource.errors.full_messages.first %>";
+    $("#mainapp_popup").show();
+    setTimeout(function () {
+        close_me_please();
+    }, 4000);
+</script>

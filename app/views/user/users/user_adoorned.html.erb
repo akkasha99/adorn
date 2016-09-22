@@ -1,0 +1,47 @@
+<div class="main_layout">
+  <h3 style="font-weight: bold; text-align: center;">You Adoorned</h3>
+
+  <div id="user_adoorners">
+    <a href="/user" class="btn green" style="margin-bottom: 2%;"> < back</a>
+    <% if @items.present? || @outfits.present? %>
+        <% @items.each do |item| %>
+            <% if item != nil %>
+                <div class="clearfix">
+                  <label class="col-md-12" style="border: grey solid 1px;"><a href="/user/item/show/<%= item.id %>">
+                    <% if item.image? && File.exists?(item.image.path(:icon).to_s) %>
+                        <%= image_tag item.image(:icon) %> <%= item.title if item.title.present? %></a>
+                    <% else %>
+                        <%= image_tag "missing_item.jpeg" %>
+                    <% end %>
+
+                    </label>
+                </div>
+            <% end %>
+        <% end %>
+        <% @outfits.each do |outfit| %>
+            <% if outfit != nil %>
+                <div class="clearfix">
+                  <label class="col-md-12" style="border: grey solid 1px;"><%= image_tag outfit.image(:icon), :class => "avatar" %> <%= outfit.title if outfit.title.present? %></label>
+                </div>
+            <% end %>
+        <% end %>
+    <% else %>
+        <div class="clearfix">
+          <label class="col-md-12" style="border: grey solid 1px;">You didn't adorn any thing yet.</label>
+        </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+    body {
+        color: #000000
+    }
+
+    .adoorner {
+        background-color: #fff;
+        margin: 0 auto;
+        padding: 30px 30px 15px;
+        width: 360px;
+    }
+</style>

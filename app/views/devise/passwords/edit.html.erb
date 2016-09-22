@@ -1,0 +1,54 @@
+<div class="wrapper setting-bg">
+  <header>
+    <div class="h-con">
+      <div class="user-main-con">
+        <div class="h-heading">ADOORN</div>
+      </div>
+      <!--<div class="backBtn"><a href="/users/sign_in?mobile=true'"><img src="/assets/setting-errow.png" alt=""></a></div>-->
+      <div class="clear-fix"></div>
+    </div>
+  </header>
+
+  <div class="acc-main-con w_100">
+    <div class="account-h-con">
+      <div class="heading">Change Password</div>
+    </div>
+    <div class="w_100">
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :put, :id => 'reset_edit_form'}) do |f| %>
+          <%#= devise_error_messages! %>
+          <%= f.hidden_field :reset_password_token %>
+          <!--<form action="#" method="post">-->
+          <!--<div class="form ch-pw">-->
+          <%#= f.email_field :email, :value => user.email, :disabled => true, :placeholder => "Email Address" %>
+          <!--<input type="text" name="email" id="email" placeholder="Email Address"/>-->
+          <!--</div>-->
+          <!--<div class="gap"></div>-->
+          <div class="form ch-pw">
+            <%= f.password_field :password, autofocus: true, autocomplete: "off", :placeholder => "New Password" %>
+            <!--<input type="text" name="newpw" id="newpw" placeholder="New Pawwword"/>-->
+          </div>
+          <div class="form ch-pw">
+            <%= f.password_field :password_confirmation, autocomplete: "off", :placeholder => "New Password, again" %>
+            <!--<input type="text" name="newpwagain" id="newpwagain" placeholder="New Pawwword, again"/>-->
+          </div>
+
+          <div class="container">
+            <%#= f.submit "Change Password", :class => "sign_btn" %>
+            <a href="javascript:;" class="sign_btn border_9" onclick="$('#reset_edit_form').submit()">RESET</a>
+            <!--<input type="submit" class="save-chage-btn padding" name="submit" value="Changes Password">-->
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<%= render :partial => "/shared/pop_up" %>
+<script>
+    if ("<%= resource.errors.full_messages.first %>" != "") {
+        document.getElementById("mainpop_text").innerHTML = "<%= resource.errors.full_messages.first %>";
+        $("#mainapp_popup").show();
+        setTimeout(function () {
+            close_me_please();
+        }, 4000);
+    }
+
+</script>

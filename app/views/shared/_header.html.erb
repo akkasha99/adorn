@@ -1,0 +1,36 @@
+<div class="page-header navbar navbar-fixed-top">
+  <div class="page-header-inner">
+    <div class="page-logo">
+      <a href="/">
+        <!--<img class="logo-default" alt="logo" src="/assets/logo.png">-->
+      </a>
+
+      <div class="menu-toggler sidebar-toggler hide">
+      </div>
+    </div>
+    <a data-target=".navbar-collapse" data-toggle="collapse" class="menu-toggler responsive-toggler" href="javascript:;">
+    </a>
+
+    <div class="top-menu">
+      <ul class="nav navbar-nav pull-right">
+        <li class="dropdown dropdown-user">
+          <a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <img src="" class="img-circle" alt="">
+                <span class="username">
+                    <%= current_user.email.split("@")[0] %> </span>
+            <i class="fa fa-angle-down"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <%= link_to destroy_user_session_path, method: :delete, :class => 'navbar-link' do %>
+                  <i class="icon-key"></i>Logout
+              <% end %>
+              <!--<a href="login.html">-->
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>

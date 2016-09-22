@@ -1,0 +1,44 @@
+<% if comment %>
+    <% comment.each do |c| %>
+        <div class="desk-comments-h-con border-0">
+          <div class="w-100">
+            <a href="#">
+              <div class="desk-mn-user-image" onclick="closet(<%= c.user.id %>)">
+                <% if c.user.avatar? && File.exists?(c.user.avatar.path(:thumb).to_s) %>
+                    <%= image_tag c.user.avatar(:thumb) %>
+                <% else %>
+                    <%= image_tag "missing.png" %>
+                <% end %>
+              </div>
+            </a>
+
+            <div class="comments-desc">
+              <div class="f-l"><a class="low_cas_desk" href="#" onclick="closet(<%= c.user.id %>)"><%= c.user.user_name %></a></div>
+              <div class="desk-comm-days"><%= time_ago_in_words(c.created_at) %> ago</div>
+
+              <div class="detail"><%= c.text %></div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+<%# end %>
+<% else %>
+    <div class="desk-comments-h-con border-0">
+      <div class="w-100">
+        <div class="comments-desc">
+          <div class="detail" style="text-align: center;font-family: weezerfont_CURRENT">Nothing Found.<%#= c.text %></div>
+        </div>
+      </div>
+    </div>
+<% end %>
+<!--<div class="w-100">-->
+<!--<div class="desk-add-com-box">-->
+<!--<%# @comment = Comment.new %>-->
+<!--<%#= form_for @comment, :url => @outfit == nil ? "/user/user_items/add_comments?item_id=#{@item.id}&item=item" : "/user/user_outfits/add_comments?item_id=#{@outfit.id}&outfit=outfit", :html => {:multipart => true, :onsubmit => "return false", :id => 'item_comment_form', :method => 'post'} do |comment| %>-->
+<!--<%#= comment.text_field :text, :placeholder => "Add a comment", :id => "item_comment" %>-->
+<!--<%#= comment.hidden_field :user_item_id, :value => (@item != nil ? @item.id : nil) %>-->
+<!--<%#= comment.hidden_field :user_outfit_id, :value => (@outfit != nil ? @outfit.id : nil) %>-->
+<!--<%#= comment.hidden_field :user_id, :value => current_user.id %>-->
+<!--<%# end %>-->
+<!--</div>-->
+<!--</div>-->

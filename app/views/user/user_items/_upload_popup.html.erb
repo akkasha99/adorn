@@ -1,0 +1,292 @@
+<div id="popup_upload" class="pop-up" onclick="show_pop()">
+  <% @item = UserItem.new %>
+  <%= form_for @item, :url => '/user/user_items/add_item_pic', :html => {:multipart => true, :onsubmit => "return false", :id => 'item_pic_form', :method => 'post'} do |f| %>
+      <div class="popBox">
+        <div class="popScroll">
+          <div class="container">
+            <div class="upload-menue">
+              <div class="upload-items-hd">upload an item or outfit</div>
+              <!--upload-items-hd end-->
+
+              <div class="btn-con-upload">
+                <a href="javascript:;" id="scan_code" onclick="semantic()">
+                  <img src="/assets/scan-barcodes.png" alt="">
+
+                  <div>Scan barcode</div>
+                </a>
+              </div>
+              <!--btn-con-upload end-->
+              <div class="btn-con-upload">
+                <a href="#links">
+                  <img onclick="browse()" src="/assets/add-photo.png" alt="">
+
+                  <div>Add Photo</div>
+                </a>
+                <%= file_field_tag :image, :capture => "camera", :style => "display: none;", :id => 'my_file' %>
+              </div>
+              <!--btn-con-upload end-->
+              <div class="btn-con-upload">
+                <a href="#links" onclick="get_partial('<%= current_user.id %>','/user/user_items/open_search')"  id="scan_upc">
+                  <img src="/assets/search.png" alt="">
+
+                  <div>Search</div>
+                </a>
+              </div>
+              <!--btn-con-upload end-->
+              <div class="btn-con-upload">
+                <a href="#links" onclick="get_partial('<%= current_user.id %>', '/user/user_outfits/new_outfit')">
+                  <img src="/assets/create-outfit-btn.png" alt="">
+
+                  <div>Create Outfit</div>
+                </a>
+              </div>
+              <!--btn-con-upload end-->
+
+            </div>
+          </div>
+          <!--container end-->
+        </div>
+        <!--popScroll end-->
+
+      </div>
+      <a href="#links" class="lightbox"></a>
+  <% end %>
+</div>
+<!--<div id="upload_sub" class="acc-main-con set_pg_bg" style="display: none;"></div>-->
+<!--<div id="item_up" class="acc-main-con set_pg_bg0" style="display: none;"></div>-->
+
+<script>
+
+
+     function showpanel() {
+         Android.PageCompleted();
+
+     }
+
+
+
+    $(document).ready(function () {
+        setTimeout(showpanel, 2000)
+        show_user_footer();
+        window.scrollTo(0, 0);
+
+
+        window.return_code = function (code) {
+            if (code == '123') {
+                $('.background_shadow').show()
+                $("#item_pic_form").ajaxSubmit({
+                    success: function (data) {
+                        if (data != 'error') {
+                            $(".background_shadow").hide()
+                            $('#_main').hide();
+                            //                    $('#upload_sub').hide();
+                            $('#_sub').show().html(data);
+                        }
+                    },
+                    error: function (data) {
+
+                    }
+                });
+            }
+//                var image = new Image()
+//                image = code.image
+//                $.ajax({
+//                    url: '/user/user_items/read_image?image=' + code.image,
+//                    success: function (data) {
+//                        $("#main_div").html(data)
+//                    }
+//                })
+        }
+
+
+    });
+
+    //    function browse() {
+    //        show_pop()
+    //        document.getElementById('my_file').click();
+    ////        if (window.Android) {
+    ////            Android.image_upload()
+    ////        }
+    ////        window.return_code = function (code) {
+    ////            var image = new Image()
+    ////            image = code.image
+    ////            $.ajax({
+    ////                url: '/user/user_items/read_image?image=' + code.image,
+    ////                success: function (data) {
+    ////                    $("#main_div").html(data)
+    ////                }
+    ////            })
+    ////        }
+    //    }
+
+    function browse() {
+        show_pop()
+        document.getElementById('my_file').click();
+        if (window.Android) {
+            Android.image_upload()
+        }
+
+    }
+
+
+    //
+    //    function browse() {
+    //            show_pop()
+    //            document.getElementById('my_file').click();
+    //            if (window.Android) {
+    //                Android.image_upload()
+    //            }
+    //            window.return_code = function (code) {
+    //                var image = new Image()
+    //                image = code.image
+    //                $.ajax({
+    //                    url: '/user/user_items/read_image?image=' + code.image,
+    //                    success: function (data) {
+    //                        $("#main_div").html(data)
+    //                    }
+    //                })
+    //            }
+    //        }
+
+    //    (function () {
+    var nativeBridge = {
+        invoke: function (commandName, args) {
+            //                console.log(commandName + ": " + JSON.stringify(args, null, 2));
+            window.location = 'scan-barcode:' + commandName + ':' + encodeURIComponent(JSON.stringify(args));
+        }
+    };
+
+    function semantic() {
+        show_pop();
+        //        var fNameTextField = 'Barcode'
+//        var clickevent = window.ontouchend ? 'touchend' : 'click';
+//        updateNativeBtn.addEventListener(clickevent, function (evt) {
+//            evt.preventDefault();
+        if (window.Android) {
+            Android.scanBarcode()
+        }
+        else {
+            nativeBridge.invoke('scanBarcode', {
+                barcode: 'Barcode'
+            });
+        }
+
+
+//        });
+        window.return_code = function (code) {
+            var product_id = code.barcode;
+            get_product_details(product_id)
+        }
+    }
+
+    function upcdb() {
+        var updateNativebtn = document.getElementById('scan_upc');
+        //        var fNameTextField = 'Barcode'
+//        var clikevent = window.ontouchend ? 'touchend' : 'click';
+//        updateNativebtn.addEventListener(clikevent, function (evt) {
+//            evt.preventDefault();
+        nativeBridge.invoke('scanBarcode', {
+            barcode: 'Barcode'
+        });
+//        });
+        window.return_code = function (code) {
+            var product_id = code.barcode;
+            upc_details(product_id)
+        }
+    }
+    //    })();
+
+    (function () {
+//        var nativeBrdge = {
+//            invoke: function (commandName, args) {
+//                //                console.log(commandName + ": " + JSON.stringify(args, null, 2));
+//                window.location = 'scan-barcode:' + commandName + ':' + encodeURIComponent(JSON.stringify(args));
+//            }
+//        };
+//        var updateNativebtn = document.getElementById('scan_upc');
+//        //        var fNameTextField = 'Barcode'
+//        var clikevent = window.ontouchend ? 'touchend' : 'click';
+//        updateNativebtn.addEventListener(clikevent, function (evt) {
+//            evt.preventDefault();
+//            nativeBridge.invoke('scanBarcode', {
+//                barcode: 'Barcode'
+//            });
+//        });
+//        window.return_code = function (code) {
+//            var product_id = code.barcode;
+//            //                alert(product_id)
+//            upc_details(product_id)
+//        }
+    })();
+
+    function get_product_details(upc) {
+        $(".background_shadow").show();
+        $.ajax({
+            url: '/user/user_items/item_details?upc=' + upc,
+            processData: false,
+            success: function (data) {
+                if (data.success == false) {
+                    $(".background_shadow").hide()
+                    document.getElementById("mainpop_text").innerHTML = data.detail;
+                    $("#mainapp_popup").show();
+//                    hudMsg('error', data.detail);
+                    setTimeout(function () {
+                        browse();
+                        close_me_please();
+                    }, 4000);
+
+                }
+                else if (data.success == true) {
+                    $(".background_shadow").hide();
+                    document.getElementById("mainpop_text").innerHTML = data.detail;
+                    $("#mainapp_popup").show();
+                    setTimeout(function () {
+                        close_me_please();
+                    }, 4000);
+                }
+                else {
+                    $(".background_shadow").hide();
+                    $('#_main').hide();
+                    $('#_sub').show().html(data);
+                    setTimeout(function () {
+                        show_pop();
+                    }, 4000);
+                }
+                //                    $('#user_item_show').html(data);
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+    function upc_details(upc) {
+        $.ajax({
+            url: '/user/user_items/upc_details?upc=' + upc,
+            processData: false,
+            success: function (data) {
+                if (data != 'error')
+                    alert(data)
+                //                    $('#user_item_show').html(data);
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+    $('#my_file').change(function () {
+        $(".background_shadow").show();
+        $("#item_pic_form").ajaxSubmit({
+            success: function (data) {
+                if (data != 'error') {
+                    $(".background_shadow").hide()
+                    $('#_main').hide();
+//                    $('#upload_sub').hide();
+                    $('#_sub').show().html(data);
+                }
+            },
+            error: function (data) {
+
+            }
+        });
+    });
+</script>

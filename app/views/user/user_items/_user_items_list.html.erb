@@ -1,0 +1,67 @@
+<div class="animated  fadeInRight">
+  <div class="w_100 mrgbot100 stpd">
+    <div class="w100">
+      <% if upload == true %>
+          <div class="prod-main-con">
+            <div class="pro-con">
+              <!--<div class='box'>--><!--<div class='content'>-->
+              <a href="#popup_upload" onclick="show_pop()">
+                <div class="upload-image-item"><img src="/assets/upload-items2.jpg" alt=""></div>
+              </a>
+              <!--</div>--><!--</div>-->
+            </div>
+            <!--<div class="quantity"></div>-->
+          </div>
+      <% end %>
+      <!--ser-main-con end-->
+      <% if items.size > 0 %>
+          <% items.each do |item| %>
+              <div class="prod-main-con">
+                <div class="pro-con">
+                  <!--<div class='box'>--><!--<div class='content'>-->
+                  <a href="javascript:;" onclick="get_partial('<%= item.id %>', '/user/user_items/show')">
+                    <% if item.image? && File.exists?(item.image.path(:thumb).to_s) %>
+                        <%= image_tag item.image.url(:thumb) %>
+                    <% else %>
+                        <%= image_tag "missing_item.jpeg" %>
+                    <% end %>
+                  </a>
+                  <!--</div>  </div>-->
+                </div>
+                <!--pro-con end-->
+                <!--<a href="#">-->
+                <div class="quantity"><%= number_to_human(item.adorns.length) %></div>
+                <!--</a>-->
+              </div>
+          <% end %>
+      <% else %>
+          <% if upload == false %>
+              <div class="w_100 not-found">
+                Nothing Found.
+              </div>
+          <% end %>
+      <% end %>
+    </div>
+    <!--w100 end-->
+  </div>
+  <!--container end-->
+</div>
+
+<script>
+    $(function () {
+        window.scrollTo(0, 0);
+    });
+
+    function upload_item() {
+        $('.background_shadow').show();
+        $.ajax({
+            url: '/user/user_items/upload_item',
+            processData: false,
+            success: function (data) {
+                $('.background_shadow').hide();
+                $("#add_item").show().html(data);
+            }
+        });
+    }
+
+</script>

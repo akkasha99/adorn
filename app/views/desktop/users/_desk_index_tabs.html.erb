@@ -1,0 +1,136 @@
+<div id="page-wrap">
+
+  <div class="desk-tab-main-con">
+    <% if @user == current_user %>
+        <div class="tab-max-width desk-tab-max-width wrapp">
+          <label for="tab1"><span class="desk-tab-width desk-tab-width2 active" id="item_active" onclick="items_list(<%= @user.id %>,'item_active')">Items</span></label>
+          <label for="tab2"><span class="desk-tab-width desk-tab-width2 border-left" id="outfit_active" onclick="outfits_list(<%= @user.id %>,'outfit_active')">Outfits</span></label>
+          <label for="tab3"><span class="desk-tab-width desk-tab-width2 border-left" id="adoored_active" onclick="adoored_list(<%= @user.id %>,'adoored_active')">Adoorned</span></label>
+        </div>
+    <% else %>
+        <div class="tab-max-width">
+          <label for="tab1"><span class="desk-tab-width active" id="item_active_other" onclick="items_list(<%= @user.id %>,'item_active_other')">Items</span></label>
+          <label for="tab2"><span class="desk-tab-width border-left" id="outfit_active_other" onclick="outfits_list(<%= @user.id %>,'outfit_active_other')">Outfits</span></label>
+          <label for="tab3"><span class="desk-tab-width border-left" id="adoored_active_other" onclick="adoored_list(<%= @user.id %>,'adoored_active_other')">Adoorned</span></label>
+          <label for="tab4"><span class="desk-tab-width border-left" id="blog_active_other" onclick="blogs_list(<%= @user.id %>,'blog_active_other')">Blog</span></label>
+        </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="wrapp2">
+  <div class="desk-TabBar">
+    <ul class="tabs desk-tabs">
+      <li>
+        <input type="radio" checked name="tabs" id="tab1">
+        <label for="tab1"></label>
+
+        <div id="tab-content1" class="tab-content padb50">
+          <%= render :partial => '/desktop/users/items_list', :locals => {:items => @user.items_list(@user)} %>
+        </div>
+      </li>
+
+      <li>
+        <input type="radio" name="tabs" id="tab2">
+        <label for="tab2"></label>
+
+        <div id="tab-content2" class="tab-content padb50">
+          <%#= render :partial => '/desktop/users/outfits_list' %>
+        </div>
+      </li>
+
+      <li>
+        <input type="radio" name="tabs" id="tab3">
+        <label for="tab3"></label>
+
+        <div id="tab-content3" class="tab-content padb50">
+          <%#= render :partial => '/desktop/users/adoored_list' %>
+        </div>
+      </li>
+      <li>
+        <input type="radio" name="tabs" id="tab4">
+        <label for="tab4"></label>
+
+        <div id="tab-content4" class="tab-content">
+          <%#= render :partial => '/desktop/users/blogs_list' %>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<script>
+    function items_list(id, div_id) {
+        $("#outfit_active_other").removeClass("active");
+        $("#adoored_active_other").removeClass("active");
+        $("#" + div_id).addClass("active");
+        $("#adoored_active").removeClass("active");
+        $("#outfit_active").removeClass("active");
+        $("#blog_active_other").removeClass("active");
+        $(".background_shadow").show()
+        $.ajax({
+            url: '/user/user_items/user_items_list?id=' + id,
+            processData: false,
+            success: function (data) {
+                $(".background_shadow").hide()
+                $("#tab-content1").html(data);
+            }
+        });
+    }
+
+    function outfits_list(id, div_id) {
+        $("#item_active_other").removeClass("active");
+        $("#adoored_active_other").removeClass("active");
+        $("#item_active").removeClass("active");
+        $("#adoored_active").removeClass("active");
+        $("#" + div_id).addClass("active");
+        $("#blog_active_other").removeClass("active");
+        $(".background_shadow").show()
+        $.ajax({
+            url: '/user/user_outfits/user_outfits_list?uid=' + id,
+            processData: false,
+            success: function (data) {
+                $(".background_shadow").hide()
+                $("#tab-content2").html(data);
+            }
+        });
+    }
+
+    function adoored_list(id, div_id) {
+        $("#item_active_other").removeClass("active");
+        $("#outfit_active_other").removeClass("active");
+        $("#item_active").removeClass("active");
+        $("#outfit_active").removeClass("active");
+        $("#blog_active_other").removeClass("active");
+        $("#" + div_id).addClass("active");
+        $(".background_shadow").show()
+        $.ajax({
+            url: '/user/users/user_adoorned?id=' + id,
+            processData: false,
+            success: function (data) {
+                $(".background_shadow").hide()
+                $("#tab-content3").html(data);
+            }
+        });
+    }
+
+    function blogs_list(id, div_id) {
+        $("#item_active_other").removeClass("active");
+        $("#outfit_active_other").removeClass("active");
+        $("#adoored_active_other").removeClass("active");
+        $("#item_active").removeClass("active");
+        $("#adoored_active").removeClass("active");
+        $("#outfit_active").removeClass("active");
+        $("#" + div_id).addClass("active");
+        $(".background_shadow").show()
+        $.ajax({
+            url: '/user/user_blogs/blogs_list?user_id=' + id,
+            processData: false,
+            success: function (data) {
+                $(".background_shadow").hide()
+                $("#tab-content4").html(data);
+            }
+        });
+    }
+</script>

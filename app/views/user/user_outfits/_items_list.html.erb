@@ -1,0 +1,82 @@
+<!--<div id="item_portion" class="row">-->
+<h3 style="text-align: center; font-weight: bold;"> Select Item</h3>
+<div class="image_gallery">
+  <% if items.size > 0 %>
+      <% items.each do |item| %>
+          <% if item.image? && File.exists?(item.image.path(:icon).to_s) %>
+              <div class="col-sm-4">
+                <div class="thumbnail">
+                  <a href="javascript:;" onclick="selected_item('<%= item.image.url(:icon) %>', '<%= item.id %>')">
+                    <%= image_tag item.image.url(:icon) %>
+                    <div class="caption">
+                      <p style="font-weight: bold; word-wrap: break-word;"> <%= item.title.capitalize! %> </p>
+
+                      <p>
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+          <% end %>
+      <% end %>
+  <% else %>
+      <div class="col-sm-4">
+        <div class="thumbnail" style="text-align: center; background-color: lightgray;">
+          <p style="font-weight: lighter; font-size: xx-large;">Nothing Found.</p>
+        </div>
+      </div>
+  <% end %>
+  <div style="float: right; margin-right: 5%;">
+    <a href="javascript:;" onclick="cancel_items()" class="btn red">Cancel</a>
+  </div>
+</div>
+<!--</div>-->
+
+<script>
+    var x = 0;
+    var y = 0;
+
+
+    //    function selected_item(url, id) {
+    //    if (startX == 300) {
+    //        startX = 0;
+    //        startY = startY + 60;
+    //    }
+    //    var img = new Image();
+    //    img.src = url;
+    //
+    //    g = ctx.drawImage(img, startX, startY);
+    //    item_arr.push(id)
+    //    startX = startX + 60;
+    //            $('#items_select').hide();
+    //    }
+
+    function selected_item(url, id) {
+        var img = new Image();
+        img.src = url;
+        img.onload = function () {
+            obj = new Kinetic.Image({ x: startX,
+                y: startY,
+                width: 100,
+                height: 100,
+                draggable: true,
+                image: img});
+            layer.add(obj);
+            layer.draw();
+            item_arr.push(id)
+            startX = startX + 100;
+            if (startX == 300) {
+                startX = 0;
+                startY = startY + 100;
+            }
+        }
+        stage.add(layer);
+
+        $('#items_select').hide();
+    }
+
+    function cancel_items() {
+        $('#items_select').hide();
+    }
+
+</script>

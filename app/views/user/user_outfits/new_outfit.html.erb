@@ -1,0 +1,299 @@
+<div id="outfit_partial" class="">
+  <div class="acc-main-con set_pg_bg">
+    <header>
+      <div class="h-con">
+        <div class="user-main-con">
+          <div class="h-heading">Create Outfit</div>
+        </div>
+        <div class="setclose"><a href="/user"><img src="/assets/exit-creat-outfit.png" alt=""></a></div>
+      </div>
+    </header>
+
+    <div class="w_100">
+      <div class="emp_box w_100">
+        <div class="empty-box w_100" id="">
+          <div class="empty-box-content" id="outfit_canvas">
+
+          </div>
+        </div>
+        <div class="w_100 mrg20">
+          <!--<div class="outfits-left">-->
+          <!--<div class="">-->
+          <div class="undo"><a href="javascript:;" onclick="undo_canvas()"><img src="/assets/undo.png" alt="">
+
+            <div>Undo</div>
+          </a></div>
+          <div class="undo"><a href="javascript:;" onclick="redo_canvas()"><img src="/assets/redo.png" alt="">
+
+            <div>redo</div>
+          </a></div>
+          <!--</div>-->
+          <!--</div>-->
+
+          <!--<div class="outfits-r">-->
+          <!--<div class="un-re-do un-re-do1">-->
+          <div class="undo undo-save-outfit f-r">
+            <a href="javascript:;" onclick="create_outfit()"><img src="/assets/save-outfit.png" alt="">
+
+              <div>Save outfit</div>
+            </a></div>
+          <div class="undo f-r"><a href="javascript:;" onclick="select_basics()"><img src="/assets/basics.png" alt="">
+
+            <div>basics</div>
+          </a></div>
+          <!--</div>-->
+          <!--</div>-->
+        </div>
+      </div>
+
+      <div class="outfit-pro w_100">
+        <% @items.each do |item| %>
+            <% if item.image? && File.exists?(item.image.path(:thumb).to_s) %>
+                <div class="pro-box">
+                  <a href="javascript:;" onclick="selected_item('<%= item.image.url(:icon) %>', '<%= item.id %>', 'user')">
+                    <%= image_tag item.image.url(:thumb) %>
+                  </a>
+                  <a href="javascript:;">
+                    <div id="tik_<%= item.id %>" class="select-product-img" style="display: none;">
+                      <img src="/assets/select-produt-hover.png" alt="">
+                    </div>
+                  </a>
+                </div>
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <footer id="outfit_footer" class="f-stricky">
+      <div class="f-con">
+        <div class="fbot_menu">
+          <a href="javascript:;" onclick="remove_image();"><img src="/assets/fotimg_0.png" alt="">
+
+            <div class="txtwid">remove</div>
+          </a></div>
+        <div class="fbot_menu"><a href="javascript:;" onclick="moveTotop()"><img src="/assets/fotimg_1.png" alt="">
+
+          <div class="txtwid">front</div>
+        </a></div>
+        <div class="fbot_menu"><a href="javascript:;" onclick="moveToback()"><img src="/assets/fotimg_2.png" alt="">
+
+          <div class="txtwid">back</div>
+        </a></div>
+        <div class="fbot_menu"><a href="#"><img src="/assets/fotimg_3.png" alt="">
+
+          <div class="txtwid">reflect</div>
+        </a></div>
+      </div>
+      <!--f-con end-->
+    </footer>
+  </div>
+</div>
+<div id="basics_add" class="create-outfitbg"></div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#user_footer').hide();
+    });
+
+    stage = new Kinetic.Stage({
+        container: 'outfit_canvas',
+        width: $('#outfit_canvas').width(),
+        height: $('#outfit_canvas').height()
+    });
+    var obj;
+    var selected_img;
+    var layer = new Kinetic.Layer();
+    var startX = 0;
+    var startY = 0;
+    var item_arr = [];
+    var basic_item_arr = [];
+    var item_pop = [];
+    var cPushArray = new Array();
+    var cStep = -1;
+
+    function close_pop() {
+        $('#add_outfit').hide();
+    }
+
+    function create_outfit() {
+//        var canvas = document.getElementById('outfit_canvas');
+        if (item_arr.length > 0 || basic_item_arr.length > 0) {
+            html2canvas($("#outfit_canvas"), {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL('image/png');
+                    var file = dataURLtoBlob(data);
+                    var fd = new FormData();
+                    fd.append("image", file);
+                    $.ajax({
+                        url: '/user/user_outfits/create_outfit',
+                        type: 'POST',
+                        data: fd,
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            if (data != 'error') {
+//                            $('#outfit_footer').hide();
+                                $('#user_footer').show();
+                                $('#outfit_partial').html(data);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    function dataURLtoBlob(dataURL) {
+        var binary = atob(dataURL.split(',')[1]);
+        var array = [];
+        for (var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {type: 'image/png'});
+    }
+
+    function undo_canvas() {
+        if (cStep >= 0) {
+            cUndo(cPushArray[cStep]);
+            cStep--;
+        }
+    }
+
+    function redo_canvas() {
+        if (cStep < cPushArray.length - 1) {
+            cStep++;
+            cRedo(cPushArray[cStep])
+        }
+    }
+
+    function cPush(obj) {
+        cStep++;
+        if (cStep < cPushArray.length) {
+            cPushArray.length = cStep;
+        }
+        cPushArray.push(obj)
+    }
+
+    function cUndo(obj) {
+        obj.hide();
+        layer.draw();
+        $('#tik_' + obj.attrs.id).hide();
+        if (obj.attrs.type == 'user') {
+            var index = item_arr.indexOf(obj.attrs.id);
+            if (index != -1)
+                item_arr[index] = null;
+        }
+        else if (obj.attrs.type == 'basic') {
+            var index = item_arr.indexOf(obj.attrs.id);
+            if (index != -1)
+                basic_item_arr[index] = null;
+        }
+    }
+
+    function cRedo(obj) {
+        obj.show();
+        layer.draw();
+        $('#tik_' + obj.attrs.id).show();
+        if (obj.attrs.type == 'user') {
+            var index = item_arr.indexOf(obj.attrs.id);
+            if (index == -1)
+                item_arr.push(obj.attrs.id);
+        }
+        else if (obj.attrs.type == 'basic') {
+            var index = item_arr.indexOf(obj.attrs.id);
+            if (index == -1)
+                basic_item_arr.push(obj.attrs.id);
+        }
+    }
+
+    var x = 0;
+    var y = 0;
+
+    function selected_item(url, id, type) {
+        if (type == 'user')
+            var count = item_arr.indexOf(id);
+        else if (type == 'basic')
+            var count = basic_item_arr.indexOf(id);
+        if (count == -1) {
+            var img = new Image();
+            img.src = url;
+            img.onload = function () {
+                draw_img(id, img, 100, 100);
+            }
+            if (type == 'user')
+                item_arr.push(id)
+            else if (type == 'basic')
+                basic_item_arr.push(id)
+            stage.add(layer);
+            $('#tik_' + id).show();
+
+        }
+    }
+
+    function select_basics() {
+        $.ajax({
+            url: '/user/user_outfits/select_basics',
+            processData: false,
+            success: function (data) {
+                if (data != 'error') {
+                    $('#outfit_partial').hide();
+                    $('#basics_add').html(data).show();
+                }
+            }
+        });
+    }
+
+    function draw_img(id, img, width, height) {
+        obj = new Kinetic.Image({ x: startX,
+            y: startY,
+            width: width,
+            height: height,
+            draggable: true,
+            id: layer.attrs.id,
+            image: img,
+            id: id,
+            type: 'user'});
+        bind_handlers(obj);
+        layer.add(obj);
+        layer.draw();
+        cPush(obj);
+
+        startX = startX + 100;
+        if (startX == 300) {
+            startX = 0;
+            startY = startY + 100;
+        }
+    }
+
+    function bind_handlers(obj) {
+        obj.on('click', function (evt) {
+            var img = evt.target;
+            selected_img = img;
+        });
+        obj.on('mouseover', function () {
+            document.body.style.cursor = 'pointer';
+        });
+        obj.on('mouseout', function () {
+            document.body.style.cursor = 'default';
+        });
+    }
+
+    function moveTotop() {
+        if (selected_img)
+            selected_img.moveToTop();
+        layer.draw();
+    }
+
+    function moveToback() {
+        if (selected_img)
+            selected_img.moveDown();
+        layer.draw();
+    }
+
+    function remove_image() {
+        if (selected_img)
+            cUndo(selected_img)
+    }
+
+</script>

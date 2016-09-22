@@ -1,0 +1,181 @@
+<div class="wrapper">
+  <div class="pozrel w_100">
+
+    <div class="blgOut">
+      <div class="blog-banner w_100<%= " logclost" if @user == current_user %>" style="background: url(<%= @user.avatar.present? && File.exists?(@user.avatar.path(:medium).to_s) ? @user.avatar.url(:medium) : "/assets/missing.png" %>) no-repeat center top !important; background-size: cover!important;"></div>
+    </div>
+    <div class="w_100" style="position: absolute; height: 100%;">
+      <%# if# @user.avatar.present? && File.exists?(@user.avatar.path(:other).to_s) %>
+      <%#= image_tag @user.avatar.url(:other), :alt => "Profile Picture" %>
+      <%# elsif @user.avatar.present? && File.exists?(@user.avatar.path(:medium).to_s) %>
+      <%#= image_tag @user.avatar.url(:medium), :alt => "Profile Picture" %>
+      <%# else %>
+      <%#= image_tag 'missing.png' %>
+      <%# end %>
+      <!--<div id="wrappp">-->
+      <div class="w_100">
+        <div class="user-circle-con">
+          <% if @user.avatar.present? && File.exists?(@user.avatar.path(:medium).to_s) %>
+              <%= image_tag @user.avatar.url(:medium), :alt => "Profile Picture" %>
+          <% else %>
+              <%= image_tag 'missing.png' %>
+          <% end %>
+        </div>
+
+        <div style="<%= "font-size: 13px!important;" if @user.user_name.length > 25 %>" class="customer-name"><%= @user.user_name %>
+          <% if @user != current_user && (@user.user_feed.is_active? if @user.user_feed.present?) %>
+              <img src="/assets/ciecle-check.png" alt="">
+          <% end %>
+        </div>
+
+        <div class="customer-text">
+          <p>
+            <% abc = (@user.first_name.present? ? @user.first_name.length : 0) + (@user.last_name.present? ? @user.last_name.length : 0) + 2 %>
+            <span style="<%= "border-right:2px solid #fff;" if (@user.first_name.present? || @user.last_name.present?) && @user.about_me.present? %> margin: 0 5px 0 0;"><b><%= (@user.first_name.present? ? @user.first_name + ' ' : '') + '' + (@user.last_name.present? ? @user.last_name : ' ') + ' ' %></b></span>
+            <%= truncate(@user.about_me, :length => 150-abc) if @user.about_me.present? %>
+          </p>
+        </div>
+        <% if @user != current_user %>
+            <% adoorn_status = is_adoorn(@user.id) %>
+            <%# if is_adoorn(@user.id) %>
+            <div id="usr_adorn" class="black-btn <%= adoorn_status ? '' : 'adoorning-btn' %>" onclick="add_adoorn('<%= @user.id %>', '<%= adoorn_status %>', 'usr_adorn')">
+              <a id="adorn_text" href="javascript:;"><%= adoorn_status ? 'Adoorning' : 'Adoorn' %></a></div>
+            <%# else %>
+            <!--<div class="black-btn" onclick="add_adoorn('<%#= @user.id %>', 'false')"><a href="#">Adoorn</a></div>-->
+            <%# end %>
+        <% end %>
+      </div>
+
+      <div id="usr_stats" class="w_100 stats_set">
+        <div class="user-adoorn">
+          <a href="javascript:;" onclick="get_partial('<%= @user.id %>', '/user/users/adoorners')" alt="">
+            <div class="total"><%= number_to_human(@user.adoorners.length) %></div>
+            <div class="add-name">Adoorners</div>
+          </a>
+        </div>
+        <!--ser-adoorn end-->
+        <div class="user-adoorn">
+          <a href="javascript:;" onclick="get_partial('<%= @user.id %>', '/user/users/adoornings')" alt="">
+            <div class="total"><%= number_to_human(@user.iadoorns.length) %></div>
+            <div class="add-name">Adoorning</div>
+          </a>
+        </div>
+        <!--ser-adoorn end-->
+        <div class="user-adoorn border-0">
+          <a href="javascript:;" onclick="get_partial('<%= @user.id %>', '/user/users/mentions')" alt="">
+            <div class="total"><%= number_to_human(@user.unread_mentions.length) %></div>
+            <div class="add-name">Mentions</div>
+          </a>
+        </div>
+        <!--ser-adoorn end-->
+      </div>
+      <div class="clear-fix"></div>
+    </div>
+    <!--w100 end-->
+  </div>
+</div>
+
+<script>
+    //    $(document).ready(function () {
+    //        myScroll = new IScroll('#wrappp', {probeType: 3, bindToWrapper: true, tap: true, click: true});
+    //        myScroll.on('scroll', function () {
+    //            if (this.y < -15) {
+    //                myScroll.scrollTo(0, 15, 1000);
+    //            }
+    //            else if (this.y > 10 && this.y < 15) {
+    //                $('.overlay_pull').css('opacity', '0.7');
+    //                $('#user_pic_pro').css('opacity', '0.7');
+    //                $('#usr_stats').css('opacity', '0.7');
+    //                $('#blurd').css('filter', 'blur(28px)');
+    //                $('#blurd').css('-webkit-filter', 'blur(28px)');
+    //            }
+    //            else if (this.y > 15 && this.y < 20) {
+    //                $('.overlay_pull').css('opacity', '0.6');
+    //                $('#user_pic_pro').css('opacity', '0.6');
+    //                $('#usr_stats').css('opacity', '0.6');
+    //                $('#blurd').css('filter', 'blur(24px)');
+    //                $('#blurd').css('-webkit-filter', 'blur(24px)');
+    //            }
+    //            else if (this.y > 20 && this.y < 25) {
+    //                $('.overlay_pull').css('opacity', '0.6');
+    //                $('#user_pic_pro').css('opacity', '0.6');
+    //                $('#usr_stats').css('opacity', '0.6');
+    //                $('#blurd').css('filter', 'blur(20px)');
+    //                $('#blurd').css('-webkit-filter', 'blur(20px)');
+    //            }
+    //            else if (this.y > 25 && this.y < 30) {
+    //                $('.overlay_pull').css('opacity', '0.5');
+    //                $('#user_pic_pro').css('opacity', '0.5');
+    //                $('#usr_stats').css('opacity', '0.5');
+    //                $('#blurd').css('filter', 'blur(16px)');
+    //                $('#blurd').css('-webkit-filter', 'blur(16px)');
+    //            }
+    //            else if (this.y > 30 && this.y < 35) {
+    //                $('.overlay_pull').css('opacity', '0.4');
+    //                $('#user_pic_pro').css('opacity', '0.4');
+    //                $('#usr_stats').css('opacity', '0.4');
+    //                $('#blurd').css('filter', 'blur(12px)');
+    //                $('#blurd').css('-webkit-filter', 'blur(12px)');
+    //            }
+    //            else if (this.y > 35 && this.y < 40) {
+    //                $('.overlay_pull').css('opacity', '0.3');
+    //                $('#user_pic_pro').css('opacity', '0.3');
+    //                $('#usr_stats').css('opacity', '0.3');
+    //                $('#blurd').css('filter', 'blur(8px)');
+    //                $('#blurd').css('-webkit-filter', 'blur(8px)');
+    //            }
+    //            else if (this.y > 40 && this.y < 45) {
+    //                $('.overlay_pull').css('opacity', '0.2');
+    //                $('#user_pic_pro').css('opacity', '0.2');
+    //                $('#usr_stats').css('opacity', '0.2');
+    //                $('#blurd').css('filter', 'blur(4px)');
+    //                $('#blurd').css('-webkit-filter', 'blur(4px)');
+    //            }
+    //            else if (this.y > 45) {
+    //                $('.overlay_pull').css('opacity', '0');
+    //                $('#user_pic_pro').css('opacity', '0');
+    //                $('#usr_stats').css('opacity', '0');
+    //                $('#blurd').css('filter', 'blur(0px)');
+    //                $('#blurd').css('-webkit-filter', 'blur(0px)');
+    //            }
+    ////            else if (this.y > 36 && this.y < 39) {
+    ////                $('.overlay_pull').css('opacity', '0.0');
+    ////                $('#user_pic_pro').css('opacity', '0');
+    ////                $('#usr_stats').css('opacity', '0');
+    ////                $('#blurd').css('filter', 'blur(1px)');
+    ////                $('#blurd').css('-webkit-filter', 'blur(1px)');
+    ////            }
+    ////            else if (this.y > 36 && this.y < 39) {
+    ////                $('.overlay_pull').css('opacity', '0.0');
+    ////                $('#user_pic_pro').css('opacity', '0');
+    ////                $('#usr_stats').css('opacity', '0');
+    ////                $('#blurd').css('filter', 'blur(0px)');
+    ////                $('#blurd').css('-webkit-filter', 'blur(0px)');
+    ////            }
+    //        });
+    //        myScroll.on('scrollEnd', function () {
+    //            $('.overlay_pull').css('opacity', '0.8');
+    //            $('#user_pic_pro').css('opacity', '1');
+    //            $('#usr_stats').css('opacity', '1');
+    //            $('#blurd').css('filter', 'blur(28px)');
+    //            $('#blurd').css('-webkit-filter', 'blur(28px)');
+    //        });
+    //    });
+
+
+    function add_adoorn(id, status, div) {
+
+        $.ajax({
+            url: '/user/users/add_adoorn?id=' + id + '&status=' + status,
+            processData: false,
+            success: function (data) {
+                if (data != 'error')
+                    view_partial('icon_closet', '/user/users/user_closet?id=' + id)
+            },
+            error: function (data) {
+
+            }
+        });
+    }
+</script>
+<!--<div class="total"><%#= number_to_human(@user.unread_mentions.length) %></div>-->

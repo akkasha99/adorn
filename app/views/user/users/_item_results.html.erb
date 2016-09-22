@@ -1,0 +1,30 @@
+<% if items.size > 0 %>
+    <% items.each do |item| %>
+        <div class="search-prod-con">
+          <a href="javascript:;" onclick="get_partial('<%= item.id %>', '<%= item.class.name=='UserItem' ? '/user/user_items/show' : '/user/user_outfits/show' %>')">
+            <div class="prce w_100"><%= truncate(item.title, :length => 10) %></div>
+            <div class="pro-con">
+              <% if item.image? && File.exists?(item.image.path(:thumb).to_s) %>
+                  <%= image_tag item.image(:thumb) %>
+              <% else %>
+                  <%= image_tag "missing_item.jpeg" %>
+              <% end %>
+              <!--<img src="images/black-shirt.jpg" alt="">-->
+            </div>
+            <div class="prce">$<%= item.price %></div>
+            <div class="quantity"><%= number_to_human(item.item_adoorners.count) %>
+              <!--<img src="/assets/pro-avilable-img.png" alt="">-->
+            </div>
+          </a>
+        </div>
+    <% end %>
+<% else %>
+    <div class="w100">
+      <a href="#">
+        <div class="inner-h-con p0">
+          <%#= image_tag "missing.png" %>
+          <div class="pro">Nothing Found.</div>
+        </div>
+      </a>
+    </div>
+<% end %>

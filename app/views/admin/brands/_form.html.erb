@@ -1,0 +1,60 @@
+<%= form_for @brand, :url => '/admin/brands/', :html => {:multipart => true, :onsubmit => "return false", :id => 'brand_form', :method => 'post'} do |f| %>
+    <div class="errD">
+      <div class="clearfix">
+        <%= f.label :name %>
+        <%= f.text_field :name, :class => "form-control placeholder-no-fix", :placeholder => "Brand Name" %>
+      </div>
+      <div class="clearfix">
+        <%= f.label :logo %>
+        <%= image_tag @brand.logo.url(:thumb) unless f.object.new_record? %>
+        <%= f.file_field :logo %>
+      </div>
+      <br>
+
+      <div class="clearfix">
+        <% if f.object.new_record? %>
+            <%= link_to "submit", "javascript:;", :onclick => "submit_brand('create', '');", :class => "btn green pull-left" %>
+        <% else %>
+            <%= link_to "submit", "javascript:;", :onclick => "submit_brand('update', '#{@brand.id}');", :class => "btn green pull-left" %>
+        <% end %>
+        <%#= link_to "Back", admin_brands_path, :class => "btn green", :style=> "margin:0 0 0 10px;" %>
+      </div>
+    </div>
+<% end %>
+
+<script>
+
+    function submit_brand(action, id) {
+        if ($('#brand_form').valid() == true) {
+            $(".background_shadow").show()
+            $("#brand_form").ajaxSubmit({
+                url: $('#brand_form').attr("action") + action + '?id=' + id,
+                success: function (data) {
+                    if (data != 'error') {
+                        $(".background_shadow").hide()
+                        $('#panel_body').html(data);
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+    }
+
+    $('#brand_form').validate({
+                rules: {
+                    "brand[name]": {
+                        maxlength: 255,
+                        minlength: 3,
+                        required: true
+                    },
+                    "brand[logo]": {
+//                        required: true
+                    }
+                }
+
+            }
+    );
+
+</script>

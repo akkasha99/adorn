@@ -1,0 +1,15 @@
+<div class="post-con">
+  <% unless blogs.blank? %>
+      <% blogs.each do |blog| %>
+          <a href="javascript:;">
+            <div class="re-post">
+              <a class="text-black" href="javascript:;" onclick="get_partial('<%= blog.id %>', '/user/user_blogs/show')"><%= blog.title %></a>
+            </div>
+          </a>
+      <% end %>
+  <% else %>
+      <a href="#">
+        <div class="re-post not-found">Nothing Found.</div>
+      </a>
+  <% end %>
+</div>

@@ -1,0 +1,123 @@
+<header>
+  <div class="h-con">
+    <div class="user-main-con">
+      <div class="h-heading">Settings</div>
+    </div>
+    <div class="backBtn">
+      <a href="#" onclick="back_to_setting()"><img src="/assets/setting-errow.png" alt=""></a>
+    </div>
+    <div class="clear-fix"></div>
+  </div>
+</header>
+
+<div class="acc-main-con w_100 mrgbot100">
+  <div class="account-h-con">
+    <div class="heading">notifications</div>
+  </div>
+  <%= form_for @notifications, :html => {:id => 'notification_form', :name => 'notificationForm', :multipart => true, :onsubmit => 'return false;'}, :url => '/user/users/notifications_update' do |n| %>
+
+      <div class="w_100">
+        <a href="#">
+          <div class="inner-h-con">
+            <div class="pro">New Adoorners</div>
+            <div class="r-erow">
+              <div class="switch-top">
+                <div class="onoffswitch">
+                  <%= n.check_box :new_adoorns, :class => "onoffswitch-checkbox", :id => "new_adoorns", :onchange => "update_settings('new_adoorns');" %>
+                  <label class="onoffswitch-label" for="new_adoorns">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="w_100">
+        <a href="#">
+          <div class="inner-h-con">
+            <div class="pro">Mentions</div>
+            <div class="r-erow">
+              <div class="switch-top">
+                <div class="onoffswitch">
+                  <%= n.check_box :mentions, :class => "onoffswitch-checkbox", :id => "mentions", :onchange => "update_settings('mentions');" %>
+                  <label class="onoffswitch-label" for="mentions">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="w_100">
+        <a href="#">
+          <div class="inner-h-con">
+            <div class="pro">Item Adoorns</div>
+            <div class="r-erow">
+              <div class="r-erow">
+                <div class="switch-top">
+                  <div class="onoffswitch">
+                    <%= n.check_box :item_adoorns, :class => "onoffswitch-checkbox", :id => "item_adoorns", :onchange => "update_settings('item_adoorns');" %>
+                    <label class="onoffswitch-label" for="item_adoorns">
+                      <span class="onoffswitch-inner"></span>
+                      <span class="onoffswitch-switch"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="w_100">
+        <a href="#">
+          <div class="inner-h-con">
+            <div class="pro">Outfit Adoorns</div>
+            <div class="r-erow">
+              <div class="r-erow">
+                <div class="switch-top">
+                  <div class="onoffswitch">
+                    <%= n.check_box :outfit_adoorns, :class => "onoffswitch-checkbox", :id => "outfit_adoorns", :onchange => "update_settings('outfit_adoorns');" %>
+                    <label class="onoffswitch-label" for="outfit_adoorns">
+                      <span class="onoffswitch-inner"></span>
+                      <span class="onoffswitch-switch"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+  <% end %>
+</div>
+
+<script>
+
+    function update_settings(setting) {
+        var state = $('#' + setting).is(":checked");
+        $.ajax({
+            url: '/user/users/notifications_update?setting=' + setting + '&state=' + state,
+            success: function (data) {
+                if (data != 'error') {
+                    $('.background_shadow').hide();
+//                    $('#main_div').html(data);
+                }
+                else {
+                    document.getElementById("mainpop_text").innerHTML = "Unexpected error: Try Again.";
+                    $("#mainapp_popup").show();
+                    setTimeout(function () {
+                        close_me_please();
+                    }, 4000);
+                }
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+</script>

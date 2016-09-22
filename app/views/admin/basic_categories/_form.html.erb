@@ -1,0 +1,60 @@
+<%= form_for @category, :url => 'basic_categories/', :html => {:multipart => true, :onsubmit => "return false", :id => 'category_form', :method => 'post'} do |f| %>
+<div class="errD">
+    <div class="clearfix">
+      <%= f.label :name %>
+      <%= f.text_field :name, :class => "form-control placeholder-no-fix", :placeholder => "Category Name" %>
+    </div>
+    <div class="clearfix">
+      <%= f.label :image %>
+      <%= image_tag @category.image.url(:thumb), :class => 'thumbnail' unless f.object.new_record? %>
+      <%= f.file_field :image %>
+    </div>
+    <br>
+    <div class="clearfix">
+      <% if f.object.new_record? %>
+          <%= link_to "submit", "javascript:;", :onclick => "submit_category('create', '');", :class => "btn green pull-left" %>
+      <% else %>
+          <%= link_to "submit", "javascript:;", :onclick => "submit_category('update', '#{@category.id}');", :class => "btn green pull-left" %>
+      <% end %>
+      <%#= link_to "submit", "javascript:;", :onclick => "submit_brand('#{f.object.new_record? ? 'create' : 'update'}', '#{f.object.new_record? ? nil : @brand.id}');", :class => "btn green pull-left" %>
+      <%#= link_to "Back", admin_brands_path, :class => "btn green", :style=> "margin:0 0 0 10px;" %>
+    </div>
+</div>
+<% end %>
+
+<script>
+
+    function submit_category(action, id) {
+        if ($('#category_form').valid() == true) {
+            $(".background_shadow").show()
+            $("#category_form").ajaxSubmit({
+                url: $('#category_form').attr("action") + action + '?id=' + id,
+                success: function (data) {
+                    if (data != 'error') {
+                        $(".background_shadow").hide()
+                        $('#panel_body').html(data);
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+    }
+
+    $('#category_form').validate({
+                rules: {
+                    "basic_category[name]": {
+                        maxlength: 255,
+                        minlength: 3,
+                        required: true
+                    },
+                    "basic_category[logo]": {
+//                        required: true
+                    }
+                }
+
+            }
+    );
+
+</script>

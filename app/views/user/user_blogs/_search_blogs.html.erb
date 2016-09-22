@@ -1,0 +1,64 @@
+<div class="animated  fadeInRight">
+  <div class="w_100 btnOut" style="position:absolute; top:-10px;">
+    <div class="search-main-con" style="float: left;margin: 15px 0;">
+      <div class="m_search w-100 fxsrch">
+        <!--<form action="#" method="post">-->
+        <!--<input type="text" name="search" id="search" placeholder="Shop, search users, and products">-->
+        <%= text_field_tag :search, nil, :placeholder => 'Search' %>
+        <span><a href="javascript:;" onclick="cancel_search();" class="cancel-btn1">Cancel</a></span>
+        <img src="/assets/h-search-btn.png" alt="">
+        <!--</form>-->
+      </div>
+    </div>
+    <!--search-main-con end-->
+  </div>
+  <!--container end-->
+
+  <div class="w_100 padbot100 blog_7676" id="search_results">
+    <% if @recent.size > 0 %>
+        <div class="w100 btnOut">
+          <div class="re-post-hd">Recent Searches</div>
+        </div>
+        <div class="container">
+          <div class="post-con">
+            <% @recent.each do |recent| %>
+                <a href="javascript:;" onclick="search_text('<%= recent.search %>')">
+                  <div class="re-post"><%= recent.search %></div>
+                </a>
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+
+  </div>
+  <!--w100 end-->
+</div>
+
+<script>
+    $('#search').keyup(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which)
+        if (code == 13) {
+            var name = $('#search').val();
+            search_text(name)
+//            document.getElementById("blog_tab").className = "";
+//            document.getElementById("blogger_tab").className = "active";
+        }
+    });
+
+    function search_text(name) {
+        $(".background_shadow").show()
+        $('#search').val(name);
+        $.ajax({
+            url: '/user/user_blogs/search_user_blogs?key=' + name,
+            processData: false,
+            success: function (data) {
+                $(".background_shadow").hide()
+                $("#search_results").html(data);
+            }
+        });
+    }
+
+    function cancel_search() {
+        $('#search').val('');
+    }
+</script>

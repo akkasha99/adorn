@@ -1,0 +1,60 @@
+<header>
+  <div class="h-con">
+    <div class="user-main-con">
+      <div class="h-heading">ADOORN</div>
+    </div>
+    <div class="backBtn">
+      <a href="#" onclick="back_to_setting()"><img src="/assets/setting-errow.png" alt=""></a>
+    </div>
+    <div class="clear-fix"></div>
+  </div>
+</header>
+<div class="acc-main-con w_100">
+  <div class="account-h-con">
+    <div class="heading">change location</div>
+  </div>
+  <% @locations.each_with_index do |location, i| %>
+      <a href="javascript:;" class="w_100">
+        <div id="loc_<%= i %>" class="add-basic-con-loc pozrel <%= location == @user.location ? 'active' : 'p0' %>" onclick="change_location('<%= @user.id %>','<%= location %>','<%= i %>')">
+          <img src="/assets/<%= location %>.jpg" alt="">
+
+          <div class="pro-name"><%= location %></div>
+          <div class="r-erow imzmrg">
+            <img src="/assets/confirm.png" alt="">
+          </div>
+        </div>
+      </a>
+  <% end %>
+  <div class="w_100 btnOut setting-bg padbot100">
+  </div>
+</div>
+
+
+<script>
+    function change_location(user_id, location, i) {
+        $('.background_shadow').show()
+        $.ajax({
+            url: '/user/users/location_update?user_id=' + user_id + '&location=' + location,
+            success: function (data) {
+                if (data == 'error') {
+                    $('.background_shadow').hide()
+                    document.getElementById("mainpop_text").innerHTML = "Try again.";
+                    $("#mainapp_popup").show();
+                    setTimeout(function () {
+                        close_me_please();
+                    }, 4000);
+                }
+                else {
+                    $('.background_shadow').hide();
+                    $("#loc_" + i).addClass('active')
+                    for (var k = 0; k < 7; k++) {
+                        if (k != i)
+                            $("#loc_" + k).removeClass('active')
+                    }
+                }
+            },
+            error: function (data) {
+            }
+        });
+    }
+</script>

@@ -1,0 +1,13 @@
+<!--<div class="w100 stmynez">-->
+  <!--<div class="outifit-icon-bt <%#= is_adoorn(user.id) ? 'active' : '' %>" onclick="adoorn_blogs('<%#= user.id %>','<%#= is_adoorn(user.id) %>')">-->
+    <!--<a class="soc1" href="javascript:;">Adoorn It</a></div>-->
+<!--</div>-->
+
+<div class="comment-con mdador" style="text-align: center; margin:19px 0 10px 0;">
+      <a onclick="adoorn_blogs('<%= user.id %>','<%= is_adoorn(user.id) %>')" class="gryBtn <%= is_adoorn(user.id) ? 'active' : '' %>" href="javascript:;" style="display: inline-block;
+          float: none;
+              width:100%;
+          margin: 0 auto;
+          text-align: center;"><img class="valnm" style="float:none;" alt="" src="/assets/adoorn-eye.png">
+        <%= is_adoorn(user.id) ? 'ADOORNING BLOG' : 'ADOORN BLOG' %></a>
+</div>

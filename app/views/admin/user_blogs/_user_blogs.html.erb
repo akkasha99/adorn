@@ -1,0 +1,84 @@
+<div class="page-content" style="min-height:1215px">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="page-title">Bloggers Details</h3>
+          <ul class="page-breadcrumb breadcrumb">
+            <li>
+              <i class="fa fa-home"></i>
+              <a href="/">Home</a>
+              <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+              <a href="/">Adoorn Select Blogger Details</a>
+              <i class="fa fa-angle-right"></i>
+            </li>
+            <li class="pull-right">
+              <div data-original-title="Change dashboard date range" data-placement="top" class="dashboard-date-range tooltips" id="dashboard-report-range">
+                <i class="icon-calendar"></i>
+                <span></span>
+                <i class="fa fa-angle-down"></i>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <%# unless users.blank? %>
+        <div class="form-group">
+          <div class="col-md-6">
+            <label>User Blogger/Adoorn Internal Blogger Details</label>
+            <select id="user_select" class="form-control input-medium select2me" data-placeholder="Select..." onchange="get_user_blogs();">
+              <option value=""></option>
+              <% users.each do |user| %>
+                  <%# if user.user_feed.present? && user.user_feed.is_active != 2 %>
+                  <% if user.user_feed.present? %>
+                      <option value="<%= user.id %>"><%= user.user_name %></option>
+                  <% end %>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <%# end %>
+
+        <!--<div class="col-md-12" style="margin-top: 2%;">-->
+        <!--<button class="btn green" onclick="get_user_blogs();">Show User Blogs</button>-->
+        <!--</div>-->
+      </div>
+
+      <div id="user_blogs_div" class="row" style="margin-top: 2%;">
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+
+    function get_user_blogs() {
+        if ($("#user_select").val() != "") {
+            $(".background_shadow").show()
+            var user_id = $("#user_select").val();
+            $.ajax({
+                url: '/admin/user_blogs/get_user_blogs?id=' + user_id,
+                processData: false,
+                success: function (data) {
+                    $("#user_blogs_div").html(data);
+                    $(".background_shadow").hide()
+                }
+            });
+        } else {
+            apprise("No User Selected.")
+            return false;
+        }
+    }
+
+    $("#user_select").select2({
+        allowClear: true
+    });
+
+
+</script>

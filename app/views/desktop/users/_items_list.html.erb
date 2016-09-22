@@ -1,0 +1,32 @@
+<div class="container-desk">
+  <div class="animated  fadeInRight">
+    <div class="closet-new-desk">
+      <% if items.size > 0 %>
+          <% items.each do |item| %>
+              <div class="desk-prod-main-con">
+                <div class="desk-pro-con">
+                  <div class="desk-items-pro">
+                    <div class="desk-items-pro-content" onclick="item_show(<%= item.id %>)">
+                      <% if item.image? && File.exists?(item.image.path(:original).to_s) %>
+                          <%= image_tag item.image.url(:original) %>
+                      <% else %>
+                          <%= image_tag "missing_item.jpeg" %>
+                      <% end %>
+                      <!--<img src="/assets/multi-product.jpg" alt="">-->
+                    </div>
+                  </div>
+                </div>
+                <!--pro-con end-->
+                <div class="desk-days"><%= time_ago_in_words(item.created_at) %> ago</div>
+                <div class="des-quantity"><%= number_to_human(item.adorns.length) %>
+                  <img src="/assets/desk-ro-avi-img.png" alt=""></div>
+              </div>
+          <% end %>
+      <% else %>
+          <div class="banner-con desk-not-found">
+            Nothing Found.
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

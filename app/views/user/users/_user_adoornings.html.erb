@@ -1,0 +1,54 @@
+<header>
+  <div class="h-con">
+    <div class="user-main-con">
+      <div class="h-heading2">Adoorning</div>
+    </div>
+    <div class="backBtn">
+      <a href="javascript:;" onclick="return_closet();"><img src="/assets/setting-errow.png" alt=""></a>
+    </div>
+  </div>
+</header>
+
+<div class="w-100 mrgbot100">
+  <% if @adoorns.size > 0 %>
+      <% @adoorns.each do |adoorn| %>
+          <a href="#">
+            <div class="comments-h-con btnOut">
+              <div class="w_100 mnIn">
+                <div class="user-image2">
+                  <a href="javascript:;" onclick="view_partial('icon_closet','/user/users/user_closet?id=<%= adoorn.id %>')">
+                    <% if adoorn.avatar? && File.exists?(adoorn.avatar.path(:thumb).to_s) %>
+                        <%= image_tag adoorn.avatar(:thumb) %>
+                    <% else %>
+                        <%= image_tag "missing.png" %>
+                    <% end %>
+                  </a>
+                </div>
+
+                <div class="txtbx02">
+                  <a href="javascript:;" onclick="view_partial('icon_closet','/user/users/user_closet?id=<%= adoorn.id %>')" class="text-black">
+                    <h6><%= adoorn.user_name %></h6>
+                  </a>
+
+                  <p><%= (adoorn.first_name.present? ? adoorn.first_name : '') + ' ' + (adoorn.last_name.present? ? adoorn.last_name : '') %></p>
+                </div>
+
+              </div>
+            </div>
+          </a>
+      <% end %>
+  <% else %>
+      <a href="#">
+        <div class="comments-h-con btnOut">
+          <div class="w_100 mnIn">
+            <div class="user-image2"><%= image_tag "missing.png" %></div>
+            <div class="txtbx02">
+              <h6>Nothing Found.</h6>
+
+              <!--<p>No Adoornings yet.</p>-->
+            </div>
+          </div>
+        </div>
+      </a>
+  <% end %>
+</div>

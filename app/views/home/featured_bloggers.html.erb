@@ -1,0 +1,75 @@
+<div class="wrapper">
+  <%= render "/shared/user_header" %>
+  <div class="container">
+    <div class="w-100">
+
+      <div class="w100">
+
+        <div class="our-fea-blog">
+          <div class="fav-h">Our Featured Bloggers</div>
+          <div class="text">Keep up with your favorite blogs.</div>
+        </div>
+        <!--our-fea-blog end-->
+
+        <div class="w100">
+          <div class="user-img-con">
+            <div class="user-main-con">
+              <% @bloggers.each do |blogger| %>
+                  <div id="blogger_<%= blogger.id %>" class="we-ad-box brand-logo-border" onclick="select_blogger(<%= blogger.id %>)">
+                    <!--<img src="images/women.jpg" alt="">-->
+                    <% if blogger.avatar.present? %>
+                        <%= image_tag blogger.avatar.url(:medium) %>
+                    <% else %>
+                        <%= image_tag "/assets/defalt-img.jpg" %>
+                    <% end %>
+                    <div class="fe-name"><%= (blogger.first_name.present? ? blogger.first_name : '')+ '' + (blogger.last_name.present? ? blogger.last_name : '') %></div>
+                    <div class="fe-address"><%= blogger.location %></div>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--<div class="built"><img src="/assets/built.png" alt=""></div>-->
+
+    <div class="continue-con-btn"><a href="javascript:;" onclick="save_bloggers();">Continue</a></div>
+    <div class="skip-text"><a href="/users/sign_in">Skip</a></div>
+  </div>
+</div>
+
+<script>
+
+    var bloggers_list = []
+    function select_blogger(blogger_id) {
+        var count = 0;
+        $.each(bloggers_list, function (index, id) {
+            if (id == blogger_id) {
+                bloggers_list[index] = null;
+                $('#blogger_' + blogger_id).removeClass("activ");
+                count = count + 1;
+                return
+            }
+        });
+        if (count == 0) {
+            bloggers_list.push(blogger_id);
+            $('#blogger_' + blogger_id).addClass("activ");
+        }
+    }
+
+    function save_bloggers() {
+        $.ajax({
+            url: '/home/fav_bloggers?list=' + bloggers_list + '&user_id=' + '<%= params[:id] %>',
+            success: function (data) {
+                if (data != 'error') {
+                    $('.background_shadow').hide();
+                    window.location.href = data;
+                }
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+</script>

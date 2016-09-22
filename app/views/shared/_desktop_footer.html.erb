@@ -1,0 +1,27 @@
+<footer class="desk-footer">
+  <div class="desk-footer-con">
+    <ul>
+      <li><a href="#" onclick="desk_static_pages('about')">About</a></li>
+      <li><a href="/privacy_policy">Privacy Policy</a></li>
+      <li><a href="#" onclick="desk_static_pages('terms_of_services')">Terms of Service</a></li>
+      <li><a href="mailto:feedback@adoorn.com">Feedback</a></li>
+    </ul>
+  </div>
+  <!--desk-footer-con end-->
+</footer>
+
+<script>
+    function desk_static_pages(page) {
+        $(".background_shadow").show();
+        $.ajax({
+            url: '/user/users/static_pages?page=' + page,
+            success: function (data) {
+                if (data != 'error')
+                    $(".background_shadow").hide();
+                $("#desk_main_div").html(data);
+            },
+            error: function (data) {
+            }
+        });
+    }
+</script>

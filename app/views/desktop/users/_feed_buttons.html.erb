@@ -1,0 +1,39 @@
+<div class="desk-shar-btn">
+  <% if feed.is_adoorned(current_user.id) %>
+      <a href="javascript:;" class="active" onclick="feed_adoorn('<%= feed.class.name + feed.id.to_s %>','<%= feed.id %>','<%= feed.class.name %>',<%= current_user.id %>,'feed')">
+        <img src="/assets/adoorn-eye_active.png" alt=""> Adoorned</a>
+  <% else %>
+      <a href="javascript:;" onclick="feed_adoorn('<%= feed.class.name + feed.id.to_s %>','<%= feed.id %>','<%= feed.class.name %>',<%= current_user.id %>,'feed')"><img src="/assets/adoorn-eye.png" alt="">Adoorn</a>
+  <% end %>
+  <!--<a href="#" class="active"><img src="/assets/adoorn-eye.png" alt=""> Adoored</a>-->
+
+  <div class="desk-black-built-con">
+    <div class="desk-black-built"></div>
+    <div class="desk-black-built"></div>
+    <div class="desk-black-built"></div>
+  </div>
+  <!--black-built end-->
+</div>
+<div class="desk-total-visitor"><span><%= number_to_human(feed.adorns.length) %></span>
+  <img alt="" src="/assets/desk-eye.png"></div>
+
+
+<script>
+    function feed_adoorn(div_id, id, action, user_id, type) {
+        if (action == "UserOutfit") {
+            url = '/user/user_outfits/feed_adoorning?outfit_id=' + id + '&user_id=' + user_id + '&type=' + type
+        }
+        else {
+            url = '/user/user_items/feed_adoorning?item_id=' + id + '&user_id=' + user_id + '&type=' + type
+        }
+        $.ajax({
+            url: url,
+            success: function (data) {
+                if (data != 'error')
+                    $('#' + div_id).html(data);
+            },
+            error: function (data) {
+
+            }
+        });
+    }</script>

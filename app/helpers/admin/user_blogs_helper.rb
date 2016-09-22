@@ -1,0 +1,2 @@
+module Admin::UserBlogsHelper
+end

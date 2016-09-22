@@ -1,0 +1,123 @@
+<div class="page-content" style="min-height:1215px">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+          <h3 class="page-title">Basic Items</h3>
+          <ul class="page-breadcrumb breadcrumb">
+            <li>
+              <i class="fa fa-home"></i>
+              <a href="/">Home</a>
+              <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+              <a href="/">Basic Items</a>
+              <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+              <a href="/">New Basic Item</a>
+            </li>
+            <li class="pull-right">
+              <div data-original-title="Change dashboard date range" data-placement="top" class="dashboard-date-range tooltips" id="dashboard-report-range">
+                <i class="icon-calendar"></i>
+                <span></span>
+                <i class="fa fa-angle-down"></i>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <%# unless categories.blank? %>
+        <div class="form-group">
+          <div class="col-md-4">
+            <label>Select category</label>
+            <select id="basic_category" class="form-control input-medium select2me" data-placeholder="Select..." onchange="get_subcategories()">
+              <option value=""></option>
+              <% categories.each do |cat| %>
+                  <option value="<%= cat.id %>"><%= cat.name %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <%# end %>
+
+
+      </div>
+      <div class="row" id="get_Sub_cat">
+      </div>
+
+      <div id="new_item_form" class="row" style="margin-top: 2%; display: none;">
+        <div class="col-md-6">
+          <div class="portlet box grey-cascade">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-comments"></i>New Basic Item
+              </div>
+              <div class="tools">
+                <a class="collapse" href="javascript:;">
+                </a>
+                <a class="config" data-toggle="modal" href="#portlet-config">
+                </a>
+                <a class="reload" href="javascript:;">
+                </a>
+                <a class="remove" href="javascript:;">
+                </a>
+              </div>
+            </div>
+            <div id="item_panel" class="portlet-body">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+
+    function add_new_item() {
+        if ($("#basic_subcategory").val() != "") {
+            var subcategory_id = $("#basic_subcategory").val();
+            $.ajax({
+                url: '/admin/basic_items/new_item?id=' + subcategory_id,
+                processData: false,
+                success: function (data) {
+                    $('#new_item_form').show();
+                    $("#item_panel").html(data);
+                }
+            });
+        } else {
+            apprise("No SubCategory Selected.")
+            $('#new_item_form').hide();
+            return false;
+        }
+    }
+
+    $("#basic_subcategory").select2({
+        allowClear: true
+    });
+
+    function get_subcategories() {
+
+        if ($("#basic_category").val() != "") {
+            var cat = $("#basic_category").val()
+            $.ajax({
+                        url: '/admin/basic_items/basic_categories?id=' + cat,
+                        success: function (data) {
+                            $("#get_Sub_cat").show().html(data)
+                        }
+                    }
+            )
+        }
+        else {
+            apprise("Selected Category.");
+            $("#get_Sub_cat").hide();
+            $('#new_item_form').hide();
+        }
+    }
+
+</script>

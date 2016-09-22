@@ -1,0 +1,44 @@
+<% if @comments.present? %>
+    <% @comments.each do |c| %>
+        <div class="comments-h-con">
+          <div class="w_100">
+            <a href="javascript:;" onclick="view_partial('icon_closet','/user/users/user_closet?id=<%= c.user.id %>')">
+              <div class="user-image29">
+                <% if c.user.avatar? && File.exists?(c.user.avatar.path(:thumb).to_s) %>
+                    <%= image_tag c.user.avatar(:thumb) %>
+                <% else %>
+                    <%= image_tag "missing.png" %>
+                <% end %>
+              </div>
+            </a>
+
+            <div class="comments-desc">
+              <div class="f-l">
+                <a href="javascript:;" onclick="view_partial('icon_closet','/user/users/user_closet?id=<%= c.user.id %>')"><%= c.user.user_name %></a>
+              </div>
+              <div class="comm-days"><%= time_ago_in_words(c.created_at) %> ago</div>
+              <div class="detail"><%= c.text %></div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+<% else %>
+    <div class="comments-h-con">
+      <div class="w_100">
+        <a href="javascript:;">
+          <div class="user-image29">
+            <% if current_user.avatar? && File.exists?(current_user.avatar.path(:thumb).to_s) %>
+                <%= image_tag current_user.avatar(:thumb) %>
+            <% else %>
+                <%= image_tag "missing.png" %>
+            <% end %>
+
+          </div>
+        </a>
+
+        <div class="comments-desc">
+          <div class="detail">Nothing Found.</div>
+        </div>
+      </div>
+    </div>
+<% end %>

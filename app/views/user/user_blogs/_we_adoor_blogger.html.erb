@@ -1,0 +1,19 @@
+
+<div class="brandsList2 <%= is_adoorn(blogger.id) ? 'active' : '' %>" onclick="adoor_blogger('<%= blogger.id %>','<%= is_adoorn(blogger.id) %>')">
+  <!--<div id="blogger_<%#= blogger.id %>" class="brandsList2" onclick="get_partial('<%#= blogger.id %>','/user/users/user_closet', 'true')">-->
+  <% if blogger.avatar.present? %>
+      <a onclick="adoor_blogger('<%= blogger.id %>','<%= is_adoorn(blogger.id) %>')">
+        <%= image_tag blogger.avatar.url(:medium) %>
+      </a>
+  <% else %>
+      <a onclick="adoor_blogger('<%= blogger.id %>','<%= is_adoorn(blogger.id) %>')">
+        <%= image_tag "/assets/missing.png" %>
+      </a>
+  <% end %>
+  <div class="overlay"></div>
+  <div class="overDet">
+    <h4><%= (blogger.first_name.present? ? blogger.first_name : '')+ ' ' + (blogger.last_name.present? ? blogger.last_name : '') %></h4>
+
+    <p><%= truncate(blogger.user_feed.feed_title, :length => 12) if  blogger.user_feed.feed_title.present? %></p>
+  </div>
+</div>

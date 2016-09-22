@@ -1,0 +1,16 @@
+<% if @blogs != nil && @blogs.size > 0 %>
+
+    <div class="animated  fadeInRight ">
+      <div id="usr_blog" class="btnOut crtOutfit mrgbot100">
+        <div class="w100">
+          <% @blogs.each do |blog| %>
+              <%= render :partial => 'show_partial', :locals => {:@blog => blog, :user => blog.user, :@div => 'usr_blog'} %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+<% else %>
+    <div class="w_100 not-found">
+      Nothing Found.
+    </div>
+<% end %>

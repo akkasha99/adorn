@@ -1,0 +1,53 @@
+<div class="comment-con mdador">
+  <% if blog.is_adoorned(current_user.id) %>
+      <a href="javascript:;" onclick="blog_adoorning(<%= blog.id %>,<%= current_user.id %>, '<%= @div %>')" class="gryBtn active"><img src="/assets/adoorn-eye.png" alt="">
+        Adoorned</a>
+  <% else %>
+      <a href="javascript:;" class="gryBtn" onclick="blog_adoorning(<%= blog.id %>,<%= current_user.id %>, '<%= @div %>')"><img src="/assets/adoorn-eye.png" alt="">
+        Adoorn</a>
+  <% end %>
+  <!--<a href="/user/blog/comment/<%#= blog.id %>" class="com-btn"><img src="/assets/comment-icon.png" alt=""> Comment</a>-->
+  <a href="javascript:;" onclick="blog_comments('<%= blog.id %>')" class="gryBtn2"><img src="/assets/comment-icon.png" alt="">
+    Comment</a>
+
+  <div class="visit-con">
+    <div class="total-visitor09">
+      <span><%= number_to_human(blog.adorns.length) %></span><img src="/assets/bgEye.png" alt="">
+    </div>
+  </div>
+</div>
+
+<script>
+    //    $(function () {
+    //        window.scrollTo(0, 0);
+    //    });
+
+    function blog_adoorning(blog_id, user_id, div) {
+        $.ajax({
+            url: '/user/user_blogs/blog_adoorning?blog_id=' + blog_id + '&user_id=' + user_id + '&div=' + div,
+            success: function (data) {
+                if (data != 'error') {
+                    $('#' + div).find('#blog_' + blog_id).html(data);
+//                    $('#blog_' + blog_id).html(data);
+                }
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+    function blog_comments(id, action) {
+        $('.background_shadow').show();
+        $.ajax({
+            url: '/user/user_blogs/comments?id=' + id,
+            processData: false,
+            success: function (data) {
+                $('.background_shadow').hide();
+//                $("#blog_details").parent().show().html(data);
+                $("#_main").hide();
+                $("#_sub").show().html(data);
+            }
+        });
+    }
+
+</script>

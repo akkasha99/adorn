@@ -1,0 +1,32 @@
+.desk-buy-btn {
+    padding: 8px 31px 9px !important;
+}
+
+.desk-login-box-btn {
+    box-sizing: border-box;
+    font-family: 'Raleway-SemiBold';
+    font-size: 11px;
+    color: #fff !important;
+    cursor: pointer;
+    text-transform: uppercase;
+    height: 41px;
+    margin: 8px 0 0;
+    max-width: 280px;
+    padding: 11px 20px;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #000 !important;
+    border: 1px solid #fff !important;
+
+}
+
+.desk-not-found {
+    text-align: center;
+    font-family: weezerfont_CURRENT;
+}
+
+.mrgtop30 {
+    margin-top: 30px !important;
+}

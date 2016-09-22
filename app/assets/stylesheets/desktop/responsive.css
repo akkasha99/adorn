@@ -1,0 +1,1370 @@
+/* CSS Document */
+
+@media only screen and (max-width: 767px) {
+    .acc-inner-p {
+        padding: 25px 15px;
+    }
+
+    .desk-acc-hd {
+        font-size: 20px;
+        line-height: 20px;
+        padding: 30px 0 20px 20px;
+    }
+
+    .logo-text {
+        font-size: 20px;
+    }
+
+    .logo-textimg {
+        /*width: 120px;*/
+    }
+
+    nav > ul > li > a {
+        font-size: 14px;
+        margin: 8px 15px 0 0;
+    }
+
+    .desk-user-circle-con {
+        width: 110px;
+    }
+
+    .desk-customer-name {
+        font-size: 20px;
+    }
+
+    .desk-tab-width {
+        font-size: 14px;
+        padding: 15px 0;
+    }
+
+    .desk-tab-main-con {
+        height: 58px;
+    }
+
+    .desk-customer-name > img {
+        top: 4px;
+        width: 20px;
+    }
+
+    .desk-customer-text {
+        font-size: 16px;
+        line-height: normal;
+    }
+
+    .desk-black-btn {
+        margin: 5px auto 25px;
+        width: 173px;
+    }
+
+    .desk-black-btn a {
+        font-size: 18px;
+        padding: 6px 25px;
+    }
+
+    .desk-user-adoorn .desk-total {
+        font-size: 16px;
+        padding: 0px 0 0 7px;
+    }
+
+    .desk-add-name {
+        font-size: 12px;
+    }
+
+    .desk-user-adoorn-con {
+        padding: 0 0 20px;
+    }
+
+    nav > ul > li > div {
+        height: 115px;
+    }
+
+    nav > ul > li > div {
+        font-size: 14px;
+    }
+
+    .u-img {
+        height: 35px;
+        margin: 3px 9px 0 12px;
+        width: 35px;
+    }
+
+    .user-image img {
+        width: 55px;
+    }
+
+    .time-con p {
+        font-size: 20px;
+    }
+
+    .banner-con .des {
+        font-size: 16px;
+        letter-spacing: 0.2px;
+        line-height: 22px;
+    }
+
+    .user-name {
+        font-size: 20px;
+    }
+
+    .banner-con .heading {
+        font-size: 20px;
+    }
+
+    .follow-txt {
+        font-size: 20px;
+        line-height: 28px;
+        margin: 235px auto 0;
+        width: 235px;
+    }
+
+    .desk-customer-text2 {
+        width: 400px;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+
+    .modalDialog {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 620px) {
+    .ch-pw input {
+        padding: 0 15px !important;
+    }
+
+    .form img {
+        padding: 30px 0 25px 15px;
+    }
+
+    .form input {
+        padding: 0 15px 0 60px;
+    }
+
+    .collarless-h {
+        font-size: 30px;
+    }
+
+    .total-visitor > span {
+        line-height: 0;
+    }
+
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+        /* width: 95%;*/
+    }
+
+    .buttons label {
+        font-size: 24px;
+        padding: 2% 0;
+    }
+
+    .comment-con a {
+        font-size: 24px;
+        margin: 0 2% 0 0;
+        padding: 2%;
+    }
+
+    .com-btn {
+        padding: 2% 2.5% !important;
+    }
+
+    .visit-con p > span {
+        font-size: 24px;
+        line-height: 0;
+    }
+
+    .visit-con img {
+        width: 25px;
+    }
+
+    .banner-con .heading {
+        font-size: 30px;
+    }
+
+    .h-heading {
+        font-size: 45px;
+    }
+
+    .f-menu a {
+        font-size: 18px;
+    }
+
+    .f-menu img {
+        height: 25px;
+        width: 25px;
+    }
+
+    .fe-name {
+        bottom: 105px;
+        font-size: 15px;
+        line-height: normal;
+        width: 85px;
+    }
+
+    .fe-address {
+        bottom: 90px;
+        font-size: 14px;
+    }
+
+    .signup-con {
+        margin: 80% auto 2%;
+    }
+
+    .fields_txt input {
+        font-size: 20px;
+        height: 55px;
+    }
+
+    .sign_btn {
+        height: 65px;
+        font-size: 33px;
+    }
+
+    .user-adoorn {
+        border-width: 0 2px 0 0;
+    }
+
+    .gear {
+        width: 30px;
+    }
+
+    .account-h-con {
+        padding: 0 15px;
+    }
+
+    .inner-h-con {
+        padding: 0 15px;
+    }
+
+    .mrg-top50 {
+        margin: 20px 0;
+    }
+
+    .collar-price {
+        font-size: 20px;
+    }
+
+    .collar-price .from {
+        font-size: 15px;
+    }
+
+    .black-built-con {
+        margin: 14px 0;
+    }
+
+    .pro-border {
+        padding: 15px;
+    }
+
+    .white-box {
+        height: 50px;
+        width: 50px;
+    }
+
+}
+
+@media only screen and (max-width: 568px) {
+
+    .add-comments input {
+        font-size: 16px;
+        height: 25px;
+        margin: 10px 0;
+        padding: 0 6px;
+    }
+
+    .add-comments-btn {
+        font-size: 16px;
+        height: 27px;
+        margin: 10px 0;
+    }
+
+    .comm-days {
+        font-size: 18px;
+    }
+
+    .comments-h-con {
+        font-size: 18px;
+        min-height: 75px;
+        padding: 15px 15px 0px 15px;
+    }
+
+    .mn-user-image > img {
+        width: 35px;
+    }
+
+    .comments-h-con .mn-pro img {
+        width: 35px;
+    }
+
+    .create-out-fit .top-title {
+        font-size: 22px;
+        padding: 20px 0 5px;
+    }
+
+    .create-out-fit input {
+        border-radius: 7px;
+        font-size: 12px;
+        height: 30px;
+        margin: 0;
+        padding: 0 12px;
+    }
+
+    .create-out-fit .mid-title {
+        font-size: 20px;
+        padding: 0 0 7px;
+    }
+
+    .text-box-outfit textarea {
+        font-size: 12px;
+        height: auto;
+        padding: 10px;
+        border-radius: 7px;
+    }
+
+    .switch-box {
+        font-size: 16px;
+        min-height: 55px;
+        padding: 0 15px;
+        margin: 17px 0;
+    }
+
+    .switch-box .private {
+        padding: 18px 0 0;
+    }
+
+    .onoffswitchoutfit-inner:before, .onoffswitchoutfit-inner:after {
+        height: 30px;
+    }
+
+    .outfit-switch-top {
+        margin: 12px 0 0;
+    }
+
+    .onoffswitchoutfit-switch {
+        right: 25px;
+        width: 25px;
+    }
+
+    .onoffswitchoutfit {
+        width: 56px;
+    }
+
+    .post-items {
+        font-size: 20px;
+    }
+
+    .outifit-icon-bt {
+        border-radius: 7px;
+        margin: 10px 0 0;
+        min-height: 35px;
+    }
+
+    .outifit-icon-bt a {
+        font-size: 13px;
+        padding: 10px 0;
+    }
+
+    .outifit-icon-bt img {
+        width: 18px;
+        margin: 6px 0 0;
+        position: relative;
+        right: 5px;
+        top: 2px;
+    }
+
+    .out-fit-lb-line {
+        border: 1px solid #dcd5d5;
+        margin: 20px 0 14px;
+    }
+
+    .outfit-btn input {
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        height: 35px;
+    }
+
+    .shirt-h {
+        font-size: 18px;
+    }
+
+    .color-hd {
+        font-size: 16px;
+    }
+
+    .white-box {
+        height: 35px;
+        width: 35px;
+    }
+
+    .add-items a {
+        font-size: 14px;
+    }
+
+    .add-items img {
+        margin: 0 7px 0 0;
+        width: 17px;
+    }
+
+    .welcome-bg .top-hd {
+        font-size: 28px;
+    }
+
+    .welcome-bg .adoorn {
+        font-size: 54px;
+        line-height: 54px;
+    }
+
+    .welcome-bg p {
+        font-size: 16px;
+        max-width: 290px;
+    }
+
+    .swip-l {
+        padding: 30px 0;
+        width: 100px;
+    }
+
+    .swip-l a {
+        font-size: 16px;
+    }
+
+    .swip-left {
+        margin: 3px 0;
+        width: 8px;
+    }
+
+    .collarless-h {
+        font-size: 30px;
+    }
+
+    .user-name {
+        font-size: 24px;
+    }
+
+    .time-con p {
+        font-size: 20px;
+    }
+
+    .banner-con .des {
+        font-size: 20px;
+    }
+
+    .comment-con img {
+        width: 25px;
+    }
+
+    .m_search input {
+        font-size: 18px;
+        padding: 1% 1% 1% 7%;
+    }
+
+    .cancel-btn1 {
+        font-size: 22px;
+        line-height: 34px;
+    }
+
+    .m_search img {
+        top: 7px;
+        width: 20px;
+    }
+
+    .m_search1 img {
+        left: 11px !important;
+    }
+
+    .re-post-hd {
+        font-size: 25px;
+        padding: 10px 30px;
+    }
+
+    .re-post {
+        font-size: 20px;
+        padding: 15px 30px 15px 0;
+        line-height: normal;
+    }
+
+    .terms-txt {
+        font-size: 17px;
+    }
+
+    .b-signin {
+        font-size: 20px;
+        padding: 5% 0 0;
+    }
+
+    .seprator {
+        margin: 10px 0;
+    }
+
+    .user-circle-con {
+        width: 104px;
+    }
+
+    .customer-name {
+        font-size: 22px;
+    }
+
+    .customer-name > img {
+        margin: 0;
+    }
+
+    .customer-name {
+        width: 185px;
+    }
+
+    .customer-text {
+        width: 315px;
+        font-size: 16px;
+    }
+
+    .black-btn a {
+        font-size: 22px;
+        padding: 8px 45px 10px;
+    }
+
+    .adoorning-btn a {
+        padding: 8px 25px 15px;
+    }
+
+    .black-btn {
+        margin: auto auto 45px;
+        width: 197px;
+    }
+
+    .user-adoorn .total {
+        font-size: 22px;
+        padding: 8px 5px 0 15px;
+    }
+
+    .add-name {
+        font-size: 18px;
+        padding: 0 5px 12px 15px;
+    }
+
+    .quantity {
+        font-size: 18px;
+    }
+
+    .quantity > img {
+        margin-top: 6px;
+    }
+
+    .tab-width {
+        font-size: 14px !important;
+        padding: 14px 0 !important;
+    }
+
+    .tab-main-con {
+        min-height: 50px !important;
+    }
+
+    .f-menu a {
+        font-size: 14px;
+    }
+
+    .by-text {
+        font-size: 28px;
+    }
+
+    .buttons label {
+        font-size: 20px;
+    }
+
+    .comment-con a {
+        font-size: 18px;
+    }
+
+    .fe-name {
+        bottom: 110px;
+        font-size: 18px;
+        line-height: 18px;
+        width: 100px;
+    }
+
+    .fe-address {
+        font-size: 14px;
+        bottom: 100px;
+    }
+
+    .user-image img {
+        width: 55px;
+    }
+
+    .our-fea-blog .fav-h {
+        font-size: 18px;
+    }
+
+    .our-fea-blog .text {
+        font-size: 14px;
+    }
+
+    .our-fea-blog {
+        padding: 20px 0;
+    }
+
+    .we-ad-box {
+        height: 155px;
+    }
+
+    .outfit-btn input {
+        border-radius: 7px;
+    }
+
+    .undo img {
+        width: 18px;
+    }
+
+    .undo a {
+        font-size: 12px;
+    }
+
+    .un-re-do {
+        width: 115px;
+    }
+
+    .un-re-do1 {
+        float: right;
+        width: 175px;
+    }
+
+    .select-product-img {
+        width: 20px;
+    }
+
+    .btn-con-upload a {
+        font-size: 14px;
+    }
+
+    .upload-items-hd {
+        font-size: 20px;
+    }
+
+}
+
+@media only screen and (max-width: 480px) {
+
+    .delet-popup {
+        width: 280px;
+        height: 280px;
+        margin-left: -140px;
+        margin-top: -140px;
+    }
+
+    .delet-popup p {
+        font-family: 'ralewaylight';
+        font-size: 24px;
+        font-weight: 100;
+        margin: 48px auto 0;
+        width: 90%;
+        text-align: center;
+    }
+
+    .wrapper {
+        min-height: 610px;
+        padding: 0 0 70px;
+    }
+
+    .forogot-pw a {
+        font-size: 14px;
+        padding: 15px 0;
+    }
+
+    .pricavy-policy-con .pri-hd {
+        font-size: 16px;
+        padding: 10px 0;
+    }
+
+    .pricavy-policy-con p {
+        font-size: 12px;
+    }
+
+    .form textarea {
+        font-size: 16px;
+        min-height: 125px;
+        padding: 15px 13px 0 30px;
+    }
+
+    .circle-plus img {
+        top: 11px;
+        width: 20px;
+    }
+
+    .sent-f-btn {
+        font-size: 16px;
+        padding: 35px 0;
+    }
+
+    .iphon-email input {
+        padding: 0 24px 0 0 !important;
+    }
+
+    .add-comments input {
+        font-size: 12px;
+    }
+
+    .add-comments-btn {
+        font-size: 14px;
+    }
+
+    .comm-days {
+        font-size: 14px;
+    }
+
+    .comments-h-con {
+        font-size: 14px;
+        min-height: auto;
+    }
+
+    .comments-h-con .days {
+        font-size: 10px;
+        padding: 7px 0;
+    }
+
+    .btn-con-upload a {
+        font-size: 12px;
+    }
+
+    .select-product-img {
+        width: 15px;
+        right: 10px;
+        top: 10px;
+    }
+
+    .undo {
+        width: 48px;
+    }
+
+    .undo-save-outfit {
+        float: right;
+        width: 80px;
+    }
+
+    .un-re-do {
+        width: 98px;
+    }
+
+    .un-re-do1 {
+        width: 140px;
+    }
+
+    .inner-h-con .style-p {
+        padding: 8px 0 0;
+    }
+
+    .adoorners-name {
+        color: #898181;
+        font-size: 10px;
+    }
+
+    .outfit-btn input {
+        border-radius: 5px;
+    }
+
+    .outifit-icon-bt {
+        border-radius: 5px;
+    }
+
+    .create-out-fit input {
+        border-radius: 5px;
+    }
+
+    .text-box-outfit textarea {
+        border-radius: 5px;
+    }
+
+    .create-out-fit .top-title {
+        font-size: 16px;
+    }
+
+    .create-out-fit .mid-title {
+        font-size: 14px;
+    }
+
+    .create-out-fit .top-title {
+        font-size: 14px;
+        padding: 12px 0 2px;
+    }
+
+    .post-items {
+        font-size: 14px;
+    }
+
+    .we-ad-box {
+        height: 140px;
+    }
+
+    .welcome-bg .top-hd {
+        font-size: 14px;
+    }
+
+    .welcome-bg .adoorn {
+        font-size: 25px;
+        line-height: normal;
+    }
+
+    .welcome-bg p {
+        font-size: 12px;
+        max-width: 290px;
+    }
+
+    .swip-l {
+        padding: 15px 0;
+        width: 80px;
+    }
+
+    .swip-l a {
+        font-size: 14px;
+    }
+
+    .swip-left {
+        margin: 3px 0;
+        width: 8px;
+    }
+
+    .welcome-bg .top-hd {
+        padding: 60px 0 0;
+    }
+
+    .welcome-bg {
+        height: 690px;
+    }
+
+    .user-image img {
+        width: 45px;
+    }
+
+    .two-btn label {
+        font-size: 14px;
+        padding: 2% 0;
+    }
+
+    .form input {
+        font-size: 16px;
+        min-height: 45px;
+        padding: 0 15px 0 30px;
+    }
+
+    .fe-address {
+        bottom: 98px;
+    }
+
+    .gap {
+        height: 11px;
+    }
+
+    .form img {
+        padding: 15px 0 25px 8px;
+        width: 16px;
+    }
+
+    .l-quantity {
+        font-size: 20px;
+        margin: 8px 0 0;
+        width: 65px;
+    }
+
+    .l-quantity img {
+        margin: 4px 0 0 !important;
+    }
+
+    .by-text {
+        font-size: 18px;
+    }
+
+    .black-built-con {
+        margin: 8px 0;
+    }
+
+    .collar-price .from {
+        font-size: 12px;
+    }
+
+    .collar-price {
+        font-size: 16px;
+    }
+
+    .collarless-h {
+        font-size: 18px;
+        line-height: 42px;
+    }
+
+    .f-l.add-plus-icon {
+        width: 10px;
+    }
+
+    .f-r.add-plus-icon {
+        width: 25px;
+    }
+
+    .total-visitor > span {
+        font-size: 14px;
+    }
+
+    .switch-top {
+        margin: 7px 0 0;
+    }
+
+    .save-chage-btn {
+        font-size: 18px;
+        margin: 25px 0 0;
+        min-height: 45px;
+    }
+
+    .save-chage-btn .padding {
+        padding: 12px 0 0;
+    }
+
+    .f-menu a {
+        font-size: 13px;
+    }
+
+    .inner-h-con img {
+        margin: 7px 3% 0 0;
+        width: 30px;
+    }
+
+    .inner-h-con .pro {
+        padding: 13px 0 0;
+    }
+
+    .inner-h-con {
+        font-size: 16px;
+        min-height: 45px;
+    }
+
+    .r-erow > img {
+        margin: 12px 0 0;
+        width: 12px;
+    }
+
+    .account-h-con {
+        font-size: 18px;
+        min-height: 35px;
+    }
+
+    .account-h-con .heading {
+        padding: 8px 0 0;
+    }
+
+    .setting-errow img {
+        width: 16px;
+    }
+
+    .setting-errow {
+        margin: 0;
+    }
+
+    .gear {
+        margin: 5px 13% 0 0;
+    }
+
+    .h-con {
+        min-height: 43px;
+        padding: 0;
+    }
+
+    .gear {
+        width: 18px;
+    }
+
+    .h-heading {
+        font-size: 25px;
+    }
+
+    .buttons label {
+        font-size: 18px;
+    }
+
+    .user-name {
+        font-size: 18px;
+    }
+
+    .time-con p {
+        font-size: 16px;
+    }
+
+    .banner-con .heading {
+        font-size: 20px;
+    }
+
+    .banner-con .des {
+        font-size: 14px;
+    }
+
+    .comment-con img {
+        width: 16px;
+    }
+
+    .comment-con a {
+        font-size: 16px;
+    }
+
+    .total-visitor {
+        padding-top: 5px;
+    }
+
+    .visit-con img {
+        margin-top: 5px;
+        width: 18px;
+    }
+
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .fe-name {
+        bottom: 98px;
+        font-size: 14px;
+        line-height: normal;
+        width: 80px;
+    }
+
+    .m_search input {
+        font-size: 15px;
+        height: 23px;
+    }
+
+    .m_search1 input {
+        height: 30px;
+    }
+
+    .cancel-btn1 {
+        font-size: 18px;
+    }
+
+    .re-post-hd {
+        font-size: 20px;
+    }
+
+    .re-post {
+        font-size: 16px;
+    }
+
+    .m_search img {
+        top: 7px;
+        width: 16px;
+    }
+
+    .terms-txt {
+        font-size: 14px;
+    }
+
+    .r-erow .switch-box {
+        margin-top: 1px;
+    }
+
+    .quantity {
+        font-size: 12px;
+    }
+
+    .quantity > img {
+        margin-left: 2px;
+        margin-top: 3px;
+        width: 14px;
+    }
+
+    .inner-h-con {
+        padding: 0 15px;
+    }
+
+    .continue-con-btn {
+        font-size: 18px;
+        padding: 12px 0;
+    }
+
+    .skip-text {
+        font-size: 16px;
+        padding: 16px 0;
+    }
+
+    .user-name {
+        padding: 10px 0 0 0;
+    }
+
+    .white-box {
+        margin: 5px 2.6%;
+    }
+
+    .add-basic-con {
+        font-size: 15px;
+        min-height: 45px;
+        padding: 0 15px;
+    }
+
+    .add-basic-con img {
+        margin: 13px 3% 0 0;
+        width: 23px;
+    }
+
+    .add-basic-con .pro-name {
+        padding: 14px 0 0;
+    }
+}
+
+@media only screen and (max-width: 440px) {
+    .white-box {
+        /* margin: 4px;*/
+    }
+
+    .white-box {
+        height: 30px;
+        width: 30px;
+    }
+
+    .two-btn a {
+        width: 49% !important;
+    }
+
+    .h-con {
+        min-height: 30px;
+    }
+
+    .buttons label {
+        font-size: 14px;
+    }
+
+    .h-heading {
+        font-size: 20px;
+    }
+
+    .user-name {
+        font-size: 16px;
+    }
+
+    .time-con p {
+        font-size: 12px;
+    }
+
+    .banner-con {
+        margin: 5px 0 0;
+    }
+
+    .banner-con .heading {
+        font-size: 16px;
+    }
+
+    .container {
+        /* width: 94%;*/
+    }
+
+    .banner-con .des {
+        line-height: normal;
+        padding: 5px 0;
+        width: 100%;
+    }
+
+    .buttons label {
+        padding: 2% 0;
+    }
+
+    .f-menu img {
+        height: 16px;
+        width: 16px;
+    }
+
+    .we-ad-box {
+        height: 140px;
+    }
+
+    .m_search input {
+        padding: 1% 1% 1% 9%;
+    }
+
+    .user-adoorn {
+        width: 33.3%;
+    }
+
+    .gear {
+        margin: 2px 13% 0 0;
+    }
+
+    .f-menu a {
+        font-size: 11px;
+    }
+
+    .user-image img {
+        width: 35px;
+    }
+
+}
+
+@media only screen and (max-width: 360px) {
+    .wrapper {
+        min-height: 590px;
+        padding: 0 0 50px;
+    }
+
+    .comments-h-con {
+        font-size: 12px;
+    }
+
+    .upload-items-hd {
+        font-size: 14px;
+    }
+
+    .btn-con-upload a {
+        font-size: 11px;
+    }
+
+    .shirt-h {
+        font-size: 14px;
+    }
+
+    .color-hd {
+        font-size: 14px;
+    }
+
+    .white-box {
+        height: 25px;
+        width: 25px;
+    }
+
+    .h-heading {
+        font-size: 22px;
+    }
+
+    .f-menu a {
+        font-size: 9px;
+    }
+
+    .user-name {
+        font-size: 12px;
+    }
+
+    .banner-con .heading {
+        font-size: 14px;
+    }
+
+    /*.container {
+      width: 94.5%;
+    }*/
+    .comment-con a {
+        font-size: 14px;
+    }
+
+    .comment-con img {
+        width: 14px;
+    }
+
+    .total-visitor {
+        padding-top: 0;
+    }
+
+    .f-menu a {
+        font-size: 12px;
+    }
+
+    .f-menu img {
+        height: 14px;
+        width: 14px;
+    }
+
+    .f-menu {
+        margin-left: 6px;
+        margin-right: 6px;
+    }
+
+    .f-menu a {
+        font-size: 10px;
+    }
+
+    .we-ad-box {
+        height: 100px;
+    }
+
+    .fe-name {
+        bottom: 80px;
+        font-size: 11px;
+        line-height: 15px;
+        width: 87px;
+    }
+
+    .fe-address {
+        bottom: 73px;
+        font-size: 10px;
+    }
+
+    .m_search input {
+        font-size: 13px;
+    }
+
+    .m_search img {
+        top: 8px;
+    }
+
+    .cancel-btn1 {
+        font-size: 14px;
+    }
+
+    .terms-txt {
+        font-size: 11px;
+    }
+
+    .b-signin {
+        font-size: 16px;
+        padding: 3% 0 0;
+    }
+
+    .fields_txt input {
+        font-size: 15px;
+        height: 35px;
+        padding: 4px 15px 0;
+    }
+
+    .seprator {
+        margin: 6px 0;
+    }
+
+    .sign_btn {
+        font-size: 22px;
+        height: 45px;
+    }
+
+    .user-adoorn .total {
+        font-size: 16px;
+    }
+
+    .add-name {
+        font-size: 16px;
+        padding: 0 5px 8px 15px;
+    }
+
+    .customer-name {
+        font-size: 18px;
+    }
+
+    .customer-name {
+        width: 150px;
+    }
+
+    .customer-text {
+        font-size: 14px;
+        width: 285px;
+        line-height: normal;
+    }
+
+    .black-btn a {
+        font-size: 18px;
+    }
+
+    .black-btn {
+        margin: auto auto 35px;
+        width: 180px;
+    }
+
+}
+
+@media only screen and (max-width: 320px) {
+    .f-menu {
+        float: left;
+        height: auto;
+        margin-left: 7px;
+        margin-right: 7px;
+        width: 15%;
+    }
+}

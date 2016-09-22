@@ -1,0 +1,199 @@
+<div class="page-sidebar-wrapper">
+  <div class="page-sidebar navbar-collapse collapse">
+    <ul data-slide-speed="200" data-auto-scroll="true" class="page-sidebar-menu">
+      <li class="sidebar-toggler-wrapper">
+        <div class="sidebar-toggler">
+        </div>
+      </li>
+      <li class="start ">
+        <a href="/admin/dashboard">
+          <i class="icon-home"></i>
+          <span class="title">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:;">
+          <i class="icon-users"></i>
+          <span class="title">Users</span>
+          <span class="arrow "></span>
+        </a>
+        <ul class="sub-menu">
+          <li>
+            <a href="#" onclick="partial_call('users/new');"><i class="icon-user"></i>Create New User</a>
+          </li>
+          <li>
+            <a href="#" onclick="partial_call('users');">
+              <i class="icon-users"></i>
+              All Users</a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="javascript:;">
+          <i class="icon-basket"></i><span class="title">Basic Categories</span>
+          <span class="arrow "></span>
+        </a>
+        <ul class="sub-menu">
+          <li>
+            <a href="javascript:;" onclick="partial_call('basic_categories/new');">
+              <i class="icon-plus"></i>
+              Add New Category</a>
+          </li>
+          <li>
+            <a href="javascript:;" onclick="partial_call('basic_categories');">
+              <i class="icon-drawer"></i>
+              All Categories
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="javascript:;">
+          <i class="icon-basket"></i><span class="title">Basic SubCategories</span>
+          <span class="arrow "></span>
+        </a>
+        <ul class="sub-menu">
+          <li>
+            <a href="javascript:;" onclick="partial_call('basic_subcategories/new');">
+              <i class="icon-plus"></i>
+              Add New subCategory</a>
+          </li>
+          <li>
+            <a href="javascript:;" onclick="partial_call('basic_subcategories');">
+              <i class="icon-drawer"></i>
+              All SubCategories
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="javascript:;"><i class="icon-briefcase"></i>
+          <span class="title">Basic Items</span>
+          <span class="arrow "></span>
+        </a>
+        <ul class="sub-menu">
+          <li>
+            <a href="javascript:;" onclick="partial_call('basic_items/new');">
+              <i class="icon-plus"></i>
+              Add New Item</a>
+          </li>
+          <li>
+            <a href="javascript:;" onclick="partial_call('basic_items');">
+              <i class="icon-briefcase"></i>
+              Display All Items</a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="javascript:;">
+          <i class="icon-basket"></i><span class="title">Brands</span>
+          <span class="arrow "></span>
+        </a>
+        <ul class="sub-menu">
+          <li>
+            <a href="#" onclick="partial_call('brands/new');">
+              <i class="icon-plus"></i>
+              Add New Brand</a>
+          </li>
+          <li>
+            <a href="#" onclick="partial_call('brands')">
+              <i class="icon-drawer"></i> All Brands
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#" onclick="partial_call('user_items')">
+          <i class="icon-home"></i>
+          <span class="title">User Items</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="javascript:;" onclick="partial_call('user_outfits')">
+          <i class="icon-home"></i>
+          <span class="title">User OutFits</span>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:;">
+          <i class="icon-users"></i>
+          <span class="title">Bloggers</span>
+          <span class="arrow "></span>
+        </a>
+        <ul class="sub-menu">
+          <li>
+            <a href="#" onclick="partial_call('user_blogs/new');"><i class="icon-user"></i>Create New Blogger</a>
+          </li>
+          <li>
+            <a href="#" onclick="partial_call('user_blogs/all_bloggers');">
+              <i class="icon-users"></i>
+              Adoorn Select Bloggers</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:;" onclick="partial_call('user_blogs')">
+          <i class="icon-home"></i>
+          <span class="title">Blogger Details</span>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:;" onclick="partial_call('user_blogs/bloggers_detail')">
+          <i class="icon-home"></i>
+          <span class="title">User Blogs</span>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:;">
+          <i class="icon-home"></i>
+          <span class="title">Reports</span>
+        </a>
+        <ul class="sub-menu">
+          <li>
+            <a href="#" onclick="partial_call('users/reported_users')">
+              <i class="icon-plus"></i>
+              Reported Users</a>
+          </li>
+          <li>
+            <a href="#" onclick="partial_call('users/reported_items')">
+              <i class="icon-drawer"></i>
+              Reported Items
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="partial_call('users/reported_outfits')">
+              <i class="icon-plus"></i>
+              Reported Outfits</a>
+          </li>
+          <li>
+            <a href="#" onclick="partial_call('users/reported_blogs')">
+              <i class="icon-drawer"></i>
+              Reported Blogs
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <!-- END SIDEBAR MENU -->
+  </div>
+</div>
+
+<script>
+
+    function partial_call(action) {
+        $.ajax({
+            url: '/admin/' + action,
+            processData: false,
+            success: function (data) {
+                $("#panel_body").html(data);
+            }
+        });
+    }
+
+</script>

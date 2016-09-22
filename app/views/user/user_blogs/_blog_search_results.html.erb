@@ -1,0 +1,61 @@
+<div class="w_100">
+  <div id="page-wrap" class="pggg">
+    <div class="buttons two-btn buttons-mrg-b stnmmrg">
+      <label id="blogger_tab" class="active" onclick="show_bloggers();"><span>Bloggers</span></label>
+      <label id="blog_tab" class="" onclick="show_blogs();"><span>Posts</span></label>
+    </div>
+  </div>
+</div>
+
+<div id="result_blog" class="container">
+  <%= render :partial => 'bloggers_result', :locals => {:@bloggers => @bloggers} %>
+  <!--<div class="post-con">-->
+  <!--<%# unless blogs.blank? %>-->
+  <!--<%# blogs.each do |blog| %>-->
+  <!--<a href="javascript:;">-->
+  <!--<div class="re-post">-->
+  <!--<a class="text-black" href="javascript:;" onclick="get_partial('<%#= blog.id %>', '/user/user_blogs/show')"><%#= blog.title %></a>-->
+  <!--</div>-->
+  <!--</a>-->
+  <!--<%# end %>-->
+  <!--<%# else %>-->
+  <!--<a href="#">-->
+  <!--<div class="re-post not-found">Nothing Found.</div>-->
+  <!--</a>-->
+  <!--<%# end %>-->
+  <!--</div>-->
+</div>
+
+<script>
+    $(function () {
+        window.scrollTo(0, 0);
+    });
+
+    function show_blogs() {
+        document.getElementById("blog_tab").className = "active";
+        document.getElementById("blogger_tab").className = "";
+        var name = $('#search').val();
+        search_text(name, 'blog');
+    }
+
+    function show_bloggers() {
+        document.getElementById("blog_tab").className = "";
+        document.getElementById("blogger_tab").className = "active";
+        var name = $('#search').val();
+        search_text(name, 'blogger');
+    }
+
+    function search_text(name, type) {
+        if (name != '') {
+            $('#search').val(name);
+            $.ajax({
+                url: '/user/user_blogs/complete_search?key=' + name + '&type=' + type,
+                processData: false,
+                success: function (data) {
+                    $("#result_blog").html(data);
+                }
+            });
+        }
+    }
+
+</script>

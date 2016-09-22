@@ -1,0 +1,39 @@
+<div class="w100">
+  <div class="desk-pro-hd">Related Items</div>
+</div>
+<div class="w-100 mrg20">
+  <% @suggested_items.each do |item| %>
+      <div class="desk-rel-prod">
+        <div class="desk-rel-items">
+          <div class="desk-rel-items-content">
+            <a href="#" onclick="item_show(<%= item.class.name == 'BasicItem' ? '' : item.id %>)">
+              <% if item.image? && File.exists?(item.image.path(:thumb).to_s) %>
+                  <%= image_tag item.image.url(:thumb) %>
+              <% else %>
+                  <%= image_tag "missing_item.jpeg" %>
+              <% end %>
+            </a>
+          </div>
+        </div>
+        <a href="javascript:;">
+          <div class="quantity"><%= number_to_human(item.class.name=='BasicItem' ? '0' : item.adorns.length) %>
+            <img src="/assets/pro-avilable-img.png" alt=""></div>
+        </a>
+      </div>
+  <% end %>
+</div>
+
+<script>
+    function item_show(id) {
+        if (id != '') {
+            $.ajax({
+                url: '/user/user_items/show?id=' + id,
+                processData: false,
+                success: function (data) {
+                    $("#desk_main_div").html(data)
+                    scroll(0, 0)
+                }
+            });
+        }
+    }
+</script>

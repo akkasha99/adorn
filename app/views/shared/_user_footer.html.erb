@@ -1,0 +1,74 @@
+<div style="clear:both;"></div>
+<footer class="f-stricky">
+  <div id="outfit_footer" class="f-con" style="display: none;">
+    <div class="fbot_menu">
+      <a href="javascript:;" onclick="remove_image();"><img src="/assets/fotimg_0.png" alt="">
+
+        <div class="txtwid">remove</div>
+      </a></div>
+    <div class="fbot_menu"><a href="javascript:;" onclick="moveTotop()"><img src="/assets/fotimg_1.png" alt="">
+
+      <div class="txtwid">front</div>
+    </a></div>
+    <div class="fbot_menu"><a href="javascript:;" onclick="moveToback()"><img src="/assets/fotimg_2.png" alt="">
+
+      <div class="txtwid">back</div>
+    </a></div>
+    <div class="fbot_menu"><a href="javascript:;" onclick="reflect_image()"><img src="/assets/fotimg_3.png" alt="">
+
+      <div class="txtwid">reflect</div>
+    </a></div>
+  </div>
+
+  <div id="user_footer" class="f-con">
+    <div id="icon_newsfeed" class="f-menu active">
+      <a href="#links" onclick="goto_newsfeed()"><img src="/assets/img5_h.png" alt="">
+
+        <div>newsFeed</div>
+      </a></div>
+    <div id="icon_search" class="f-menu">
+      <a href="#links" onclick="view_partial('icon_search', '/user/users/search_partial')"><img src="/assets/img4_h.png" alt="">
+
+        <div>Search</div>
+      </a></div>
+    <div id="icon_upload" class="f-menu">
+      <a href="#popup_upload" onclick="show_pop()"><img id="plus" src="/assets/img3_h.png" alt="">
+        <!--<a href="#popup_upload" onclick="view_partial('icon_upload', '/user/user_items/upload_item')"><img src="/assets/img3_h.png" alt="">-->
+
+        <div>Upload</div>
+      </a></div>
+    <div id="icon_closet" class="f-menu">
+      <a href="#links" onclick="view_partial('icon_closet','/user/users/user_closet?id=<%= current_user.id %>')"><img src="/assets/img1_h.png" alt="">
+
+        <div>closet</div>
+      </a></div>
+    <div id="icon_blogger" class="f-menu">
+      <a href="#links" onclick="view_partial('icon_blogger', '/user/user_blogs/blogs_index')"><img src="/assets/img2_h.png" alt="">
+
+        <div>Bloggers</div>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+    function goto_newsfeed() {
+        $('#popup_upload ').hide();
+        $(".background_shadow").show();
+        window.location.href = '/';
+        $(".background_shadow").hide();
+    }
+
+    function show_pop() {
+        if (!$('#popup_upload ').is(':visible')) {
+            var prev = activate_footer('icon_upload')
+            $('#icon_upload').find('#plus').css('transform', 'rotate(45deg)');
+            $('#popup_upload ').show();
+        }
+        else {
+            activate_footer('');
+            $('#icon_upload').find('#plus').css('transform', 'rotate(0deg)');
+            $('#popup_upload ').hide();
+        }
+    }
+</script>

@@ -1,0 +1,375 @@
+<div id="main_div">
+  <header>
+    <div class="h-con">
+      <div class="user-main-con">
+        <div class="h-heading">Settings</div>
+      </div>
+      <div class="backBtn">
+        <a href="javascript:;" onclick="return_closet();"><img src="/assets/setting-errow.png" alt=""></a>
+      </div>
+      <div class="clear-fix"></div>
+    </div>
+  </header>
+  <div class="acc-main-con w_100">
+    <div class="account-h-con">
+      <div class="heading">Account</div>
+    </div>
+
+    <div class="w_100">
+      <a href="javascript:;" onclick="browse_pic()">
+        <%= form_for @user, :url => '/user/user_items/picture_update', :html => {:multipart => true, :onsubmit => "return false", :id => 'profile_pic_frm', :method => 'post'} do |f| %>
+            <div class="inner-h-con">
+              <% if @user.avatar && File.exists?(@user.avatar.path(:thumb).to_s) %>
+                  <%= image_tag @user.avatar(:thumb), :class => 'thumbnail' %>
+              <% else %>
+                  <%= image_tag "missing.png", :class => 'thumbnail' %>
+              <% end %>
+              <%= f.file_field :avatar, :capture => "camera", :style => "display: none;", :id => 'profile_pic' %>
+              <div class="pro">Profile Picture</div>
+              <div class="r-erow"><img src="/assets/profile-erow.png" alt=""></div>
+            </div>
+        <% end %>
+      </a>
+    </div>
+
+
+    <div class="w_100">
+      <a href="#" onclick="goto_profile()">
+        <div class="inner-h-con">
+          <div class="pro">Profile Info</div>
+          <div class="r-erow"><img src="/assets/profile-erow.png" alt=""></div>
+        </div>
+      </a>
+    </div>
+    <div class="w_100">
+      <a href="#" onclick="goto_aboutme()">
+        <div class="inner-h-con">
+          <div class="pro">about me</div>
+          <div class="r-erow"><img src="/assets/profile-erow.png" alt=""></div>
+        </div>
+      </a>
+    </div>
+    <div class="w_100">
+      <a href="#" onclick="render_partial('/user/users/linked_accounts')">
+        <div class="inner-h-con">
+          <div class="pro">Share Settings</div>
+          <div class="r-erow"><img src="/assets/profile-erow.png" alt=""></div>
+        </div>
+      </a>
+    </div>
+    <div class="account-h-con">
+      <div class="heading">Preferences</div>
+    </div>
+
+
+    <div class="w_100">
+      <a href="#" onclick="goto_password()">
+        <div class=" inner-h-con">
+          <div class="pro">Change Password</div>
+          <div class="r-erow"><img src="/assets/profile-erow.png" alt=""></div>
+        </div>
+      </a>
+    </div>
+
+
+    <div class="w_100">
+      <a href="#" onclick="goto_notifications()">
+        <div class="inner-h-con">
+          <div class="pro">Notifications</div>
+          <div class="r-erow"><img src="/assets/profile-erow.png" alt=""></div>
+        </div>
+      </a>
+    </div>
+
+
+    <div class="w_100">
+      <a href="#" onclick="goto_location()">
+        <div class="inner-h-con">
+          <div class="pro">Location</div>
+          <div class="r-erow"><img src="/assets/profile-erow.png" alt=""></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="account-h-con">
+      <div class="heading">support</div>
+    </div>
+
+    <div class="w_100">
+      <a href="#" onclick="goto_static_pages('about_adoorn')">
+        <div class="inner-h-con">
+          <div class="pro">About Adoorn</div>
+          <div class="r-erow"><img src="/assets/profile-erow.png" alt=""></div>
+        </div>
+      </a>
+    </div>
+    <div class="w_100">
+      <a href="#" onclick="goto_static_pages('privacy_policy')">
+        <div class="inner-h-con">
+          <div class="pro">Privacy Policy</div>
+          <div class="r-erow"><img src="/assets/profile-erow.png" alt=""></div>
+        </div>
+      </a>
+    </div>
+    <div class="w_100">
+      <a href="#" onclick="goto_static_pages('terms_of_services')">
+        <div class="inner-h-con">
+          <div class="pro">Terms of Service</div>
+          <div class="r-erow"><img src="/assets/profile-erow.png" alt=""></div>
+        </div>
+      </a>
+    </div>
+    <div class="w_100">
+      <a href="mailto:feedback@adoorn.com">
+        <!--<a href="mailto:feedback@adoorn.com?subject=Your feedback is important to us.">-->
+        <div class="inner-h-con">
+          <div class="pro">Feedback</div>
+          <div class="r-erow"><img src="/assets/profile-erow.png" alt=""></div>
+        </div>
+      </a>
+    </div>
+    <div class="w_100 btnOut setting-bg mrgbot100">
+      <div class="continue-con-btn">
+        <a href="/users/sign_out_mobile">Sign out</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#wrapper").addClass('setting-bg');
+    })
+
+
+    function render_partial(url) {
+        $.ajax({
+            url: url,
+            success: function (data) {
+                if (data != 'error')
+                    $('#main_div').html(data);
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+    function goto_profile_pic() {
+        $.ajax({
+            url: '/user/users/goto_profile_pic',
+            success: function (data) {
+                if (data != 'error')
+                    $('#main_div').html(data);
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+    function goto_profile() {
+        $.ajax({
+            url: '/user/users/goto_profile',
+            success: function (data) {
+                if (data != 'error')
+                    $('#main_div').html(data);
+//                $('#username').attr("disabled", "disabled")
+//                $('#email').attr("disabled", "disabled")
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+    function goto_aboutme() {
+        $.ajax({
+            url: '/user/users/goto_aboutme',
+            success: function (data) {
+                if (data != 'error')
+                    $('#main_div').html(data);
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+    function goto_password() {
+        $.ajax({
+            url: '/user/users/goto_password',
+            success: function (data) {
+                if (data != 'error')
+                    $('#main_div').html(data);
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+    function goto_location() {
+        $.ajax({
+            url: '/user/users/goto_location',
+            success: function (data) {
+                if (data != 'error')
+                    $('#main_div').html(data);
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+    function goto_notifications() {
+        $.ajax({
+            url: '/user/users/goto_notification',
+            success: function (data) {
+                if (data != 'error')
+                    $('#main_div').html(data);
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+    function goto_static_pages(page) {
+        console.log(page)
+        $.ajax({
+            url: '/user/users/static_pages?page=' + page,
+            success: function (data) {
+                if (data != 'error')
+                    $('#main_div').html(data);
+            },
+            error: function (data) {
+            }
+        });
+    }
+    //
+    //    function update_user_feed(id, user_id) {
+    //        apprise("Are you sure You want to Delete this Url", {'verify': true}, function (r) {
+    //            if (r == true) {
+    //                $.ajax({
+    //                    url: '/user/users/update_user_feed?id=' + id + '&user_id=' + user_id,
+    //                    processData: false,
+    //                    success: function (data) {
+    //                        $("#main_div").html(data);
+    //                        $("#settings_div").hide()
+    //                        $("#user_feed_div").show()
+    //                    }
+    //                });
+    //            }
+    //        });
+    //    }
+    //    $(document).ready(function () {
+    //        $("#user_feed_div").hide()
+    //    });
+    //    function user_feed_edit() {
+    //        $("#settings_div").hide()
+    //        $("#user_feed_div").show()
+    //    }
+    //
+    //    function user_feed_t0_settings() {
+    //        $("#settings_div").show()
+    //        $("#user_feed_div").hide()
+    //    }
+    //    $("#user_feed_form").validate({
+    //                rules: {
+    //                    "user_feed[url]": {
+    //                        url: true
+    //                    }
+    //                }
+    //            }
+    //    );
+
+
+    //    function add_feed_url() {
+    ////        if ($('#user_feed_form').valid() == true) {
+    //        $('.background_shadow').show()
+    //        $("#user_feed_form").ajaxSubmit({
+    //            success: function (data) {
+    //                if (data != 'error')
+    //                    $('.background_shadow').hide()
+    //                $('#main_div').html(data);
+    //                $("#settings_div").show()
+    //                $("#user_feed_div").hide()
+    //            },
+    //            error: function (data) {
+    //
+    //            }
+    //        });
+    ////        }
+    //    }
+
+    function back_to_setting() {
+        $.ajax({
+            url: '/user/users/back_to_setting',
+            success: function (data) {
+                if (data != 'error')
+                    $('#main_div').html(data);
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+    function browse_pic() {
+        if (!window.Android) {
+            document.getElementById('profile_pic').click();
+        }
+//        document.getElementById('my_file').click();
+        if (window.Android) {
+            Android.image_upload()
+        }
+        window.return_code = function (code) {
+            if (code == '123') {
+                $('.background_shadow').show()
+                $("#profile_pic_frm").ajaxSubmit({
+                    url: '/user/users/picture_update_android?user_id=' + <%= current_user.id.to_s %>,
+                    success: function (data) {
+                        if (data != 'error') {
+                            $(".background_shadow").hide()
+                            $('#main_div').html(data);
+//                            $('#_main').hide();
+//                            $('#_sub').show().html(data);
+                        }
+                    },
+                    error: function (data) {
+
+                    }
+                });
+            }
+        }
+    }
+
+    function change_picture(user_id) {
+        if ($('#profile_pic_frm').valid() == true) {
+            $('.background_shadow').show()
+            $("#profile_pic_frm").ajaxSubmit({
+                url: '/user/users/picture_update?user_id=' + user_id,
+                success: function (data) {
+                    if (data == 'error') {
+                        $('.background_shadow').hide()
+                        document.getElementById("mainpop_text").innerHTML = "Try again.";
+                        $("#mainapp_popup").show();
+                        setTimeout(function () {
+                            close_me_please();
+                        }, 4000);
+                    }
+                    else {
+                        $('.background_shadow').hide();
+                        $('#main_div').html(data);
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+    }
+
+    $('#profile_pic').change(function () {
+        change_picture(<%= current_user.id %>);
+    });
+    function return_closet() {
+        view_partial('icon_closet', '/user/users/user_closet?id=<%= @user.id %>')
+    }
+</script>

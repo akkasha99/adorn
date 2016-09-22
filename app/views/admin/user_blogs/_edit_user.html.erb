@@ -1,0 +1,62 @@
+<div class="page-content" style="min-height:1215px">
+  <div class="row">
+    <div class="col-md-12">
+      <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+      <h3 class="page-title">
+        User
+      </h3>
+      <ul class="page-breadcrumb breadcrumb">
+        <li>
+          <i class="fa fa-home"></i>
+          <a href="/">Home</a>
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+          <a href="/">Bloggers</a>
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+          <a href="/">Edit Blogger</a>
+        </li>
+        <li class="pull-right">
+          <div data-original-title="Change dashboard date range" data-placement="top" class="dashboard-date-range tooltips" id="dashboard-report-range">
+            <i class="icon-calendar"></i>
+            <span></span>
+            <i class="fa fa-angle-down"></i>
+          </div>
+        </li>
+      </ul>
+      <!-- END PAGE TITLE & BREADCRUMB-->
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-6">
+
+      <div class="portlet box grey-cascade">
+        <div class="portlet-title">
+          <div class="caption">
+            <i class="fa fa-comments"></i>Edit Blogger
+          </div>
+          <div class="tools">
+            <a class="collapse" href="javascript:;">
+            </a>
+            <a class="config" data-toggle="modal" href="#portlet-config">
+            </a>
+            <a class="reload" href="javascript:;">
+            </a>
+            <a class="remove" href="javascript:;">
+            </a>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <%= render "edit_user_form", :locals => {:@user => @user} %>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+</div>

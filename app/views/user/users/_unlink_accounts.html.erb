@@ -1,0 +1,56 @@
+<header>
+  <div class="h-con">
+    <div class="user-main-con">
+      <div class="h-heading">ADOORN</div>
+    </div>
+    <div class="backBtn">
+      <a href="#" onclick="social_accounts()"><img src="/assets/setting-errow.png" alt=""></a>
+    </div>
+    <div class="clear-fix"></div>
+  </div>
+</header>
+<div class="acc-main-con w_100">
+  <div class="account-h-con">
+    <div class="heading"><%= media %></div>
+  </div>
+  <div class="w100">
+    <a href="<%= check_connection(media) == false ? "/users/auth/#{media}" : 'javascript:;' %>" onclick="<%= check_connection(media) == true ? "unlink_acc('#{media}');" : '' %>">
+      <div class="inner-h-con acc-share-link">
+        <img class="bg22" src="/assets/<%= media %>.png" alt="">
+
+        <div class="pro">
+          <% if check_connection(media) %>
+              UnLink account
+          <% else %>
+              Link account
+          <% end %>
+        </div>
+      </div>
+    </a>
+
+    <div class="w_100 btnOut setting-bg padbot100">
+    </div>
+  </div>
+</div>
+<div style="clear:both;"></div>
+
+<script>
+    function social_accounts() {
+        $.ajax({
+            url: '/user/users/linked_accounts',
+            success: function (data) {
+                $("#main_div").html(data)
+            }
+        });
+    }
+
+    function unlink_acc(media) {
+        $.ajax({
+            url: '/user/users/unlink_account?media=' + media,
+            success: function (data) {
+                if (data == 'ok')
+                    social_accounts();
+            }
+        });
+    }
+</script>

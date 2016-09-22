@@ -1,0 +1,200 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require desktop/custom.css
+ *= require desktop/responsive.css
+ *= require desktop/tab-css.css
+ *= require desktop/my_style.css
+ */
+
+.avatar {
+    border-radius: 50% !important;
+    box-shadow: 0 3px 2px rgba(0, 0, 0, 0.2) inset;
+    width: 20%;
+    display: inline-block;
+}
+
+.main {
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+.background_shadow {
+    background: rgba(0, 0, 0, .6);
+    /*background: none repeat scroll 0 0 #000000;*/
+    display: block;
+    height: 100%;
+    left: 0;
+    /*opacity: 0.6;*/
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999999999999
+}
+
+.loader_img {
+    /*background: url("/assets/mobile-loader.gif") no-repeat scroll right center transparent;*/
+    background: url("/assets/ellipsis.svg") no-repeat scroll right center transparent;
+    display: block;
+    height: 32px;
+    margin: 0 auto;
+    /*opacity: 0.6;*/
+    position: relative;
+    top: 47%;
+    width: 32px;
+    z-index: 9999999999999999;
+    /*background-size: 100px 100px !important;*/
+}
+
+.main_layout {
+    background-color: #fff;
+    margin: 0 auto;
+    padding: 30px 30px 15px;
+    width: 70%;
+    margin-top: 5%;
+}
+
+.main_layout a {
+    display: inline-block;
+    vertical-align: middle;
+    /*color: #c8c8c8;*/
+    font-size: 20px;
+    transition: All .5s ease;
+    -moz-transition: All .5s ease;
+    -webkit-transition: All .5s ease;
+    -ms-transition: All .5s ease;
+}
+
+/*label {*/
+/*width: auto;*/
+/*float: left;*/
+/*position: relative;*/
+/*}*/
+
+label.error {
+    float: none;
+    color: red;
+    padding-left: 0px;
+    vertical-align: bottom;
+    font-family: weezerfont_CURRENT, sans-serif;
+}
+
+p {
+    clear: both;
+
+}
+
+fieldset {
+    position: absolute;
+    left: 450px;
+    width: 400px;
+}
+
+em {
+    font-weight: bold;
+    padding-right: 1em;
+    vertical-align: top;
+}
+
+.fields_txt1 {
+    position: relative;
+}
+
+/*.fields_txt1 label.error {*/
+/*position: absolute;*/
+/*right: 20px;*/
+/*top: 30px;*/
+/*}*/
+
+.fields_txt1 label.error {
+    position: absolute;
+    right: 12px;
+    top: 9px;
+    font-size: 11px;
+}
+
+.des div {
+    width: 100%;
+    float: left;
+    margin: 10px 0 !important;
+    padding: 0;
+    font-size: 16px;
+    overflow: hidden;
+}
+
+.des .seprator {
+    width: 100%;
+    float: left;
+    margin: 0;
+    padding: 0;
+
+}
+
+.banner-con .des img {
+    float: left !important;
+    width: 100% !important;
+    height: auto !important;
+}
+
+.des a {
+    float: left !important;
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+.hudmsg {
+    width: 160px;
+    padding: 20px;
+    color: #eee;
+    background: url(../images/tt.png) 0 0 repeat;
+    background: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+    position: fixed;
+    bottom: 235px;
+    left: 50%;
+    margin-left: -100px;
+    z-index: 1000;
+    text-shadow: 0 1px 1px #000;
+    font-family: ralewaymedium;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+}
+
+.hudmsg img {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 15px;
+}
+
+.acc-form-con3 select {
+    background: url(/assets/select-img34.png) no-repeat scroll right;
+    border: 1px solid #ded8d8;
+    bottom: 5px;
+    height: 40px;
+    background-color: #FFFFFF;
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    color: #898181;
+    letter-spacing: 1px;
+    font-size: 11px;
+    margin: 5px 0 0;
+    box-sizing: border-box;
+    font-family: "Raleway-Medium";
+    padding: 0 0 0 15px;
+
+}
+

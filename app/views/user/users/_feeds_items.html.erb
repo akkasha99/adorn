@@ -1,0 +1,63 @@
+<% @feeds.each_with_index do |feed, i| %>
+    <div class="w100 mrg20 solid-line pozrel">
+      <a href="javascript:;" onclick="get_partial('<%= feed.user.id %>','/user/users/user_closet', 'true')">
+        <div class="user-con">
+          <div class="user-image">
+            <% if feed.user.avatar? %>
+                <%= image_tag feed.user.avatar(:thumb), :class => 'thumbnail' %>
+            <% else %>
+                <%= image_tag "missing.png", :class => 'thumbnail' %>
+            <% end %>
+          </div>
+          <div id="textid_<%= i %>" class="user-name">
+            <%#= truncate(feed.user.user_name, :length => 12) %>
+            <%= feed.user.user_name %>
+          </div>
+        </div>
+      </a>
+
+      <div class="time-con">
+        <p><%= time_ago_in_words(feed.created_at) %> ago</p>
+      </div>
+      <!--time-con end-->
+
+      <a href="javascript:;" onclick="get_partial('<%= feed.id %>', '<%= feed.class.name=='UserItem' ? '/user/user_items/show' : '/user/user_outfits/show' %>')">
+        <div class="banner-con">
+          <%= image_tag feed.image.url(:other) if feed.image.present? %>
+          <% if feed.image? %>
+          <% else %>
+              <%= image_tag "missing_item.jpeg" %>
+          <% end %>
+        </div>
+      </a>
+
+      <div class="w100" id="<%= feed.class.name + feed.id.to_s %>">
+        <%= render :partial => 'feed_adorns_buttons', :locals => {:feed => feed} %>
+      </div>
+    </div>
+<% end %>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        if (screen.width > 480) {
+            var elements = document.getElementsByClassName("user-name");
+            for (var i = 0; i < elements.length; i++) {
+                if (elements[i].innerHTML.length > 50) {
+                    $("#textid_" + i).attr("style", "font-size: 12px!important;");
+                }
+            }
+        }
+        else {
+            console.log("width less then 480")
+            var elements = document.getElementsByClassName("user-name");
+            for (var i = 0; i < elements.length; i++) {
+                if (elements[i].innerHTML.length > 50) {
+                    console.log(elements[i].innerHTML.length);
+                    $("#textid_" + i).attr("style", "font-size: 10px!important;");
+                }
+            }
+        }
+    });
+
+</script>

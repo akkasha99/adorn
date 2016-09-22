@@ -1,0 +1,63 @@
+<% unless @bloggers.blank? %>
+    <% @bloggers.each do |user| %>
+        <div class="w_100">
+          <a href="javascript:;" onclick="get_partial('<%= user.id %>','/user/user_blogs/blogger_blogs', 'false')">
+            <div class="inner-h-con p0">
+              <!--<img alt="" src="images/profile-pic.jpg">-->
+              <% if user.avatar? && File.exists?(user.avatar.path(:thumb).to_s) %>
+                  <%= image_tag user.avatar(:thumb) %>
+              <% else %>
+                  <%= image_tag "missing.png" %>
+              <% end %>
+              <% if user.hide_as_user? %>
+                  <!--<div id="textid" class="pro low_cas"><%#= truncate(user.user_name == present? ? user.user_name : (user.first_name.present? ? user.first_name : ' '), :length => 25) %></div>-->
+                  <% if user.user_feed.blank? %>
+                      <div id="textid" class="pro low_cas"><%= truncate(((user.first_name.present? ? user.first_name : '') + ' ' + (user.last_name.present? ? user.last_name : '') + "#{user.user_feed.blank? ? '' : (' ( ' + user.user_feed.feed_title + ' )') }"), :length => 25) %></div>
+                  <% else %>
+                      <div id="textid" class="pro low_cas"><%= truncate(((user.first_name.present? ? user.first_name : '') + ' ' + (user.last_name.present? ? user.last_name : '')), :length => 25) %></div>
+                  <% end %>
+              <% else %>
+                  <div id="textid" class="pro low_cas"><%= truncate((user.user_name.present? ? user.user_name : ''), :length => 25) %></div>
+              <% end %>
+            </div>
+          </a>
+        </div>
+    <% end %>
+<% else %>
+    <div class="w100">
+      <a href="#">
+        <!--<div class="inner-h-con p0">-->
+        <%#= image_tag "missing.png" %>
+        <div class="re-post not-found">Nothing Found.</div>
+        <!--</div>-->
+      </a>
+    </div>
+<% end %>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+//        console.log($("#textid").html().length);
+//        console.log(screen.width);
+        if ($("#textid").html().length >= 25) {
+
+            if (screen.width > 480) {
+//                $('#textid').attr("style", "font-size: 16px!important;");
+//                $("#textid").text($(this).text().substr(0, 75) + '...');
+                var elements = document.getElementsByClassName("pro low_cas");
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].attr("style", "font-size: 16px!important;");
+                }
+            }
+            else {
+//                $('#textid').attr("style", "font-size: 12px!important;");
+                var elements = document.getElementsByClassName("pro low_cas");
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].attr("style", "font-size: 12px!important;");
+                }
+            }
+
+        }
+
+    });
+
+</script>

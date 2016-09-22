@@ -1,0 +1,70 @@
+<div class="row">
+  <h2 style="float: left; font-weight: bold; margin-left: 5%;"><a href="javascript:;" onclick="close_itempop()">X</a>
+  </h2>
+
+  <div class="col-md-12">
+    <a href="#" id="scan_code" class="btn default">Scan Barcode</a>
+    <!--<a onclick="add_photo()" class="btn green">Add Photo</a>-->
+    <a href="/user/item/add" class="btn green">Add Item</a>
+    <!--<span class="btn green fileinput-button">-->
+    <!--<i class="fa fa-plus"></i>-->
+    <!--<span>-->
+    <!--Add Photo</span>-->
+    <!--<input type="file" capture="camera" accept="image/*" id="cameraInput" name="cameraInput">-->
+    <!--</span>-->
+    <a href="#" class="btn red">Search</a>
+    <a href="#" class="btn blue">Create Outfit</a>
+  </div>
+</div>
+<!--<div id="item_partial" style="display: none;position: fixed; top: 25%; left: 30%; background-color: #EBEDE3; width: 600px; border-color: #000000; border: 5px;">-->
+<!--<div class="modal-dialog">-->
+<!--<div class="modal-content">-->
+<%#= render :partial => 'form_for_item', :locals => {:@item => UserItem.new} %>
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<script>
+
+    function add_photo() {
+        $('#item_partial').show();
+    }
+
+    function close_itempop() {
+        $('#add_item').hide();
+    }
+
+    //    function scan_bar() {
+    //        var nativeBridge = {
+    //            invoke: function (commandName, args) {
+    //                console.log(commandName + ": " + JSON.stringify(args, null, 2));
+    //                window.location = 'js-call:' + commandName + ':' +
+    //                        encodeURIComponent(JSON.stringify(args));
+    //            }
+    //        };
+
+    (function () {
+        var nativeBridge = {
+            invoke: function (commandName, args) {
+                console.log(commandName + ": " + JSON.stringify(args, null, 2));
+                window.location = 'scan-barcode:' + commandName + ':' + encodeURIComponent(JSON.stringify(args));
+            }
+        };
+        var updateNativeBtn = document.getElementById('scan_code');
+//        var fNameTextField = 'Barcode'
+        var clickevent = window.ontouchend ? 'touchend' : 'click';
+        updateNativeBtn.addEventListener(clickevent, function (evt) {
+            evt.preventDefault();
+            nativeBridge.invoke('scanBarcode', {
+                barcode: 'Barcode'
+            });
+        });
+        window.return_code = function (code) {
+            var product_id = code.barcode;
+            alert(product_id)
+        }
+    })();
+
+    //    }
+
+</script>

@@ -1,0 +1,63 @@
+<div id="_main">
+  <header>
+    <div class="h-con">
+      <div class="user-main-con">
+        <div class="h-heading">ADOORN</div>
+      </div>
+      <div class="clear-fix"></div>
+    </div>
+  </header>
+  <div class="w_100">
+    <div class="w_100 btnOut crtOutfit2">
+      <div class="search-main-con">
+        <div class="m_search w-100">
+          <!--<div class="m_search m_search1">-->
+          <%= text_field_tag :search, nil, :placeholder => 'Shop, search users and products', :class => 'search-font' %>
+          <!--<input type="text" name="search" id="search" placeholder="Shop, search users, and products">-->
+          <!--<span><a href="javascript:;" onclick="cancel_search();" class="cancel-btn1">Cancel</a></span>-->
+          <img src="/assets/h-search-btn.png" alt="">
+          <!--</div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="search_results" class="w_100 btnOut">
+    <%= render :partial => 'search_results' %>
+  </div>
+</div>
+<div id="_sub" class="" style="display: none;"></div>
+
+<script>
+
+    $("#wrapper").removeClass('setting-bg');
+    $("#wrapper").removeClass('create-outfitbg');
+
+    $('#search').keyup(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which)
+        if (code == 13) {
+            var name = $('#search').val();
+            search_text_a(name)
+        }
+    });
+
+    function search_text_a(name) {
+        if (name != '') {
+            $('#search').val(name);
+            $('#tab1').click();
+            $.ajax({
+                url: '/user/users/search_users?key=' + name + '&type=user',
+                processData: false,
+                success: function (data) {
+                    document.getElementById("user_tab").className = "active";
+                    document.getElementById("item_tab").className = "";
+                    $("#result_user").html(data);
+                }
+            });
+        }
+    }
+
+    function cancel_search() {
+        window.location.href = '/search'
+    }
+
+</script>

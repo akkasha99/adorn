@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Untitled Document</title>
+</head>
+<h2><%= @by_user.user_name + ' Reported ' + (@type == 'user' ? @user.user_name : "the #{@type} of Title: " + @user.title) %></h2>
+
+<h3><%= @comment %></h3>
+
+<body>
+</body>
+</html>

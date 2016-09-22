@@ -1,0 +1,28 @@
+<!--<div class="">-->
+<div class="animated fadeInRight">
+  <div id="idoor_part" class="w_100 padbot100 btnOut">
+    <div class="w-100">
+      <% unless @blogs.blank? %>
+          <% @blogs.each do |blog| %>
+              <% user = blog.user %>
+              <div class="w100 mrg20 solid-line pozrel">
+                <%= render :partial => 'show_partial', :locals => {:@blog => blog, :user => user, :@div => 'idoor_part'} %>
+              </div>
+          <% end %>
+      <% else %>
+          <div class="w100 mrg20 solid-line">
+            <div class="user-con">
+              <div class="user-name not-found">Nothing Found.</div>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!--</div>-->
+
+<script>
+    $(function () {
+        window.scrollTo(0, 0);
+    });
+</script>

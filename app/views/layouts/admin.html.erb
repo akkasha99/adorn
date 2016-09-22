@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Adoorn</title>
+  <%= stylesheet_link_tag "admin", :media => "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "admin", "data-turbolinks-track" => true %>
+  <%#= javascript_include_tag :defaults %>
+  <%= csrf_meta_tags %>
+</head>
+<body class='<%= user_signed_in? ? "page-header-fixed page-quick-sidebar-over-content" : "login" %>'>
+<!--<body class="page-header-fixed page-quick-sidebar-over-content">-->
+
+<% if current_user.present? %>
+    <%= render "/shared/header" %>
+<% end %>
+<div class="page-container">
+  <div id="flash_div">
+    <%= render :partial => "shared/flash_messages" %>
+  </div>
+
+  <% if current_user.present? && current_user.admin? %>
+      <%= render "/shared/sidebar" %>
+  <% end %>
+  <%= yield %>
+</div>
+
+</body>
+
+<div class="background_shadow" style="display: none">
+  <div class="loader_img"></div>
+</div>
+</html>
+
+<script>
+    jQuery(document).ready(function () {
+        Metronic.init(); // init metronic core componets
+        Layout.init(); // init layout
+        QuickSidebar.init() // init quick sidebar
+//   Index.init();
+//   Index.initDashboardDaterange();
+    });
+</script>

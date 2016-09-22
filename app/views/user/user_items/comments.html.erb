@@ -1,0 +1,89 @@
+<header>
+  <div class="h-con">
+    <div class="user-main-con">
+      <div class="h-heading">comments</div>
+    </div>
+    <div class="setaro"><a href="/user/item/show/<%= @item_id %>"><img src="/assets/setting-errow.png" alt=""></a></div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="w-100">
+    <% if @comments.present? %>
+        <% @comments.each do |c| %>
+            <div class="comments-h-con comments-con-padding p0">
+              <div class="w-100">
+                <a href="/user/show/<%= c.user.id %>">
+                  <div class="mn-user-image">
+                    <% if c.user.avatar? && File.exists?(c.user.avatar.path(:icon).to_s) %>
+                        <%= image_tag c.user.avatar(:icon) %>
+                    <% else %>
+                        <%= image_tag "missing.png" %>
+                    <% end %>
+                  </div>
+                </a>
+
+                <div class="comments-desc">
+                  <div class="f-l"><a href="/user/show/<%= c.user.id %>"><%= c.user.user_name %></a></div>
+                  <div class="comm-days"><%= time_ago_in_words(c.created_at) %> ago</div>
+                  <div class="detail w_100"><%= c.text %></div>
+                </div>
+              </div>
+            </div>
+        <% end %>
+    <% else %>
+        <div class="comments-h-con comments-con-padding p0">
+          <div class="w-100">
+            <a href="javascript:;">
+              <div class="mn-user-image">
+                <%= image_tag "missing.png" %>
+              </div>
+            </a>
+
+            <div class="comments-desc">
+              <div class="detail w_100">No Comments ...</div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+
+    <div class="add-comments w-100">
+      <% @comment = Comment.new %>
+      <%= form_for @comment, :url => '/user/user_items/add_comments', :html => {:multipart => true, :onsubmit => "return false", :id => 'user_item_comment_form', :method => 'post'} do |comment| %>
+          <%= comment.text_field :text, :placeholder => "Add a comment" %>
+          <%= comment.hidden_field :user_item_id, :value => @item_id %>
+          <%= comment.hidden_field :user_id, :value => current_user.id %>
+          <button class="add-comments-btn" onclick="add_comment('<%= @item_id %>')">add</button>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+
+    $("#user_item_comment_form").validate({
+                rules: {
+                    "comment[text]": {
+                        required: true
+                    }
+                }
+            }
+    );
+    function add_comment(item_id) {
+        if ($('#user_item_comment_form').valid() == true) {
+            $('.background_shadow').show();
+            $("#user_item_comment_form").ajaxSubmit({
+                url: '/user/user_items/add_comments?item_id=' + item_id,
+                success: function (data) {
+                    if (data != 'error') {
+                        window.location.href = data;
+                    }
+//                        $('#user_item_show').html(data);
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+    }
+</script>

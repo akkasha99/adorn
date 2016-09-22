@@ -1,0 +1,150 @@
+<body id="signup_div" class="box_in">
+<div class="signup-con">
+  <!--<a href="#"><img src="images/fb-signup-btn.png" alt=""></a>-->
+  <a href="<%= user_omniauth_authorize_path(:facebook) %>"><img src="/assets/fb-signup-btn.png" alt=""></a>
+
+  <div class="seprator"></div>
+  <div class="fields_in">
+    <% resource = User.new %>
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:id => 'user_reg_form', :multipart => true, :onsubmit => 'return false'}) do |f| %>
+        <div class="fields_txt">
+          <div class="fields_txt1"><%= f.text_field :user_name, :placeholder => "Username", :id => 'username' %></div>
+          <div class="fields_txt1"> <%= f.text_field :email, :placeholder => "Email Address" %></div>
+          <div class="fields_txt1"><%= f.password_field :password, :placeholder => "Password", :id => "pass" %></div>
+          <div class="fields_txtpw"><%= f.password_field :password_confirmation, :placeholder => "Confirm Password" %></div>
+        </div>
+        <input type="button" onclick="submit_user()" value="SIGN UP" class="sign_btn border_9">
+    <% end %>
+  </div>
+  <div class="terms-txt">By clicking Sign Up you agree to our <a href="/terms">Terms of Service</a> &
+    <a href="/policy">Privacy Policy</a></div>
+  <div class="b-signin2" style="margin: 10px 0 0;">Already have an account? <a href="/users/sign_in">sign In</a></div>
+</div>
+</body>
+
+<div class="background_shadow" style="display: none">
+  <div class="loader_img"></div>
+</div>
+<%= render :partial => "/shared/pop_up" %>
+
+<script>
+
+    jQuery.validator.addMethod("noSpace", function (value, element) {
+        return value.indexOf(" ") < 0 && value != "";
+    }, "No space allowed.");
+
+    $(function () {
+        $('#username').on('keypress', function (e) {
+            if (e.which == 32)
+                return false;
+        });
+    });
+
+    <% if flash[:error] != nil %>
+    document.getElementById("mainpop_text").innerHTML = "<%= flash[:error] %>";
+    $("#mainapp_popup").show();
+    setTimeout(function () {
+        close_me_please();
+    }, 4000);
+    <% elsif flash[:alert] != nil %>
+    document.getElementById("mainpop_text").innerHTML = "<%= flash[:error] %>";
+    $("#mainapp_popup").show();
+    setTimeout(function () {
+        close_me_please();
+    }, 4000);
+    <% end %>
+
+    $("#user_reg_form").validate({
+                rules: {
+                    "user[first_name]": {
+                        maxlength: 255,
+                        minlength: 3,
+                        required: true
+                    },
+                    "user[last_name]": {
+                        maxlength: 255,
+                        minlength: 3,
+                        required: true
+                    },
+                    "user[user_name]": {
+                        maxlength: 32,
+                        minlength: 3,
+                        required: true,
+                        noSpace: true,
+                        remote: {
+                            url: "/user/users/check_username?user_name=" + "user[user_name]",
+                            type: "get"
+                            //                            dataType:'html'
+                        }
+                    },
+                    "user[email]": {
+                        maxlength: 255,
+                        minlength: 1,
+                        required: true,
+                        email: true,
+                        remote: {
+                            url: "/user/users/check_email?email=" + "user[email]",
+                            type: "get"
+                            //                            dataType:'html'
+                        }
+                    },
+                    "user[password]": {
+                        required: true,
+                        maxlength: 255,
+                        minlength: 6
+                    },
+                    "user[password_confirmation]": {
+                        required: true,
+                        maxlength: 255,
+                        minlength: 6,
+                        equalTo: '#pass'
+                    },
+                    "user[location]": {
+//                        required: true
+                    },
+                    "user[about_me]": {
+//                        required: true
+                    }
+                },
+                messages: {
+                    "user[email]": {
+                        remote: "Email already exists."
+                    },
+                    "user[password_confirmation]": {
+                        equalTo: "New password doesn't match..."
+                    },
+                    "user[user_name]": {
+                        remote: "Username already exists."
+                    }
+
+                }
+
+            }
+    );
+
+    function submit_user() {
+        if ($('#user_reg_form').valid() == true) {
+            $('.background_shadow').show()
+            $("#user_reg_form").ajaxSubmit({
+                success: function (data) {
+                    $('.background_shadow').hide()
+                    if (data == 'error') {
+                        $('.background_shadow').hide();
+                        hudMsg('error', "User not registered, Try Again.")
+                    }
+                    else {
+                        $('#signup_div').removeClass('box_in');
+                        $('#signup_div').html(data);
+                        $('.background_shadow').hide();
+//                        hudMsg('success', "Registered successfully.")
+                    }
+
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+    }
+
+</script>

@@ -1,0 +1,61 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require font-awesome/css/font-awesome.min
+  *= require simple-line-icons/simple-line-icons.min
+  *= require components
+  *= require bootstrap/css/bootstrap.min
+  *= require uniform/css/uniform.default
+  *= require bootstrap-switch/css/bootstrap-switch.min
+  *= require select2/select2.css
+  *= require datatables/plugins/bootstrap/dataTables.bootstrap
+  *= require gritter/css/jquery.gritter
+  *= require tasks
+  *= require plugins
+  *= require layout
+  *= require login
+  *= require default
+  *= require custom
+  *= require apprise
+  *= require apprise-v2
+  *= require_self
+  */
+
+.background_shadow {
+    background: none repeat scroll 0 0 #000000;
+    display: block;
+    height: 100%;
+    left: 0;
+    opacity: 0.6;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999999999999
+}
+
+.loader_img {
+    background: url("/assets/dd.gif") no-repeat scroll right center transparent;
+    display: block;
+    height: 100px;
+    left: 46%;
+    opacity: 0.6;
+    position: absolute;
+    top: 25%;
+    width: 100px;
+    z-index: 9999999999999999;
+    background-size: 100px 100px !important;
+}
+
+input[type="text"] {
+    cursor: text !important;
+}
+.errD label.error { color: red!important;}

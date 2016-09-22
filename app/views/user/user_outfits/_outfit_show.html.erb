@@ -1,0 +1,144 @@
+<div id="outfit_detail">
+  <header>
+    <div class="h-con">
+      <div class="user-main-con">
+        <div class="h-heading3"><%= truncate(@outfit.title, :length => 20) %></div>
+      </div>
+      <div class="backBtn">
+        <!--<a href="javascript:;" onclick="return_back('<%#= @outfit.user.id %>');"><img src="/assets/setting-errow.png" alt=""></a>-->
+        <a href="javascript:;" onclick="return_back('item_details');"><img src="/assets/setting-errow.png" alt=""></a>
+      </div>
+      <%# if @outfit.user != current_user %>
+      <!--<div class="gearadd"><a href="#"><img src="/assets/add-plus.png" alt="" onclick="add_outfit_popup()"></a>-->
+      <!--</div>-->
+      <%# end %>
+    </div>
+  </header>
+
+  <div class="btnOut w_100">
+    <div class="w-100 mrg20">
+      <div class="banner-con">
+        <%= image_tag @outfit.image.url(:other) if @outfit.image.present? %>
+      </div>
+
+      <div class="w_100" id="show_buttons">
+        <%= render :partial => 'outfit_adoorn_buttons', :locals => {:@outfit => @outfit} %>
+      </div>
+
+      <div class="w_100">
+        <div class="banner-con">
+          <div class="des">
+            <%= @outfit.description %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--contaainer end-->
+
+  <div class="w_100">
+    <a href="javascript:;" onclick="show_outfit_comments(<%= @outfit.id %>,'closet_sub')">
+      <div class="inner-h-con brdtop2">
+        <div class="pro">Comments (<%= number_to_human(@outfit.comments.length) %>)</div>
+        <div class="r-erow"><img alt="" src="/assets/profile-erow.png"></div>
+      </div>
+    </a><!-- a end-->
+
+    <div class="w100">
+      <div class="account-h-con">
+        <div class="heading">Items Featured in Outfit</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btnOut2 w_100 mrg20 mrgbot100 padbot100">
+    <% if @featured_items.size > 0 %>
+        <% @featured_items.each do |item| %>
+            <div class="prod-main-con">
+              <div class="pro-con">
+                <!--<a href="javascript:;" onclick="get_partial('<%#= item.id %>', <%#= item.class.name == 'BasicItem' ? '#' : '/user/user_items/show' %>)">-->
+                <a href="javascript:;" onclick="get_details('<%= item.class.name == 'BasicItem' ? '' : item.id %>', '/user/user_items/show')">
+                  <%= image_tag item.image.url(:thumb) %>
+                  <!--<img alt="" src="/assets/girl-img1.jpg">-->
+                </a>
+              </div>
+              <a href="javascript:;">
+                <div class="quantity"><%= item.class.name == 'BasicItem' ? 0 : item.adorns.length %></div>
+              </a>
+            </div>
+        <% end %>
+    <% end %>
+  </div>
+  <!--container end-->
+</div>
+
+<div class="delet-popup" id="outfit_add_popup" style="display: none">
+  <p>ARE YOU SURE YOU WANT TO ADD THIS OUTFIT TO YOUR CLOSET?</p>
+
+  <div class="delet-links">
+    <a onclick="outfit_adding('<%= @outfit.id %>')">Add</a>
+
+    <a onclick="cencel_outfit_add()">Cancel</a>
+  </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        show_user_footer
+//        hide_footers();
+        window.scrollTo(0, 0);
+    });
+
+    function outfit_adoorning(outfit_id, user_id, type) {
+        $.ajax({
+            url: '/user/user_outfits/feed_adoorning?outfit_id=' + outfit_id + '&user_id=' + user_id + '&type=' + type,
+            processData: false,
+            success: function (data) {
+                if (data != 'error')
+                    $('#show_buttons').html(data);
+            },
+            error: function (data) {
+            }
+        });
+
+    }
+
+    function show_outfit_comments(outfit_id, action) {
+        $('.background_shadow').show();
+        $.ajax({
+            url: '/user/user_outfits/comments?outfit_id=' + outfit_id,
+            processData: false,
+            success: function (data) {
+                if (data != 'error') {
+                    $('.background_shadow').hide();
+//                    $('#outfit_detail').parent().show().html(data);
+                    $("#_sub").show().html(data);
+                }
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+    //    function add_outfit_popup() {
+    //        $("#outfit_add_popup").show();
+    //    }
+    //    function cencel_outfit_add() {
+    //        $("#outfit_add_popup").hide();
+    //    }
+    //
+    //    function outfit_adding(id) {
+    //        $("#outfit_add_popup").hide()
+    //        $('.background_shadow').show();
+    //        $.ajax({
+    //            url: "/user/user_outfits/add_to_closet?id=" + id,
+    //            processData: false,
+    //            success: function (data) {
+    //                $('.background_shadow').hide();
+    //                $('#user_footer').show();
+    //                $("#main_div").html(data);
+    //            }
+    //        });
+    //    }
+</script>

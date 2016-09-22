@@ -1,0 +1,29 @@
+<% if @item.private_flag == true %>
+    <a href="javascript:;" onclick="item_private(<%= @item.id %>,true)"><label class="active">Private</label></a>
+<% else %>
+    <a href="javascript:;" onclick="item_private(<%= @item.id %>,false)"><label>Private</label></a>
+<% end %>
+<a href="javascript:;" id="item_share" onclick="share_item('<%= @item.title %>', '<%= @item.image.url(:other) %>')"><label>Share
+  Item</label></a>
+
+<script>
+
+    var outfitsharebridge = {
+        invoke: function (commandName, args) {
+            //                console.log(commandName + ": " + JSON.stringify(args, null, 2));
+            window.location = 'share-item:' + commandName + ':' + encodeURIComponent(JSON.stringify(args));
+        }
+    };
+    function share_item(title, url) {
+
+        var updateNativeBtn = document.getElementById('item_share');
+        //        var clickevent = window.ontouchend ? 'touchend' : 'click';
+        //        updateNativeBtn.addEventListener(clickevent, function (evt) {
+        //            evt.preventDefault();
+        outfitsharebridge.invoke('ShareItem', {
+//            text: "Check out my style on Adoorn: " + title + " #adoornit",
+            text: "#adoornit",
+            url: 'http://54.207.73.170' + url
+        });
+    }
+</script>

@@ -1,0 +1,158 @@
+<!--<div class="middle-section">-->
+<!--<div class="wrapp">-->
+<!--<div class="w-100 mrg20">-->
+<!--<div id="search_results" class="w-100">-->
+<!--<div id="page-wrap">-->
+<!--<div class="buttons two-btn buttons-mrg-b">-->
+<!--<label id="user_tab" class="active" for="tab1" onclick="show_users();"><span>Users</span></label>-->
+<!--<label id="item_tab" class="" for="tab2" onclick="show_items();"><span>Items</span></label>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="TabBar">-->
+<!--<ul class="tabs">-->
+<!--<li>-->
+<!--<input type="radio" checked name="tabs" id="tab1">-->
+<!--<label for="tab1"></label>-->
+<!--&lt;!&ndash;&ndash;&gt;-->
+<!--<div id="tab-content1" class="tab-content">-->
+<!--<div class="animated  fadeInRight">-->
+<!--<div class="container">-->
+<!--<div id="result_user" class="w-100">-->
+<!--<%#= render :partial => '/desktop/users/user_results', :locals => {:users => users} %>-->
+<!--<%# if @recent.size > 0 %>-->
+<!--&lt;!&ndash;<div class="w100">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="re-post-hd">Recent Searches</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="post-con">&ndash;&gt;-->
+<!--&lt;!&ndash;<%# @recent.each do |recent| %>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="javascript:;" onclick="search_text('<%#= recent.search %>', 'user')">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="re-post"><%#= recent.search %></div>&ndash;&gt;-->
+<!--&lt;!&ndash;</a>&ndash;&gt;-->
+<!--&lt;!&ndash;<%# end %>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--<%# end %>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</li>-->
+<!--&lt;!&ndash;&ndash;&gt;-->
+<!--<li>-->
+<!--<input type="radio" name="tabs" id="tab2">-->
+<!--<label for="tab2"></label>-->
+<!--&lt;!&ndash;&ndash;&gt;-->
+<!--<div id="tab-content2" class="tab-content">-->
+<!--<div class="animated  fadeInRight">-->
+<!--<div class="container">-->
+<!--<div id="result_item" class="w-100">-->
+<!--<%#= render :partial => 'item_results', :locals => {} %>-->
+<!--<%# if @recent.size > 0 %>-->
+<!--&lt;!&ndash;<div class="w100">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="re-post-hd">Recent Searches</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="post-con">&ndash;&gt;-->
+<!--&lt;!&ndash;<%# @recent.each do |recent| %>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="javascript:;" onclick="search_text('<%#= recent.search %>', 'item')">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="re-post"><%#= recent.search %></div>&ndash;&gt;-->
+<!--&lt;!&ndash;</a>&ndash;&gt;-->
+<!--&lt;!&ndash;<%# end %>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--<%# end %>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+
+
+
+
+<div class="middle-section">
+  <div class="secOuter">
+    <div class="Md_Sec2">
+      <div class="srchItems">
+        <input id="desk_search_search" type="text" placeholder="Shop, Search Users, and items">
+      </div>
+    </div>
+  </div>
+  <div class="secOuter2">
+    <div class="Md_Sec">
+      <div class="tbs">
+        <p id="user_tab" class="p031 active" onclick="show_users();">Users</p>
+
+        <p id="item_tab" class="p032" onclick="show_items();">Items</p>
+      </div>
+    </div>
+  </div>
+  <div class="Md_Sec">
+    <div class="prodctsList" id="result_item" style="display:none;">
+    </div>
+    <div class="selctUser" id="result_user">
+      <%= render :partial => '/desktop/users/user_results', :locals => {:users => users} %>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#desk_search_search').val($('#desk_search').val());
+    });
+
+    $('#desk_search_search').keyup(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which)
+        if (code == 13) {
+            var name = $('#desk_search_search').val();
+            search_text(name, 'user');
+            $("#result_user").show();
+            $("#result_item").hide();
+            $("#user_tab").addClass("active");
+            $("#item_tab").removeClass("active");
+        }
+    });
+    function show_users() {
+        $("#user_tab").addClass("active");
+        $("#item_tab").removeClass("active");
+        var name = $('#desk_search_search').val();
+        search_text(name, 'user');
+        $("#result_user").show();
+        $("#result_item").hide();
+    }
+
+    function show_items() {
+        $("#item_tab").addClass("active");
+        $("#user_tab").removeClass("active");
+        var name = $('#desk_search_search').val();
+        search_text(name, 'item');
+        $("#result_item").show();
+        $("#result_user").hide();
+    }
+
+    function search_text(name, type) {
+        $('#desk_search').val(name);
+        $(".background_shadow").show()
+        $.ajax({
+            url: '/user/users/desk_search?key=' + name + '&type=' + type,
+            processData: false,
+            success: function (data) {
+                $(".background_shadow").hide()
+                $("#result_" + type).html(data);
+            }
+        });
+    }
+
+</script>

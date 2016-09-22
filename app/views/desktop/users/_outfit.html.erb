@@ -1,0 +1,159 @@
+<div class="topShadow" style="display: none" id="reporting_popup">
+  <div class="topShadowIn">
+    <div class="tSIn">
+      <div class="cls"><a href="#" onclick="reporting_outfit_close()"><img src="/assets/tpClose.png"></a></div>
+      <div class="tSHed">Report <%= truncate((@outfit.title if @outfit.title.present?), :length => 20) %></div>
+      <div class="tscontns">
+        <h3>Why are you reporting this?</h3>
+
+        <div class="checBxz">
+          <div class="chBXList">
+                     <span>
+                       <input type="radio" class="radio" name="report" value="SPAM" onchange="report()">
+                         <!--<input type="radio" name="foo">-->
+                         <p>Feels like SPAM </p>
+                        </span>
+                     <span>
+                       <input type="radio" class="radio" name="report" value="Offensive" onchange="report()">
+                         <!--<input type="radio" name="foo" checked>-->
+                         <p>Inappropriate or Offensive </p>
+                        </span>
+                        <span>
+                          <input type="radio" class="radio" name="report" value="Other" onchange="report()">
+                         <!--<input type="radio" name="foo">-->
+                         <p>Other... </p>
+                        </span>
+          </div>
+        </div>
+        <span style="display: none;margin:0 0 0 -43px;" id="others_text">
+                    <textarea id="text_text" placeholder="Enter your message here..."></textarea>
+                    </span>
+      </div>
+      <div class="actButnz">
+        <a href="#" id="report_button" onclick="send_report('<%= @outfit.id %>','outfit')">Report It</a>
+
+        <p>Thanks</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="middle-section">
+  <div class="wrapp">
+    <div class="w-100 mrg20">
+      <!--<div style="border:none;" class="inner-h-con desk-h-con p0">-->
+      <div class="desk-colllerless"><%= @outfit.title if @outfit.title.present? %></div>
+      <% user = @outfit.user %>
+      <!--<div onclick="closet(<%#= user.id %>)">-->
+      <!--<%# if user.avatar? && File.exists?(user.avatar.path(:thumb).to_s) %>-->
+      <!--<%#= image_tag user.avatar(:thumb) %>-->
+      <!--<%# else %>-->
+      <!--<%#= image_tag "missing.png" %>-->
+      <!--<%# end %>-->
+      <!--</div>-->
+      <!--<div class="pro low_cas_desk" onclick="closet(<%#= user.id %>)"><%#= @outfit.user.user_name %></div>-->
+      <!--<div class="desk-top-time"><%#= time_ago_in_words(@outfit.created_at) %> ago</div>-->
+      <!--</div>-->
+    </div>
+    <div class="w-100">
+      <div class="banner-con" style="border: solid 1px #ccc;">
+        <%= image_tag @outfit.image.url(:other) if @outfit.image.present? %>
+      </div>
+    </div>
+    <div class="w-100">
+      <div class="desk-collar-price">
+        <div class="from">
+          <a href="#" onclick="closet(<%= user.id %>)">
+            <% if user.avatar? && File.exists?(user.avatar.path(:thumb).to_s) %>
+                <%= image_tag user.avatar(:thumb), :class => "pic_image_desk", :style => "width :41px;height:41px;margin:0 3% 0 0 " %>
+            <% else %>
+                <%= image_tag "missing.png", :class => "pic_image_desk", :style => "width :41px;height:41px;margin:0 3% 0 0 " %>
+            <% end %>
+          </a>
+          <a href="#" onclick="closet(<%= user.id %>)" style="color: #000;"><%= "by " + @user = user.user_name %></a>
+        </div>
+      </div>
+    </div>
+    <div class="w-100 mrg20">
+      <div class="desk-shar-btn">
+        <a href="#" class="active" style="width:115px;">Share</a>
+
+        <div onclick="reporting_outfit()" class="desk-black-built-con">
+          <div class="desk-black-built"></div>
+          <div class="desk-black-built"></div>
+          <div class="desk-black-built"></div>
+        </div>
+      </div>
+      <div class="desk-total-visitor"><span><%= number_to_human(@outfit.adorns.length) %></span>
+        <img alt="" src="/assets/desk-eye.png">
+      </div>
+    </div>
+    <div class="w-100">
+      <div class="desk-des-multi-img">
+        <%= @outfit.description if @outfit.description.present? %>
+      </div>
+    </div>
+    <div class="desk-view-all" onclick="show_comments('item_comments')">view all comments</div>
+    <div id="item_comments" style="display: none">
+      <%= render :partial => '/desktop/users/comments', :locals => {:comment => @outfit.comments} %>
+    </div>
+    <%= render :partial => '/desktop/users/comment_form' %>
+    <%= render :partial => '/desktop/users/item_outfit', :locals => {:@suggested_items => suggested} %>
+  </div>
+</div>
+
+<!--<div class="report-popup" id="reporting_popup" style="display: none">-->
+<!--<p>Reporting</p>-->
+
+<!--<div><input type="radio" class="radio" name="report" value="SPAM" onchange="report()"> Spam</div>-->
+<!--<div><input type="radio" class="radio" name="report" value="Offensive" onchange="report()">Offensive</div>-->
+<!--<div><input type="radio" class="radio" name="report" value="Other" onchange="report()">Other-->
+<!--<input type="text" id="others_text" style="display: none"></div>-->
+<!--<input type="button" id="report_button" style="background-color:#000 " value="report" disabled onclick="send_report('<%= @outfit.id %>','outfit')">-->
+<!--</div>-->
+
+
+
+
+<!--reporting_pop_up-->
+
+<script>
+
+    //    function report_outfit(id) {
+    //        $.ajax({
+    //            url: '/user/users/reporting?id=' + id + '&comment=false&content_type=outfit',
+    //            success: function (data) {
+    //                $('#main_div').html(data);
+    //            }
+    //        });
+    //    }
+
+    $(document).ready(function () {
+        window.scrollTo(0, 0);
+        function myFunc() {
+            if ($("#text_text").val() == '') {
+                $("#report_button").removeClass('active');
+            }
+            else {
+                $("#report_button").addClass('active');
+            }
+        }
+
+        myFunc();
+
+        //either this
+        $('#text_text').keyup(function () {
+            myFunc();
+        });
+
+        //or this
+        $('#text_text').keyup(function () {
+            myFunc();
+        });
+
+        //and this for good measure
+        $('#text_text').change(function () {
+            myFunc(); //or direct assignment $('#txtHere').html($(this).val());
+        });
+    });
+</script>

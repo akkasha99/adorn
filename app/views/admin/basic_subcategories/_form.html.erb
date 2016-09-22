@@ -1,0 +1,61 @@
+<%= form_for @subcategory, :url => 'basic_subcategories/', :html => {:multipart => true, :onsubmit => "return false", :id => 'subcategory_form', :method => 'post'} do |f| %>
+  <div class="errD">
+    <div class="clearfix">
+      <%= f.label :name %>
+      <%= f.text_field :name, :class => "form-control placeholder-no-fix", :placeholder => "SubCategory Name" %>
+      <%= f.hidden_field :basic_category_id, :value => (f.object.new_record? ? category_id : @subcategory.basic_category_id) %>
+    </div>
+    <div class="clearfix">
+      <%= f.label :image %>
+      <%= image_tag @subcategory.image.url(:thumb), :class => 'thumbnail' unless f.object.new_record? %>
+      <%= f.file_field :image %>
+    </div>
+    <br>
+    <div class="clearfix">
+      <% if f.object.new_record? %>
+          <%= link_to "submit", "javascript:;", :onclick => "submit_subcategory('create', '');", :class => "btn green pull-left" %>
+      <% else %>
+          <%= link_to "submit", "javascript:;", :onclick => "submit_subcategory('update', '#{@subcategory.id}');", :class => "btn green pull-left" %>
+      <% end %>
+      <%#= link_to "submit", "javascript:;", :onclick => "submit_brand('#{f.object.new_record? ? 'create' : 'update'}', '#{f.object.new_record? ? nil : @brand.id}');", :class => "btn green pull-left" %>
+      <%#= link_to "Back", admin_brands_path, :class => "btn green", :style=> "margin:0 0 0 10px;" %>
+    </div>
+  </div>
+<% end %>
+
+<script>
+
+    function submit_subcategory(action, id) {
+        if ($('#subcategory_form').valid() == true) {
+            $(".background_shadow").show()
+            $("#subcategory_form").ajaxSubmit({
+                url: $('#subcategory_form').attr("action") + action + '?id=' + id,
+                success: function (data) {
+                    if (data != 'error') {
+                        $(".background_shadow").hide()
+                        $('#panel_body').html(data);
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+    }
+
+    $('#subcategory_form').validate({
+                rules: {
+                    "basic_subcategory[name]": {
+                        maxlength: 255,
+                        minlength: 3,
+                        required: true
+                    },
+                    "basic_subcategory[logo]": {
+//                        required: true
+                    }
+                }
+
+            }
+    );
+
+</script>

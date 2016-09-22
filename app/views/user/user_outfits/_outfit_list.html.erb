@@ -1,0 +1,57 @@
+<div class="animated  fadeInRight">
+  <div class="btnOut crtOutfit mrgbot100 ortfitbdr">
+    <div class="w100">
+      <% if upload == true %>
+          <div class="outfits-l">
+            <a href="javascript:;" onclick="get_partial('<%= current_user.id %>', '/user/user_outfits/new_outfit')"><img src="/assets/create-outfit.jpg" alt=""></a>
+            <!--<a href="#" onclick="upload_outfit('<%#= user_id %>')"><img src="/assets/create-outfit.jpg" alt=""></a>-->
+          </div>
+      <% end %>
+      <!--outfits-r end-->
+      <% if items.size > 0 %>
+          <% items.each do |item| %>
+              <div class="outfits-l">
+                <a href="javascript:;" onclick="get_partial('<%= item.id %>', '/user/user_outfits/show')">
+                  <% if item.image? && File.exists?(item.image.path(:thumb).to_s) %>
+                      <%= image_tag item.image.url(:original) %>
+                  <% else %>
+                      <%= image_tag "missing_item.jpeg" %>
+                  <% end %>
+                </a>
+                <a href="#">
+                  <div class="quantity"><%= number_to_human(item.adorns.length) %></div>
+                </a>
+              </div>
+          <% end %>
+      <% else %>
+          <% if upload == false %>
+              <div class="w_100 not-found">
+                Nothing Found.
+              </div>
+          <% end %>
+      <% end %>
+      <!--outfits-r end-->
+    </div>
+    <!--w100 end-->
+  </div>
+  <!--w100 end-->
+</div>
+</div>
+
+<script>
+
+    $(function () {
+        window.scrollTo(0, 0);
+    });
+
+    //    function upload_outfit(id) {
+    //        $.ajax({
+    //            url: '/user/user_outfits/upload?uid=' + id,
+    //            processData: false,
+    //            success: function (data) {
+    //                window.location.html(data)
+    //            }
+    //        });
+    //    }
+
+</script>

@@ -1,0 +1,177 @@
+<div class="topShadow" style="display: none" id="reporting_popup">
+  <div class="topShadowIn">
+    <div class="tSIn">
+      <div class="cls"><a href="#" onclick="reporting_outfit_close()"><img src="/assets/tpClose.png"></a></div>
+      <div class="tSHed">Report <%= truncate(@user.user_name, :length => 20) %></div>
+      <div class="tscontns">
+        <h3>Why are you reporting this?</h3>
+
+        <div class="checBxz">
+          <div class="chBXList">
+                     <span>
+                       <input type="radio" class="radio" name="report" value="SPAM" onchange="report()">
+                         <!--<input type="radio" name="foo">-->
+                         <p>Feels like SPAM </p>
+                        </span>
+                     <span>
+                       <input type="radio" class="radio" name="report" value="Offensive" onchange="report()">
+                         <!--<input type="radio" name="foo" checked>-->
+                         <p>Inappropriate or Offensive </p>
+                        </span>
+                        <span>
+                          <input type="radio" class="radio" name="report" value="Other" onchange="report()">
+                         <!--<input type="radio" name="foo">-->
+                         <p>Other... </p>
+                        </span>
+
+          </div>
+        </div>
+        <span style="display: none; margin:0 0 0 -43px;" id="others_text">
+                    <textarea id="text_text" placeholder="Enter your message here..."></textarea>
+                    </span>
+      </div>
+      <div class="actButnz">
+        <a href="#" id="report_button" onclick="send_report('<%= @user.id %>','user')">Report It</a>
+
+        <p>Thanks</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="position: relative; background: rgb(0,0,0); overflow:hidden;<%= @user != current_user ? "height: 548px;" : "height: 444px;" %> ">
+  <div class="<%= @user == current_user ? 'desk-blog-banner-2' : 'desk-blog-banner' %>"
+       <% if @user.avatar.present? && File.exists?(@user.avatar.path(:medium).to_s) %>
+       style="
+       position: absolute;
+               background-color: transparent ! important;
+               background-image: url('<%= @user.avatar.url(:medium) %>') ! important;
+               background-repeat: no-repeat ! important;
+               background-attachment: scroll ! important;
+               background-clip: border-box ! important;
+               background-origin: padding-box ! important;
+               background-size: cover;
+               height: 100%;
+               filter: blur(30px);
+               -webkit-filter: blur(30px);
+               transform: scale(1.05);
+               background-position: center center ! important;">
+  <% else %>
+  ">
+  <% end %>
+  </div>
+  <div class="w100" style="position: absolute; bottom: -4px;">
+    <div class="desk-user-circle-con">
+      <% if @user.avatar.present? && File.exists?(@user.avatar.path(:medium).to_s) %>
+          <%= image_tag @user.avatar.url(:medium), :alt => "Profile Picture" %>
+      <% else %>
+          <%= image_tag 'missing.png' %>
+      <% end %>
+      <!--<img src="/assets/girl-img2.jpg" alt="">-->
+    </div>
+    <div class="desk-customer-name">
+      <%= @user.user_name %>
+      <%# if @user != current_user %>
+          <img src="/assets/ciecle-check.png" alt="">
+      <%# end %>
+    </div>
+    <div class="desk-customer-text desk-customer-text2">
+      <% abc = (@user.first_name.present? ? @user.first_name.length : 0) + (@user.last_name.present? ? @user.last_name.length : 0) + 2 %>
+      <span style="<%= "border-right:1px solid #fff;" if (@user.first_name.present? || @user.last_name.present?) && @user.about_me.present? %> padding: 0 5px 0 0;"><b><%= (@user.first_name.present? ? @user.first_name + ' ' : '') + '' + (@user.last_name.present? ? @user.last_name : ' ') + ' ' %></b></span>
+
+      <p><%= truncate(@user.about_me, :length => 150-abc) if @user.about_me.present? %></p>
+      <!--margin: 0 5px 0 0;-->
+    </div>
+    <% if @user != current_user %>
+        <div class="desk-black-btn">
+          <% if is_adoorn(@user.id) %>
+              <a href="#" style="background-color: #000;border: 2px solid #000;" onclick="adoor_user('<%= @user.id %>',<%= is_adoorn(@user.id) %>)">Adoorning</a>
+          <% else %>
+              <a href="#" onclick="adoor_user('<%= @user.id %>',<%= is_adoorn(@user.id) %>)">Adoorn</a>
+          <% end %>
+          <!--<a href="#" onclick="adoor_user('<%#= @user.id %>',<%#= is_adoorn(@user.id) %>)"><%#= is_adoorn(@user.id) ? 'Adoorning' : 'Adoorn' %></a>-->
+        </div>
+
+    <% end %>
+    <div style="background: rgba(0, 0, 0, .31);padding-bottom: 22px;" class="w-100">
+      <div class="desk-user-adoorn-con">
+        <div class="desk-user-adoorn">
+          <div class="desk-total"><%= number_to_human(@user.adoorners.length) %></div>
+          <!--<a href="#">-->
+          <div class="desk-add-name">Adoorners</div>
+          <!--</a>-->
+        </div>
+        <div class="desk-user-adoorn">
+          <div class="desk-total"><%= number_to_human(@user.iadoorns.length) %></div>
+          <!--<a href="#">-->
+          <div class="desk-add-name">Adoorning</div>
+          <!--</a>-->
+        </div>
+        <div class="desk-user-adoorn border-0">
+          <div class="desk-total"><%= number_to_human(@user.unread_mentions.length) %></div>
+          <!--<a href="#">-->
+          <div class="desk-add-name">Mentions</div>
+          <!--</a>-->
+        </div>
+        <a href="#" style="border: medium none; display: inline-block;margin: 0 0 0 25px;padding: 0;vertical-align: text-top;position: absolute;top: 26px;"><img style="width: 15px;margin-bottom: 2px;" src="/assets/reportingnew.png" alt="Report" onclick="reporting_outfit()"/></a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<%= render :partial => '/desktop/users/desk_index_tabs', :locals => {:@user => @user} %>
+
+
+<script>
+    $(document).ready(function () {
+        window.scrollTo(0, 0);
+
+
+        //        $('#text_text').bind('input propertychange', function () {
+
+        function myFunc() {
+            if ($("#text_text").val() == '') {
+                $("#report_button").removeClass('active');
+            }
+            else {
+                $("#report_button").addClass('active');
+            }
+        }
+
+        myFunc();
+
+        //either this
+        $('#text_text').keyup(function () {
+            myFunc();
+        });
+
+        //or this
+        $('#text_text').keyup(function () {
+            myFunc();
+        });
+
+        //and this for good measure
+        $('#text_text').change(function () {
+            myFunc(); //or direct assignment $('#txtHere').html($(this).val());
+        });
+
+
+    });
+
+    function adoor_user(id, status) {
+        $.ajax({
+            url: '/user/users/add_adoorn?id=' + id + '&status=' + status,
+            processData: false,
+            success: function (data) {
+                if (data != 'error')
+                    $("#desk_main_div").html(data)
+            },
+            error: function (data) {
+
+            }
+        });
+    }
+</script>
+
+
+<!--<div class="desk-total"><%#= number_to_human(@user.unread_mentions.length) %></div>-->

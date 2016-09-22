@@ -1,0 +1,113 @@
+<div id="_main">
+  <header>
+    <div class="h-con">
+      <div class="user-main-con">
+        <div class="h-heading">ADOORN</div>
+      </div>
+      <div class="clear-fix"></div>
+    </div>
+  </header>
+  <div class="w_100">
+    <div class="w_100 btnOut crtOutfit2">
+      <div class="search-main-con">
+        <div class="m_search w-100">
+          <!--<div class="m_search m_search1">-->
+          <%= text_field_tag :search, nil, :placeholder => 'Search new products', :class => 'search-font' %>
+          <!--<input type="text" name="search" id="search" placeholder="Shop, search users, and products">-->
+          <!--<span><a href="javascript:;" onclick="cancel_search();" class="cancel-btn1">Cancel</a></span>-->
+          <img src="/assets/h-search-btn.png" alt="">
+          <!--</div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div onclick="send_search()" class="w_100 btnOut setting-bg margb2">
+    <div style="margin: 0 0 0 0!important;" class="continue-con-btn">
+      <a href="#">Search</a>
+    </div>
+  </div>
+  <div id="search_results" class="w_100 btnOut">
+    <%#= render :partial => 'search_results' %>
+  </div>
+</div>
+<div id="_sub" class="" style="display: none;"></div>
+<div id="scrollifme" style="height: 0;width: 0;display: none;"></div>
+<script>
+
+    var get_more = true;
+    var offset = 11;
+
+    $("#wrapper").removeClass('setting-bg');
+    $("#wrapper").removeClass('create-outfitbg');
+
+    $('#search').keyup(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which)
+        if (code == 13) {
+            var name = $('#search').val();
+            search_text_a(name)
+        }
+    });
+
+    function send_search() {
+        var name = $('#search').val();
+        search_text_a(name)
+
+    }
+
+    function search_text_a(name) {
+        if (name != '') {
+            $(".background_shadow").show();
+            $('#search').val(name);
+            offset = 11;
+            $.ajax({
+                url: '/user/user_items/search_items?key=' + name,
+                processData: false,
+                success: function (data) {
+                    $(".background_shadow").hide();
+                    $("#search_results").html(data);
+                },
+                error: function (data) {
+                    $(".background_shadow").hide();
+                }
+            });
+        }
+    }
+
+    function cancel_search() {
+        window.location.href = '/search'
+    }
+
+
+    $(window).scroll(function () {
+
+        if (document.getElementById('scrollifme') == null) {
+
+        }
+        else {
+            if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+                if (get_more == true) {
+                    get_more = false;
+                    var name = $('#search').val();
+                    $(".background_shadow").show();
+                    $.ajax({
+                        url: '/user/user_items/search_more?key=' + name + "&offset=" + offset,
+                        async: true,
+                        processData: false,
+                        success: function (data) {
+                            $("#search_results").append(data);
+                            offset = offset + 10;
+                            get_more = true;
+                            $(".background_shadow").hide();
+                        },
+                        error: function (data) {
+                            get_more = true;
+                            $(".background_shadow").hide();
+                        }
+                    });
+                }
+            }
+        }
+    });
+
+
+</script>

@@ -1,0 +1,61 @@
+<div class="comment-con desk-collar-price">
+  <span style="float: left;margin: 0 0 20px;width: 100%;">$<%= @item.price.present? ? number_with_precision(@item.price, :precision => 2) : 0 %></span>
+
+  <div class="from">
+    <div onclick="closet(<%= @item.user.id %>)">
+      <% if @item.user.avatar? && File.exists?(@item.user.avatar.path(:thumb).to_s) %>
+          <%= image_tag @item.user.avatar(:thumb), :class => "pic_image_desk", :style => "width :41px;height:41px;margin:0 3% 0 0 " %>
+      <% else %>
+          <%= image_tag "missing.png", :class => "pic_image_desk", :style => "width :41px;height:41px;margin:0 3% 0 0 " %>
+      <% end %>
+      <%= "by " + @user = @item.user.user_name %>
+    </div>
+  </div>
+</div>
+<!--omment-con end-->
+<div class="desk-product-total"><span><%= number_to_human(@item.adorns.length) %></span>
+  <img src="/assets/desk-eye.png" alt="">
+</div>
+
+<div class="comment-con desk-shar-btn">
+  <% if @item.is_adoorned(current_user.id) %>
+      <a href="#" class="active" onclick="item_adoorning('<%= @item.id %>','<%= current_user.id %>','item')"><img src="/assets/adoorn-eye.png" alt="">
+        Adoorned</a>
+  <% else %>
+      <a href="#" onclick="item_adoorning('<%= @item.id %>','<%= current_user.id %>','item')"><img src="/assets/adoorn-eye.png" alt="">
+        Adoorn</a>
+  <% end %>
+  <!--<a href="#"><img alt="" src="/assets/adoorn-eye.png"> Adoor</a>-->
+  <% if @item.buy_link.present? %>
+      <a href="#<%#= @item.buy_link %>" class="desk-buy-btn" onclick="viglinking('<%= @item.buy_link %>')">Buy</a>
+  <% end %>
+</div>
+<!--omment-con end-->
+
+<div class="desk-black-built-con f-r" onclick="reporting_outfit()">
+  <div class="desk-black-built"></div>
+  <div class="desk-black-built"></div>
+  <div class="desk-black-built"></div>
+</div>
+
+
+
+<script>
+    function item_adoorning(item_id, user_id, type) {
+        $.ajax({
+            url: '/user/user_items/feed_adoorning?item_id=' + item_id + '&user_id=' + user_id + '&type=' + type,
+            processData: false,
+            success: function (data) {
+                if (data != 'error')
+                    $('#item_buttons').html(data);
+            },
+            error: function (data) {
+            }
+        });
+
+    }
+
+    function viglinking(url) {
+        vglnk.open(url, "_blank");
+    }
+</script>

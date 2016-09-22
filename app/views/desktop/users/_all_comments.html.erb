@@ -1,0 +1,35 @@
+<% unless @comments.blank? %>
+    <% @comments.each do |comment| %>
+        <div class="desk-comments-h-con">
+          <div class="w-100">
+            <a href="#" onclick="closet(<%= comment.user.id %>)">
+              <div class="desk-mn-user-image">
+                <% if comment.user.avatar? && File.exists?(comment.user.avatar.path(:thumb).to_s) %>
+                    <%= image_tag comment.user.avatar(:thumb) %>
+                <% else %>
+                    <%= image_tag "missing.png" %>
+                <% end %>
+              </div>
+            </a>
+
+            <div class="comments-desc">
+              <div class="f-l"><a class="low_cas_desk" href="#" onclick="closet(<%= comment.user.id %>)"><%= comment.user.user_name %></a>
+              </div>
+              <div class="desk-comm-days"><%= time_ago_in_words(comment.created_at) %> ago</div>
+
+              <div class="detail">
+                <%= comment.text %>
+              </div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+<% else %>
+    <div class="desk-comments-h-con border-0">
+      <div class="w-100">
+        <div class="comments-desc">
+          <div class="detail" style="text-align: center;font-family: weezerfont_CURRENT">Nothing Found.<%#= c.text %></div>
+        </div>
+      </div>
+    </div>
+<% end %>

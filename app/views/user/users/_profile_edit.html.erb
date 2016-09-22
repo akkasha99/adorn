@@ -1,0 +1,135 @@
+<header>
+  <div class="h-con">
+    <div class="user-main-con">
+      <div class="h-heading">Settings</div>
+    </div>
+    <div class="backBtn">
+      <a href="#" onclick="back_to_setting()"><img src="/assets/setting-errow.png" alt=""></a>
+    </div>
+    <div class="clear-fix"></div>
+  </div>
+</header>
+<div class="acc-main-con w_100 mrgbot100 setting-bg">
+  <div class="account-h-con">
+    <div class="heading">profile info</div>
+  </div>
+  <div class="w_100">
+    <% @user = @user %>
+    <%= form_for @user, :html => {:id => 'profile_form', :multipart => true, :onsubmit => 'return false;'} do |f| %>
+        <div class="form fxfrm profile-fixing">
+          <img src="/assets/f-name.png" alt="">
+          <%= f.text_field :first_name, :placeholder => "First Name", :id => "firstname", :class => 'brd_tp' %>
+        </div>
+        <div class="form fxfrm">
+          <%= f.text_field :last_name, :placeholder => "Last Name", :id => "lastname", :class => 'brd_tp' %>
+        </div>
+        <div class="gap"></div>
+        <div class="form fxfrm">
+          <img alt="" src="/assets/user-name.png">
+          <%= f.text_field :user_name, :placeholder => "User Name", :id => "username" %>
+        </div>
+        <div class="gap"></div>
+        <div class="form fxfrm">
+          <img alt="" src="/assets/email-icon.png">
+          <%= f.text_field :email, :placeholder => "Email", :id => "email" %>
+        </div>
+
+        <div class="w_100 btnOut setting-bg mrgbot100">
+          <input type="button" class="save-chage-btn padding" name="submit" onclick="change_profile('<%= @user.id %>');" value="save changes">
+        </div>
+    <% end %>
+  </div>
+</div>
+
+
+<script>
+
+    jQuery.validator.addMethod("noSpace", function (value, element) {
+        return value.indexOf(" ") < 0 && value != "";
+    }, "No space allowed.");
+
+    $(function () {
+        $('#username').on('keypress', function (e) {
+            if (e.which == 32)
+                return false;
+        });
+    });
+
+    function change_profile(user_id) {
+        if ($('#profile_form').valid() == true) {
+            $('.background_shadow').show()
+            $("#profile_form").ajaxSubmit({
+                url: '/user/users/profile_update?user_id=' + user_id,
+                success: function (data) {
+                    if (data == 'error') {
+                        $('.background_shadow').hide()
+                        document.getElementById("mainpop_text").innerHTML = "Try again.";
+                        $("#mainapp_popup").show();
+                        setTimeout(function () {
+                            close_me_please();
+                        }, 4000);
+                    }
+                    else if (data == 'present') {
+                        $('.background_shadow').hide();
+                        document.getElementById("mainpop_text").innerHTML = "This username or email is already taken.";
+                        $("#mainapp_popup").show();
+                        setTimeout(function () {
+                            close_me_please();
+                        }, 4000);
+                    }
+                    else {
+                        $('.background_shadow').hide();
+                        $('#main_div').html(data);
+                    }
+                },
+                error: function (data) {
+                }
+            });
+        }
+    }
+
+
+    $("#profile_form").validate({
+                rules: {
+                    "user[first_name]": {
+                        maxlength: 255
+                    },
+                    "user[last_name]": {
+                        maxlength: 255
+                    },
+                    "user[user_name]": {
+                        maxlength: 32,
+                        minlength: 3,
+                        required: true,
+                        noSpace: true,
+                        remote: {
+                            url: "/user/users/user_name_check?user_name=" + "user[user_name]",
+                            type: "get"
+                            //                            dataType:'html'
+                        }
+                    },
+                    "user[email]": {
+                        maxlength: 255,
+                        minlength: 1,
+                        required: true,
+                        email: true,
+                        remote: {
+                            url: "/user/users/user_email_check?email=" + "user[email]",
+                            type: "get"
+                            //                            dataType:'html'
+                        }
+                    }
+                },
+                messages: {
+                    "user[email]": {
+                        remote: "Email already exists."
+                    },
+                    "user[user_name]": {
+                        remote: "Username already exists."
+                    }
+
+                }
+
+            }
+    );
+</script>

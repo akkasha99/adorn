@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"/> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"/> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"/> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"/>
+<head>
+  <title>Adoorn</title>
+  <%= stylesheet_link_tag "desktop", :media => "all" %>
+  <%= javascript_include_tag "desktop" %>
+  <%#= javascript_include_tag :defaults %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+</head>
+<body>
+
+<% if current_user.present? %>
+    <div class="wrapper-desk">
+      <%= render "/shared/desktop_header" %>
+<% end %>
+
+<%= yield %>
+
+<% if current_user.present? %>
+    <%= render "/shared/desktop_footer" %>
+    </div><!--wrapper-desk end-->
+<% end %>
+<%= render :partial => "/shared/pop_up" %>
+</body>
+<div class="background_shadow" style="display: none">
+  <div class="loader_img"></div>
+</div>
+</html>
+
+<script>
+    var vglnk = { key: '46a80f94e1ecde97928395b4a5aa4b13' };
+
+    (function (d, t) {
+        var s = d.createElement(t);
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = '//cdn.viglink.com/api/vglnk.js';
+        var r = d.getElementsByTagName(t)[0];
+        r.parentNode.insertBefore(s, r);
+    }(document, 'script'));
+</script>
+<%#= javascript_include_tag "desktop/wptr.1.0" %>
+<!--<script>-->
+<!--//    if ('ontouchstart' in window) {-->
+<!--//        window.addEventListener('load', function () {-->
+<!--//            FastClick.attach(document.body);-->
+<!--//        }, false);-->
+<!--//    }-->
+<!--//-->
+<!--//    headerEl.addEventListener('click', function () {-->
+<!--//        window.scrollToTop(contentEl);-->
+<!--//    });-->
+<!--</script>-->

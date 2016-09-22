@@ -1,0 +1,91 @@
+<div id="_main" class="">
+  <header>
+    <div class="h-con">
+      <div class="user-main-con">
+        <div class="h-heading">ADOORN</div>
+      </div>
+    </div>
+  </header>
+  <div class="w_100">
+
+    <div class="w_100 btnOut">
+      <div class="buttons buttons-pad w_100">
+        <label id="blog_tab1" class="active" for="tab1_iadoor" onclick="i_adoor()"><span class="">I Adoorn</span></label>
+        <label id="blog_tab2" class="" for="tab2_weadoor" onclick="we_adoor()"><span class="">We Adoorn</span></label>
+        <label id="blog_tab3" class="" for="tab3_search" onclick="search_blog()"><span class="">Search</span></label>
+      </div>
+    </div>
+    <div class="TabBar">
+      <ul class="tabs">
+        <li>
+          <input type="radio" checked name="tabs" id="tab1_iadoor">
+          <label for="tab1_iadoor"></label>
+
+          <div id="tab-content1" class="tab-content">
+            <%= render :partial => "iadoor_blogs", :locals => {:@blogs => @blogs} %>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="tabs" id="tab2_weadoor">
+          <label for="tab2_weadoor"></label>
+
+          <div id="tab-content2" class="tab-content">
+            <%#= render :partial => "weadoor_bloggers" %>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="tabs" id="tab3_search">
+          <label for="tab3_search"></label>
+
+          <div id="tab-content3" class="tab-content">
+            <%= render :partial => "search_blogs" %>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="_sub" class=""></div>
+
+
+<script>
+    $(function () {
+        window.scrollTo(0, 0);
+        $("#wrapper").removeClass('setting-bg');
+        $("#wrapper").removeClass('create-outfitbg');
+    });
+
+    function i_adoor() {
+        $("#blog_tab1").addClass("active");
+        $("#blog_tab2").removeClass("active");
+        $("#blog_tab3").removeClass("active");
+
+        $.ajax({
+            url: '/user/user_blogs/i_adoor',
+            processData: false,
+            success: function (data) {
+                $("#tab-content1").html(data);
+            }
+        });
+    }
+    function we_adoor() {
+        $("#blog_tab1").removeClass("active");
+        $("#blog_tab2").addClass("active");
+        $("#blog_tab3").removeClass("active");
+        $.ajax({
+            url: '/user/user_blogs/we_adoor',
+            processData: false,
+            success: function (data) {
+                $("#tab-content2").html(data);
+            }
+        });
+    }
+
+    function search_blog() {
+        $("#blog_tab1").removeClass("active");
+        $("#blog_tab2").removeClass("active");
+        $("#blog_tab3").addClass("active")
+    }
+
+</script>

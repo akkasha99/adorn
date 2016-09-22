@@ -1,0 +1,40 @@
+<div class="animated  fadeInRight">
+  <div class="container-desk">
+    <div class="closet-new-desk">
+      <% if @adoorned.size > 0 %>
+          <% @adoorned.each do |item| %>
+              <div class="outfits-left">
+                <div class="desk-pro-img">
+                  <div class="desk-pro-content" onclick="adoored_show('<%= item.class.name == 'UserOutfit' ? "/user/user_outfits/show?id=#{item.id}":"/user/user_items/show?id=#{item.id}" %>')">
+                    <a href="#">
+                      <% if item.image? && File.exists?(item.image.path(:original).to_s) %>
+                          <%= image_tag item.image(:original) %>
+                          <!--</a>-->
+                      <% else %>
+                          <%= image_tag "missing_item.jpeg" %>
+                      <% end %>
+                    </a>
+                  </div>
+                </div>
+              </div>
+          <% end %>
+      <% else %>
+          <div class="banner-con desk-not-found">
+            Nothing Found.
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+    function adoored_show(action) {
+        $.ajax({
+            url: action,
+            processData: false,
+            success: function (data) {
+                $("#desk_main_div").html(data)
+            }
+        });
+    }
+</script>

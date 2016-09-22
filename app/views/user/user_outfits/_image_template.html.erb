@@ -1,0 +1,14 @@
+<div class="shirt-h"><%= item.class.name == 'BasicSubcategory' ? item.name : item.basic_subcategory.name %></div>
+<div class="w_100 min-ht">
+  <a href="javascript:;"><img id="img_<%= item.id %>" src="<%= item.image.url(:medium) %>" alt=""></a>
+</div>
+<div class="add-items">
+  <a href="javascript:;" onclick="add_to_outfit('<%= item.id %>')"><img src="/assets/add-items-icon.png" alt="">
+    Add Items</a>
+</div>
+
+<script>
+    $(document).ready(function () {
+        item = '<%= item.id %>';
+    });
+</script>

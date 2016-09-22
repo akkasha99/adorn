@@ -1,0 +1,163 @@
+<header>
+  <div class="desk-bg">
+    <nav>
+      <ul class="f-l">
+        <li style="min-height: 58px;line-height: 67px;">
+          <a href="/" style="float: left;line-height: 70px;margin: 0;"><img class="logo-textimg" src="/assets/adoorn-logo-bw-v01-sd.svg" alt="ADOORN"></a>
+          <!--<a href="#" class="logo-text">ADOORN</a>-->
+        </li>
+      </ul>
+      <ul class="f-r">
+        <li><a href="/newsfeed">Newsfeed</a></li>
+        <li><a href="#" onclick="current_user_blog('<%= current_user.id %>','current_user_blogs')">Blog</a></li>
+        <li>
+          <form onsubmit="return false">
+            <div class="desk-nav-search">
+              <input type="text" name="search" placeholder="Search" id="desk_search">
+            </div>
+            <!--<input type="submit" name="submit" value="" class="desk-btn-search" onclick="search_icon()">-->
+          </form>
+        </li>
+        <li>
+          <a href="#" class="mrg-0">
+            <% if current_user.avatar && File.exists?(current_user.avatar.path(:thumb).to_s) %>
+                <%= image_tag current_user.avatar(:thumb), :class => 'u-img' %>
+            <% else %>
+                <%= image_tag "missing.png", :class => 'u-img' %>
+            <% end %>
+            <!--<img src="/assets/u-img.png" alt="" class="u-img">-->
+            <span class="u-name"><%= current_user.user_name if current_user.present? %></span></a>
+
+          <div>
+            <ul>
+              <li><a href="#" onclick="closet(<%= current_user.id %>)">Closet</a></li>
+              <li><a href="/user/profile">Settings</a></li>
+              <li><a href="/users/sign_out">Sign Out</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+<script>
+    function current_user_blog(id, user_present) {
+        $(".background_shadow").show();
+        $.ajax({
+            url: '/user/user_blogs/i_adoor',
+            processData: false,
+            success: function (data) {
+                $(".background_shadow").hide()
+                $("#desk_main_div").html(data);
+            }
+        });
+    }
+
+    $('#desk_search').keyup(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which)
+        if (code == 13) {
+            var name = $('#desk_search').val();
+            goto_search(name)
+        }
+    });
+
+    function search_icon() {
+        var name = $('#desk_search').val();
+        goto_search(name)
+    }
+
+    function goto_search(name) {
+        $('#desk_search').val(name);
+        $.ajax({
+            url: '/user/users/searching?key=' + name + '&type=user',
+            processData: false,
+            success: function (data) {
+                $("#desk_main_div").html(data);
+            }
+        });
+    }
+    $('#desk_search').focus(function () {
+        $(this).attr('data-default', $(this).width());
+        $(this).animate({width: 100}, 'slow');
+    }).blur(function () {
+//                var w = $(this).attr('data-default');
+//                $(this).animate({ width: w }, 'slow');
+                $(this).animate({width: 80}, 'slow');
+            });
+
+    function other_text() {
+        if ($("#text_text").val() == '') {
+            $("#report_button").removeClass('active');
+        }
+        else {
+            $("#report_button").addClass('active');
+        }
+    }
+
+
+    function reporting_outfit() {
+        $("#reporting_popup").show();
+    }
+
+    function reporting_outfit_close() {
+        $("#reporting_popup").hide();
+    }
+
+    var selected;
+    var report_text = '';
+
+    function report() {
+        selected = $(".radio:checked");
+        if (selected.val() == 'Other') {
+            $("#others_text").show();
+//            $(".tscontns").css({"padding": "0 0 0px 75px"});
+//            $(".actButnz").css({"padding": "10px 0"});
+            $('#report_button').removeAttr('disabled');
+            $("#report_button").removeClass('active');
+            $("#text_text").val('');
+            report_text = "";
+        }
+        else if (selected.val() == 'SPAM') {
+            $("#others_text").hide();
+//            $(".tscontns").css({"padding": "0 0 22px 75px"});
+//            $(".actButnz").css({"padding": "40px 0 0"});
+            $('#report_button').removeAttr('disabled');
+            report_text = "This is Spam"
+            $("#report_button").addClass('active');
+            $("#text_text").val('');
+        }
+        else if (selected.val() == 'Offensive') {
+            $("#others_text").hide();
+//            $(".tscontns").css({"padding": "0 0 22px 75px"});
+//            $(".actButnz").css({"padding": "40px 0 0"});
+            $('#report_button').removeAttr('disabled');
+            report_text = "This is Offensive"
+            $("#report_button").addClass('active');
+            $("#text_text").val('');
+        }
+    }
+
+    function send_report(id, type) {
+        if (selected.val() == 'Other') {
+            report_text = $("#text_text").val();
+        }
+        if (report_text != '') {
+            $('.background_shadow').show();
+            $.ajax({
+                url: '/user/users/desk_reporting?id=' + id + '&comment=' + report_text + '&content_type=' + type,
+                processData: false,
+                success: function (data) {
+                    $("#reporting_popup").hide();
+                    $('.background_shadow').hide();
+                    $("#text_text").val('');
+                    window.location.href = '/'
+//                    $("#desk_main_div").html(data)
+                }
+            });
+        }
+    }
+
+
+</script>

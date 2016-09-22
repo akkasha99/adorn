@@ -1,0 +1,49 @@
+<header>
+  <div class="h-con">
+    <div class="user-main-con">
+      <div class="h-heading2">Mentions</div>
+    </div>
+    <div class="backBtn">
+      <a href="javascript:;" onclick="return_closet();"><img src="/assets/setting-errow.png" alt=""></a>
+    </div>
+  </div>
+</header>
+
+<div class="w_100 mrgbot100">
+  <% if @mentions.size > 0 %>
+      <% @mentions.each do |mention| %>
+          <div class="comments-h-con btnOut2">
+            <div class="w_100 mnIn">
+              <%= mention %>
+            </div>
+          </div>
+      <% end %>
+  <% else %>
+      <a href="#">
+        <div class="comments-h-con btnOut2">
+          <div class="w_100 mnIn">
+            <!--<div class="user-image2"><%= image_tag "missing.png" %></div>-->
+            <div class="descrip">
+              <div class="txtbx02">
+                <h6>Nothing Found.</h6>
+
+                <!--<p>No Mention yet.</p>-->
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </a>
+  <% end %>
+</div>
+
+<style>
+
+    .adoorner {
+        background-color: #fff;
+        margin: 0 auto;
+        padding: 30px 30px 15px;
+        width: 360px;
+        margin-top: 5%;
+    }
+</style>

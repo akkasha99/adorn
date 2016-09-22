@@ -1,0 +1,165 @@
+<div id="_main">
+  <header>
+    <div class="h-con">
+      <div class="user-main-con">
+        <div class="h-heading">ADOORN</div>
+      </div>
+    </div>
+  </header>
+
+  <div id="content" class="btnOut padbot100 w_100">
+    <div id="ptr" style="display: none;">
+      <div class="loading">
+        <span id="l1"></span>
+        <span id="l2"></span>
+        <span id="l3"></span>
+      </div>
+      <span class="genericon genericon-next"></span>
+    </div>
+    <% if @feeds.size > 0 %>
+        <%= render :partial => 'feeds_items' %>
+    <% else %>
+        <div class="w100 mrg20 solid-line pozrel">
+          <div class="user-con">
+            <div class="user-name not-found">Nothing Found.</div>
+          </div>
+        </div>
+    <% end %>
+    <!--w100 end-->
+  </div>
+
+</div>
+<div id="_sub" class="" style="display: none;"></div>
+
+<script>
+
+    $("#wrapper").removeClass('setting-bg');
+    $("#wrapper").removeClass('create-outfitbg');
+
+    <% if flash[:error] != nil %>
+    document.getElementById("mainpop_text").innerHTML = "<%= flash[:error] %>";
+    $("#mainapp_popup").show();
+    setTimeout(function () {
+        close_me_please();
+    }, 4000);
+    <% elsif flash[:alert] != nil %>
+    document.getElementById("mainpop_text").innerHTML = "<%= flash[:alert] %>";
+    $("#mainapp_popup").show();
+    setTimeout(function () {
+        close_me_please();
+    }, 4000);
+    <% end %>
+
+    $('#search').keyup(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which)
+        if (code == 13) {
+            var name = $('#search').val();
+            $.ajax({
+                url: '/user/users/search_users?key=' + name,
+                processData: false,
+                success: function (data) {
+                    $("#search_results").html(data);
+                }
+            });
+        }
+    });
+
+    function feed_adoorn(div_id, id, action, user_id, type) {
+        if (action == "UserOutfit") {
+            url = '/user/user_outfits/feed_adoorning?outfit_id=' + id + '&user_id=' + user_id + '&type=' + type
+        }
+        else {
+            url = '/user/user_items/feed_adoorning?item_id=' + id + '&user_id=' + user_id + '&type=' + type
+        }
+        $.ajax({
+            url: url,
+            success: function (data) {
+                if (data != 'error')
+                    $('#' + div_id).html(data);
+            },
+            error: function (data) {
+
+            }
+        });
+    }
+
+    //    window.onload = function () {
+    //        WebPullToRefresh.init({
+    //            loadingFunction: refresh_feed
+    //        });
+    //    };
+
+
+    //    $('#content').xpull({
+    //        'callback': function () {
+    ////           console.log('Released...');
+    //            alert("yes");
+    //        }
+    //    });
+
+    //    $(document).ready(function () {
+
+    $(window).bind("load", function () {
+        // code here
+
+
+        $('#content').xpull({
+            'callback': function () {
+                return new Promise(function (resolve, reject) {
+                    // Run some async loading code here
+                    $.ajax({
+                        url: '/user/users/update_newsfeed',
+                        processData: false,
+                        async: true,
+                        success: function (data) {
+                            if (data == 'error') {
+                                reject();
+                            }
+                            else {
+                                resolve();
+                                $("#content").prepend(data);
+                                window.scrollTo(0, 0);
+                            }
+                        }
+                    });
+                    resolve();
+                    //            if (true/* if the loading worked */) {
+                    //                resolve();
+                    //            } else {
+                    //                reject();
+                    //            }
+                });
+            }
+        });
+//    })
+
+    });
+
+    //    var refresh_feed = function () {
+    //        return new Promise(function (resolve, reject) {
+    //            // Run some async loading code here
+    //            $.ajax({
+    //                url: '/user/users/update_newsfeed',
+    //                processData: false,
+    //                async: true,
+    //                success: function (data) {
+    //                    if (data == 'error') {
+    //                        reject();
+    //                    }
+    //                    else {
+    //                        resolve();
+    //                        $("#content").prepend(data);
+    //                        window.scrollTo(0, 0);
+    //                    }
+    //                }
+    //            });
+    //            resolve();
+    ////            if (true/* if the loading worked */) {
+    ////                resolve();
+    ////            } else {
+    ////                reject();
+    ////            }
+    //        });
+    //    };
+
+</script>

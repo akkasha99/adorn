@@ -1,0 +1,98 @@
+<div id="panel_body" class="page-content-wrapper">
+  <div class="page-content" style="min-height:1215px">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">Dashboard</h3>
+            <ul class="page-breadcrumb breadcrumb">
+              <li>
+                <i class="fa fa-home"></i>
+                <a href="/">Home</a>
+                <i class="fa fa-angle-right"></i>
+              </li>
+              <li>
+                <a href="/">Dashboard</a>
+              </li>
+              <li class="pull-right">
+                <div data-original-title="Change dashboard date range" data-placement="top" class="dashboard-date-range tooltips" id="dashboard-report-range">
+                  <i class="icon-calendar"></i>
+                  <span></span>
+                  <i class="fa fa-angle-down"></i>
+                </div>
+              </li>
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 go_location" location="#" style="cursor: pointer;">
+            <div class="dashboard-stat blue-madison">
+              <div class="visual">
+                <i class="fa fa-users"></i>
+              </div>
+              <div class="details">
+                <div class="number">
+                  <%= User.all.count-1 %>
+                </div>
+                <div class="desc">
+                  Total Users
+                </div>
+              </div>
+              <a href="#" class="more" onclick="partial_call('users');">
+                View more <i class="m-icon-swapright m-icon-white"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 go_location" location="#" style="cursor: pointer;">
+            <div class="dashboard-stat red-intense">
+              <div class="visual">
+                <i class="fa fa-bar-chart-o"></i>
+              </div>
+              <div class="details">
+                <div class="number">
+                  <%= UserItem.all.count %>
+                </div>
+                <div class="desc">
+                  Total Items
+                </div>
+              </div>
+              <a href="#" class="more" onclick="partial_call('user_items')">
+                View more <i class="m-icon-swapright m-icon-white"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 go_location" location="#" style="cursor: pointer;">
+            <div class="dashboard-stat purple-plum">
+              <div class="visual">
+                <i class="fa fa-ban"></i>
+              </div>
+              <div class="details">
+                <div class="number">
+                  <%= UserOutfit.all.count %>
+                </div>
+                <div class="desc">
+                  Total Outfits
+                </div>
+              </div>
+              <a class="more" href="#" onclick="partial_call('user_outfits')">
+                View more <i class="m-icon-swapright m-icon-white"></i>
+              </a>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+    body {
+        color: #000000
+    }
+</style>

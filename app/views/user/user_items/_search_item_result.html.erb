@@ -1,0 +1,45 @@
+<% if items.size > 0 %>
+    <% items.each do |item| %>
+        <% if item['images_total'] > 0 %>
+            <div class="w_100">
+              <% itm_name = item['name'].to_s.split('"')[0] %>
+              <a href="javascript:;" onclick='get_Image("<%= item['images'].first.to_s %>","<%= item['price'].to_s %>","<%= itm_name %>","<%= item['sitedetails'].first['url'].to_s %>")'>
+                <div class="inner-h-con p0">
+                  <!--<img alt="" src="images/profile-pic.jpg">-->
+                  <% if item['images'] %>
+                      <img src="<%= item['images'].first.to_s %>" alt="Image">
+                  <% else %>
+                      <%= image_tag "missing.png" %>
+                  <% end %>
+                  <div class="pro low_cas"><%= truncate(item['name'], :length => 38) %></div>
+                </div>
+              </a>
+            </div>
+        <% end %>
+    <% end %>
+<% else %>
+    <div class="w100">
+      <a href="#">
+        <div class="inner-h-con p0">
+          <%#= image_tag "missing.png" %>
+          <div class="pro">Nothing Found.</div>
+        </div>
+      </a>
+    </div>
+<% end %>
+
+<script>
+    function get_Image(url, price, name, b_link) {
+        $(".background_shadow").show();
+        $.ajax({
+            url: '/user/user_items/sementic_result?image=' + url + '&price=' + price + '&title=' + name + '&buy_link=' + b_link,
+            success: function (data) {
+                $("#_main").hide();
+                $(".background_shadow").hide();
+                $('#_sub').show().html(data);
+            },
+            error: function (data) {
+            }
+        });
+    }
+</script>

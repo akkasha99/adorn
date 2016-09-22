@@ -1,0 +1,91 @@
+<header>
+  <div class="h-con">
+    <div class="user-main-con">
+      <div class="h-heading">Report <%#= truncate(content_type == 'user' ? content.user_name : content.title, :length => 8) %></div>
+    </div>
+    <div class="setaro">
+      <% if content_type == 'user' %>
+          <a href="javascript:;" onclick="goto_closet(<%= content.id %>)"><img src="/assets/setting-errow.png" alt=""></a>
+      <% else %>
+          <!--<a href="javascript:;" onclick="show(<%#= id %>,'/user/user_items/show')"><img src="/assets/setting-errow.png" alt=""></a>-->
+          <a href="javascript:;" onclick="news_feed()"><img src="/assets/setting-errow.png" alt=""></a>
+      <% end %>
+    </div>
+    <div class="gear">
+      <a href="javascript:;"><img src="/assets/confirm1.png" alt=""></a>
+    </div>
+  </div>
+</header>
+
+<div class="acc-main-con w_100 padbot100">
+  <div class="account-h-con">
+    <div class="heading">WHY ARE YOU REPORTING THIS?</div>
+  </div>
+  <div class="w_100">
+    <div class="inner-h-con" onclick="reporting('<%= content.id %>','This is a spam.')">
+      <div class="pro">Feels like SPAM</div>
+    </div>
+    <div class="inner-h-con" onclick="reporting('<%= content.id %>','This is inappropriate or offensive.')">
+      <div class="pro">Inappropriate or Offensive</div>
+    </div>
+    <div class="inner-h-con" onclick="y_reporting('<%= content.id %>')">
+      <div class="pro">Other...</div>
+      <div class="r-erow"><img src="/assets/profile-erow.png" alt=""></div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#wrapper").addClass('setting-bg');
+    })
+
+    function reporting(user_id, comment) {
+        $(".background_shadow").show();
+        $.ajax({
+            url: '/user/users/y_reporting?id=' + user_id + '&comment=' + comment + '&content_type=<%= content_type %>',
+            success: function (data) {
+                $("#main_div").html(data)
+                $("#wrapper").removeClass('setting-bg');
+                $(".background_shadow").hide();
+            }
+        });
+    }
+
+    function y_reporting(id) {
+        $(".background_shadow").show();
+        $.ajax({
+            url: '/user/users/reporting?id=' + id + '&comment=true&content_type=<%= content_type %>',
+            success: function (data) {
+                $("#main_div").html(data)
+                $(".background_shadow").hide();
+            }
+        });
+    }
+    function goto_closet(id) {
+        $(".background_shadow").show();
+        $.ajax({
+            url: '/user/users/user_closet?id=' + id,
+            success: function (data) {
+                $("#main_div").html(data)
+                $("#wrapper").removeClass('setting-bg');
+                $(".background_shadow").hide();
+            }
+        });
+    }
+
+    function show(id, action) {
+        $(".background_shadow").show();
+        $.ajax({
+            url: action + '?id=' + id,
+            success: function (data) {
+                $("#main_div").html(data)
+                $("#wrapper").removeClass('setting-bg');
+                $(".background_shadow").hide();
+            }
+        });
+    }
+    function news_feed() {
+        window.location.href = '/';
+    }
+</script>

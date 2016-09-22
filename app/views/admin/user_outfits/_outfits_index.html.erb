@@ -1,0 +1,79 @@
+<div class="page-content" style="min-height:1215px">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="page-title">User OutFits</h3>
+          <ul class="page-breadcrumb breadcrumb">
+            <li>
+              <i class="fa fa-home"></i>
+              <a href="/">Home</a>
+              <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+              <a href="/">User OutFits</a>
+              <i class="fa fa-angle-right"></i>
+            </li>
+            <li class="pull-right">
+              <div data-original-title="Change dashboard date range" data-placement="top" class="dashboard-date-range tooltips" id="dashboard-report-range">
+                <i class="icon-calendar"></i>
+                <span></span>
+                <i class="fa fa-angle-down"></i>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <%# unless users.blank? %>
+        <div class="form-group">
+          <div class="col-md-4">
+            <label>Select User</label>
+            <select id="outfit_select" class="form-control input-medium select2me" data-placeholder="Select..." onchange="get_user_outfits()">
+              <option value=""></option>
+              <% users.each do |user| %>
+                  <option value="<%= user.id %>"><%= user.user_name %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <%# end %>
+
+        <!--<div class="col-md-12" style="margin-top: 2%;">-->
+        <!--<button class="btn green" onclick="get_user_outfits();">Show User OutFits</button>-->
+        <!--</div>-->
+      </div>
+
+      <div id="user_outfits_div" class="row" style="margin-top: 2%;">
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+
+    function get_user_outfits() {
+        if ($("#outfit_select").val() != "") {
+            var user_id = $("#outfit_select").val();
+            $.ajax({
+                url: '/admin/user_outfits/get_outfits?id=' + user_id,
+                processData: false,
+                success: function (data) {
+                    if (data != 'error')
+                        $("#user_outfits_div").html(data);
+                }
+            });
+        } else {
+            apprise("No User Selected.")
+            return false;
+        }
+    }
+
+    $("#outfit_select").select2({
+        allowClear: true
+    });
+
+</script>

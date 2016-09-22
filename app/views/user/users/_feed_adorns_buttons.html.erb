@@ -1,0 +1,30 @@
+<div class="comment-con">
+  <% if feed.is_adoorned(current_user.id) %>
+      <a href="javascript:;" class="gryBtn active" onclick="feed_adoorn('<%= feed.class.name + feed.id.to_s %>','<%= feed.id %>','<%= feed.class.name %>',<%= current_user.id %>,'feed')">
+        <img src="/assets/adoorn-eye.png" alt=""> Adoorned</a>
+  <% else %>
+      <a class="gryBtn" href="javascript:;" onclick="feed_adoorn('<%= feed.class.name + feed.id.to_s %>','<%= feed.id %>','<%= feed.class.name %>',<%= current_user.id %>,'feed')"><img src="/assets/adoorn-eye.png" alt="">Adoorn</a>
+  <% end %>
+  <a href="javascript:;" onclick="render_comments('<%= feed.id %>','newsfeed_sub','<%= feed.class.name == "UserOutfit" ? "/user/user_outfits/comments?outfit_id=" : "/user/user_items/comments?id=" %>')" class="gryBtn2"><img src="/assets/comment-icon.png" alt="">
+    Comment</a>
+
+  <div class="visit-con">
+    <div class="total-visitor09"><span><%= number_to_human(feed.adorns.length) %></span> <img src="/assets/in-active-eye.png" alt=""></div>
+  </div>
+</div>
+
+<script>
+    function render_comments(id, action, url) {
+        $('.background_shadow').show();
+        $.ajax({
+            url: url + id,
+            processData: false,
+            success: function (data) {
+                $('.background_shadow').hide();
+                $("#_main").hide()
+                $("#_sub").show().html(data);
+            }
+        });
+    }
+
+</script>

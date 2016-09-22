@@ -1,0 +1,57 @@
+<body class="box_in">
+<div class="signup-con">
+  <!--<a href="#"><img src="images/fb-signup-btn.png" alt=""></a>-->
+  <a href="<%= user_omniauth_authorize_path(:facebook) %>"><img src="/assets/fb-signin-btn.png" alt=""></a>
+  <% resource = User.new %>
+  <div class="seprator"></div>
+  <div class="fields_in">
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:id => 'signin_form'}) do |f| %>
+        <div class="fields_txt">
+          <!--<input type="text" placeholder="Username" name="name" id="name">-->
+          <%= f.text_field :user_name, :placeholder => "Username", :autocomplete => "off", :autocorrect => "off", :autocapitalize => "off", :spellcheck => "false" %>
+          <div class="fields_txtpw"><%= f.password_field :password, :placeholder => "Password", :id => "password" %></div>
+        </div>
+        <input type="button" value="SIGN IN" class="sign_btn border_9" onclick="submit_form();">
+        <!--<a href="javascript:;" class="sign_btn" onclick="submit_form();">SIGN IN</a>-->
+    <% end %>
+  </div>
+  <!--fields_in end-->
+  <div class="b-signin forgot-pw"><a href="/users/password/new">Forgot Password?</a></div>
+  <div class="b-signin2">Don’t have an account? <a href="/users/sign_up">SIGN UP</a></div>
+</div>
+<%= render :partial => "/shared/pop_up" %>
+<!--w100 end-->
+</body>
+
+<script type="text/javascript">
+
+    //    $(function () {
+    <% if flash[:error] != nil %>
+    document.getElementById("mainpop_text").innerHTML = "<%= flash[:error] %>";
+    $("#mainapp_popup").show();
+    setTimeout(function () {
+        close_me_please();
+    }, 4000);
+    <% elsif flash[:alert] != nil %>
+    document.getElementById("mainpop_text").innerHTML = "<%= flash[:alert] %>";
+    $("#mainapp_popup").show();
+    setTimeout(function () {
+        close_me_please();
+    }, 4000);
+    <% end %>
+
+    function swapStyleSheet(sheet) {
+        document.getElementById('pagestyle').setAttribute('href', sheet);
+    }
+
+    function submit_form() {
+        $("#signin_form").submit();
+    }
+
+    $("#password").keyup(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which)
+        if (code == 13) {
+            submit_form();
+        }
+    });
+</script>

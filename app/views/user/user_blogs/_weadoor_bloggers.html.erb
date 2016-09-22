@@ -1,0 +1,43 @@
+<div class="">
+  <div class="animated  fadeInRight">
+    <div class="w_100 padbot100">
+      <div class="w_100">
+        <div class="user-img-con">
+          <% if @bloggers != nil %>
+              <!--<div class="user-main-con">-->
+              <% @bloggers.each do |blogger| %>
+                  <div class="dmDv" id="blogger_<%= blogger.id %>">
+                    <%= render :partial => 'we_adoor_blogger', :locals => {:blogger => blogger} %>
+                  </div>
+              <% end %>
+          <% else %>
+              <div class="w100 mrg20 solid-line">
+                <div class="user-con">
+                  <div class="user-name not-found">Nothing Found.</div>
+                </div>
+              </div>
+          <% end %>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    function adoor_blogger(id, status) {
+        $.ajax({
+            url: '/user/user_blogs/blogger_adoorn?id=' + id + '&status=' + status + '&we=0',
+            processData: false,
+            success: function (data) {
+                if (data != 'error') {
+                    $("#blogger_" + id).html(data)
+                }
+            },
+            error: function (data) {
+
+            }
+        });
+    }
+</script>

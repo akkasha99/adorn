@@ -1,0 +1,13 @@
+<header>
+  <div class="h-con">
+    <div class="user-main-con">
+      <div class="h-heading">ADOORN</div>
+    </div>
+    <% if user_signed_in? %>
+        <% if controller_name != 'users' %>
+            <div class="setaro"><a href="/user"><img src="/assets/setting-errow.png" alt=""></a></div>
+        <% end %>
+        <div class="gear"><a href="/user/profile"><img src="/assets/gear.png" alt=""></a></div>
+    <% end %>
+  </div>
+</header>

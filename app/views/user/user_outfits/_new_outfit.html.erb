@@ -1,0 +1,454 @@
+<div id="outfit_partial" class="">
+  <header>
+    <div class="h-con">
+      <div class="user-main-con">
+        <div class="h-heading2">Create Outfit</div>
+      </div>
+      <div class="crossBtn">
+        <a href="javascript:;" onclick="return_to_closet()"><img src="/assets/exit-creat-outfit.png" alt=""></a></div>
+    </div>
+  </header>
+
+  <div class="w_100 padbot100 create-outfitbg">
+    <div class="w_100">
+      <!--<div class="empty-box w_100" id="">-->
+      <!--<div class="empty-box-content" id="outfit_canvas">-->
+
+      <!--</div>-->
+      <!--</div>-->
+      <div class="out-fit-banner-con w_100">
+        <div class="cc" id="outfit_canvas">
+          <h6>Create Outfit</h6>
+        </div>
+      </div>
+      <!--<div class="w100">-->
+      <div class="w_100 rngPad">
+        <div class="Rangeslider">
+          <input id="slid" type="range" min="100" max="300" step="10" value="100" onchange="showValue(this.value)" style="display: none"/>
+        </div>
+        <!--Rangeslider-->
+      </div>
+      <!--w_100-->
+      <!--<input id="slid" type="range" min="100" max="300" value="100" step="10" style="width:100%;display: none" onchange="showValue(this.value)"/>        -->
+      <!--</div>-->
+      <div class="w-100 btnOut">
+        <div class="outfits-left">
+          <div class="undo"><a href="javascript:;" onclick="undo_canvas()"><img src="/assets/undo.png" alt="">
+
+            <div>Undo</div>
+          </a></div>
+          <div class="undo"><a href="javascript:;" onclick="redo_canvas()"><img src="/assets/redo.png" alt="">
+
+            <div>redo</div>
+          </a></div>
+        </div>
+
+        <div class="outfits-r">
+          <!--<div class="un-re-do un-re-do1">-->
+          <div class="undo3">
+            <a href="javascript:;" onclick="create_outfit()"><img src="/assets/save-outfit.png" alt="">
+
+              <div>Save outfit</div>
+            </a></div>
+          <div class="undo2"><a href="javascript:;" onclick="select_basics()"><img src="/assets/basics.png" alt="">
+
+            <div>basics</div>
+          </a></div>
+          <!--</div>-->
+        </div>
+      </div>
+    </div>
+
+    <div class="outfit-pro w_100">
+      <% @items.each do |item| %>
+          <% if item.image? && File.exists?(item.image.path(:thumb).to_s) %>
+              <div class="pro-box">
+                <a href="javascript:;" onclick="selected_item('<%= File.exists?(item.image.path(:medium).to_s) ? item.image.url(:medium) : item.image.url(:thumb) %>', '<%= item.id %>', 'user')">
+                  <%= image_tag item.image.url(:thumb) %>
+                </a>
+                <a href="javascript:;">
+                  <div id="tik_<%= item.id %>" class="select-product-img" style="display: none;">
+                    <img src="/assets/select-produt-hover.png" alt="">
+                  </div>
+                </a>
+              </div>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div id="outfit_save" class="" style="display: none;"></div>
+<div id="basics_add" class="" style="display: none;"></div>
+<div id="basics_add_subcategories" class="" style="display:none;"></div>
+<div id="tee_basics" class="" style="display: none;"></div>
+
+<script>
+
+    $("#outfit_partial").click(function (event) {
+        if ('' + event.target.nodeName == 'CANVAS') {
+        }
+    });
+
+    $(document).ready(function () {
+        show_outfit_footer();
+        window.scrollTo(0, 0);
+        $('#wrapper').addClass('create-outfitbg');
+        $("#wrapper").removeClass('setting-bg');
+//        $('input[type="range"]').rangeslider({
+//            polyfill: false,
+////            rangeClass: 'rangeslider',
+////            fillClass: 'rangeslider__fill',
+////            handleClass: 'rangeslider__handle',
+//
+//            onInit: function () {
+//
+//            },
+//            onSlide: function (position, value) {
+//            },
+//            onSlideEnd: function (position, value) {
+////                selected_img.setPosition({x: 30, y: 30});
+//                selected_img.setSize({width: 100 + value * 2, height: 100 + value * 2});
+//                layer.draw();
+//            }
+//        });
+    });
+
+
+    function showValue(newValue) {
+        selected_img.setSize({width: newValue, height: newValue});
+        $("#slid").val(newValue)
+        layer.draw();
+    }
+
+    function return_to_closet() {
+        show_user_footer();
+        view_partial('icon_closet', '/user/users/user_closet?id=<%= current_user.id %>')
+    }
+
+    stage = new Kinetic.Stage({
+        container: 'outfit_canvas',
+        width: $('#outfit_canvas').width(),
+        height: $('#outfit_canvas').height()
+    });
+    var obj;
+    var selected_img;
+    var selected_obj;
+    var layer = new Kinetic.Layer();
+    var startX = 0;
+    var startY = 0;
+    var item_arr = [];
+    var basic_item_arr = [];
+    var item_pop = [];
+    var cPushArray = new Array();
+    var cStep = -1;
+    var reflection = 0;
+
+    function close_pop() {
+        $('#add_outfit').hide();
+    }
+
+    //    selected_obj.on('dragmove', function () {
+    //    this.setFillPatternImage(images.yoda);
+    //    this.setFillPatternOffset(-100, 70);
+    //        var userPos = stage.getUserPosition();
+    //        this.setFillPatternOffset(-userPos.x, -userPos.y);
+    //        layer.draw();
+    //        this.setX(220);
+    //        this.setY(stage.getHeight() / 4);
+    //    });
+
+
+    //    var elements = document.getElementsByTagName('canvas');
+    //    elements.onclick(function () {
+    //        alert('asd')
+    //    })
+
+    function create_outfit() {
+//        var canvas = document.getElementById('outfit_canvas');
+        if (item_arr.length > 0 || basic_item_arr.length > 0) {
+            $('.background_shadow').show();
+            html2canvas($("#outfit_canvas"), {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL('image/png');
+                    var file = dataURLtoBlob(data);
+                    var fd = new FormData();
+                    fd.append("image", file);
+                    $.ajax({
+                        url: '/user/user_outfits/create_outfit',
+                        type: 'POST',
+                        data: fd,
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            if (data != 'error') {
+                                hide_footers();
+                                $('#outfit_partial').hide();
+                                $('.background_shadow').hide();
+                                $('#outfit_save').show().html(data);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    function dataURLtoBlob(dataURL) {
+        var binary = atob(dataURL.split(',')[1]);
+        var array = [];
+        for (var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {type: 'image/png'});
+    }
+
+    function undo_canvas() {
+        if (cStep >= 0) {
+            cUndo(cPushArray[cStep]);
+            cStep--;
+        }
+    }
+
+    function redo_canvas() {
+        if (cStep < cPushArray.length - 1) {
+            cStep++;
+            cRedo(cPushArray[cStep])
+        }
+    }
+
+    function cPush(obj) {
+        cStep++;
+        if (cStep < cPushArray.length) {
+            cPushArray.length = cStep;
+        }
+        cPushArray.push(obj)
+    }
+
+    function cUndo(obj) {
+        obj.hide();
+        layer.draw();
+        $('#tik_' + obj.attrs.id).hide();
+        if (obj.attrs.type == 'user') {
+            var index = item_arr.indexOf(obj.attrs.id);
+            if (index != -1)
+                item_arr[index] = null;
+        }
+        else if (obj.attrs.type == 'basic') {
+            var index = basic_item_arr.indexOf(obj.attrs.id);
+            if (index != -1)
+                basic_item_arr[index] = null;
+        }
+    }
+
+    function cRedo(obj) {
+        obj.show();
+        layer.draw();
+        $('#tik_' + obj.attrs.id).show();
+        if (obj.attrs.type == 'user') {
+            var index = item_arr.indexOf(obj.attrs.id);
+            if (index == -1)
+                item_arr.push(obj.attrs.id);
+        }
+        else if (obj.attrs.type == 'basic') {
+            var index = basic_item_arr.indexOf(obj.attrs.id);
+            if (index == -1)
+                basic_item_arr.push(obj.attrs.id);
+        }
+    }
+
+    var x = 0;
+    var y = 0;
+
+    function selected_item(url, id, type) {
+        if (type == 'user')
+            var count = item_arr.indexOf(id);
+        else if (type == 'basic')
+            var count = basic_item_arr.indexOf(id);
+        if (count == -1) {
+            var img = new Image();
+            img.src = url;
+            img.onload = function () {
+                var d_img = draw_img(id, img, 300, 300, 1, type);
+            }
+            if (type == 'user')
+                item_arr.push(id)
+            else if (type == 'basic')
+                basic_item_arr.push(id)
+            stage.add(layer);
+            $('#tik_' + id).show();
+
+        }
+    }
+
+    function select_basics() {
+        $('.background_shadow').show();
+        $.ajax({
+            url: '/user/user_outfits/select_basics',
+            processData: false,
+            success: function (data) {
+                if (data != 'error') {
+                    $('#outfit_partial').hide();
+                    $('#basics_add').html(data).show();
+                    $('.background_shadow').hide();
+                }
+            }
+        });
+    }
+
+    function draw_img(id, img, width, height, scale, type) {
+        obj = new Kinetic.Image({ x: startX,
+            y: startY,
+            width: width,
+            height: height,
+            draggable: true,
+            id: layer.attrs.id,
+            image: img,
+            id: id,
+            type: type,
+            scaleX: scale});
+        bind_handlers(obj);
+        layer.add(obj);
+        layer.draw();
+        cPush(obj);
+
+        startX = startX + 100;
+        if (startX == 300) {
+            startX = 0;
+            startY = startY + 100;
+        }
+        return obj;
+    }
+
+    function bind_handlers(obj) {
+        obj.on('click tap', function (evt) {
+            var img = evt.target;
+            selected_img = img;
+            $("#slid").show()
+            showValue(selected_img.width())
+        });
+        obj.on('mouseover', function () {
+            document.body.style.cursor = 'pointer';
+        });
+        obj.on('mouseout', function () {
+            document.body.style.cursor = 'default';
+        });
+
+        obj.on('dragend', function (evt) {
+            var img = evt.target;
+            selected_img = img;
+            console.log(selected_img)
+            $("#slid").show()
+            showValue(selected_img.width())
+        });
+    }
+
+    function moveTotop() {
+        if (selected_img)
+            selected_img.moveToTop();
+        layer.draw();
+    }
+
+    function moveToback() {
+        if (selected_img)
+            selected_img.moveDown();
+        layer.draw();
+    }
+
+    function remove_image() {
+        if (selected_img)
+            cUndo(selected_img)
+    }
+
+    function reflect_image() {
+//        console.log(selected_img.attrs.image.src)
+//        var img = new Image();
+//        img.src = selected_img.attrs.image.src;
+//        img.onload = function () {
+//            ref_img = draw_img('refl', img, 100, 100, -1);
+//        }
+        if (selected_img && reflection == 0) {
+            selected_img.scale({x: -1, y: 1});
+            reflection = 1;
+            selected_img.setPosition({x: parseInt(selected_img.getPosition().x) + parseInt(selected_img.width()), y: selected_img.getPosition().y})
+        }
+        else if (selected_img && reflection == 1) {
+            selected_img.scale({x: 1, y: 1});
+            reflection = 0;
+            selected_img.setPosition({x: parseInt(selected_img.getPosition().x) - parseInt(selected_img.width()), y: selected_img.getPosition().y})
+        }
+        layer.draw();
+    }
+
+    function return_outfit() {
+        show_outfit_footer();
+        $('#basics_add').hide();
+        $('#tee_basics').hide();
+        $('#outfit_save').hide();
+        $('#outfit_partial').show();
+    }
+
+</script>
+<style>
+    .Rangeslider {
+        width: 100%;
+        float: left;
+    }
+
+    .Rangeslider input[type="range"] {
+        -webkit-appearance: none !important;
+        width: 100%;
+        height: 2px;
+        background-color: #a0a0a0;
+        border: none !Important;
+        transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -webkit-transition: all 0.3s ease;
+        outline: none !important;
+    }
+
+    .Rangeslider input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none !important;
+        width: 26px;
+        height: 26px;
+        background-color: #fff;
+        border-radius: 30px;
+        -moz-border-radius: 30px;
+        -webkit-border-radius: 30px;
+        transition: all 0.5s ease;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        border: 1px solid #717171;
+    }
+
+    .Rangeslider input[type="range"]::-webkit-slider-thumb:hover {
+        background-color: #fff;
+    }
+
+    .Rangeslider input[type="range"]::-webkit-slider-thumb:active {
+        box-shadow: 0px 0px 1px #3c6d59;
+    }
+
+    .rngPad {
+        margin: 0 0 15px 0;
+        padding: 0 30px;
+    }
+
+    @media only screen and (max-width: 568px) {
+        .Rangeslider input[type="range"]::-webkit-slider-thumb {
+            width: 18px !important;;
+            height: 18px !important;
+        }
+
+        .rngPad {
+            margin: 0 0 10px 0;
+            padding: 0 20px;
+        }
+    }
+
+    @media only screen and (max-width: 480px) {
+        .rngPad {
+            margin: -5px 0 10px 0;
+            padding: 0 15px;
+        }
+    }
+</style>

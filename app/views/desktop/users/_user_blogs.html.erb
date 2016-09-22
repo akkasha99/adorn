@@ -1,0 +1,47 @@
+<div class="w-100 mrg20">
+  <% if @blogs != nil && @blogs.size > 0 %>
+      <% @blogs.each do |blog| %>
+          <div class="animated  fadeInRight ">
+            <div class="wrapp">
+              <div class="w-100">
+                <div class="user-con">
+                  <div class="user-image" onclick="closet(<%= @user.id %>)">
+                    <%= image_tag @user.avatar.present? ? @user.avatar.url(:medium) : "/assets/missing.png" %>
+                  </div>
+                  <div class="user-name" onclick="closet(<%= @user.id %>)"><%= @user.user_name %></div>
+                </div>
+                <div class="time-con">
+                  <p><%= time_ago_in_words(blog.created_at) %> ago</p>
+                </div>
+              </div>
+              <div class="w-100">
+                <div class="banner-con">
+                  <div class="heading"><%= blog.title if blog.title.present? %></div>
+                  <div class="des" id="blog_links_dsk">
+                    <%#= blog.content.html_safe %>
+                    <%= blog.content.nil? ? blog.content : blog.content.html_safe %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      <% end %>
+  <% else %>
+      <div class="animated  fadeInRight ">
+        <div class="container-desk">
+          <div class="w-100">
+            <div class="banner-con desk-not-found">
+              Nothing Found.
+            </div>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#blog_links_dsk a').attr('target', '_blank');
+//        $('#abcdef a').attr('href', 'javascript:;');
+    })
+</script>

@@ -1,0 +1,51 @@
+<div class="acc-main-con set_pg_bg0" id="main_div">
+  <header>
+    <div class="h-con">
+      <div class="user-main-con">
+        <div class="h-heading">ADOORN</div>
+      </div>
+      <div class="setaro"><a href="/user/blogs"><img src="/assets/setting-errow.png" alt=""></a></div>
+    </div>
+  </header>
+  <div class="container">
+    <% user = @blog.user %>
+    <div class="w100 mrg20 solid-line">
+      <div class="user-con">
+        <div class="user-image">
+          <img src="/assets/user-pic.jpg" alt="">
+        </div>
+        <div class="user-name">
+          <%= user.user_name %>
+        </div>
+      </div>
+      <!--user-con end-->
+      <div class="time-con">
+        <p><%= time_ago_in_words(@blog.created_at) %> ago</p>
+      </div>
+      <!--time-con end-->
+      <!--W-100 end-->
+
+      <div class="w-100">
+        <div class="banner-con">
+          <div class="heading">
+            <%= @blog.title if @blog.title.present? %>
+          </div>
+          <div class="des">
+            <%= @blog.content.html_safe %>
+          </div>
+          <!--<img src="/assets/banner.jpg" alt="">-->
+
+          <!--<div class="des">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id orci est. Nam quis-->
+          <!--lectus luctus, scelerisque justo id, ultrices mauris. Praesent pulvinar pellentesque vulputate.-->
+          <!--Maecenas euismod euismod massa.-->
+          <!--</div>-->
+        </div>
+        <!--banner-con end-->
+      </div>
+      <!--w-100 end-->
+      <div class="w-100" id="blog_<%= @blog.id %>">
+        <%= render :partial => 'blog_view', :locals => {:blog => @blog} %>
+      </div>
+    </div>
+  </div>
+</div>

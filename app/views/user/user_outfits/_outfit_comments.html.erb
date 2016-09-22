@@ -1,0 +1,55 @@
+<div>
+  <a href="/user/outfit/show/<%= @outfit_id %>" class="btn green">Back</a>
+
+  <h3 style="text-align: center"><b>Comments</b></h3>
+
+  <% if @comments.present? %>
+      <% @comments.each do |c| %>
+          <a href="/user/show/<%= c.user.id %>">
+            <p class="pull-left avatar"><%= image_tag c.user.avatar(:icon) if c.user.avatar.present? %></p>
+            <b class="pull-left"><%= c.user.user_name %></b>
+            <br>
+
+            <p class="pull-left"><%= c.text %></p>
+          </a>
+      <% end %>
+  <% else %>
+      <p>Nothing Found.</p>
+  <% end %>
+  <% @comment = Comment.new %>
+  <%= form_for @comment, :url => '/user/user_outfit/add_comments', :html => {:multipart => true, :onsubmit => "return false", :id => 'user_outfit_comment_form', :method => 'post'} do |comment| %>
+      <p><%= comment.text_field :text, :placeholder => "Add a comment", :class => "pull-left form-control", :style => "width:80%!important" %>
+        <%= comment.hidden_field :user_outfit_id, :value => @outfit_id %>
+        <%= comment.hidden_field :user_id, :value => current_user.id %>
+        <button class="btn blue pull-right" onclick="add_outfit_comment('<%= @outfit_id %>')">Add</button>
+      </p>
+  <% end %>
+</div>
+
+
+<script>
+
+    $("#user_outfit_comment_form").validate({
+                rules: {
+                    "comment[text]": {
+                        required: true
+                    }
+                }
+            }
+    );
+
+    function add_outfit_comment(outfit_id) {
+        if ($('#user_outfit_comment_form').valid() == true) {
+            $("#user_outfit_comment_form").ajaxSubmit({
+                url: '/user/user_outfits/add_comments?outfit_id=' + outfit_id,
+                success: function (data) {
+                    if (data != 'error')
+                        $('#user_outfit_show').html(data);
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+    }
+</script>

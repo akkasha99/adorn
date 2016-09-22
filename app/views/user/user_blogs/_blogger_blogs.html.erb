@@ -1,0 +1,63 @@
+<header>
+  <div class="h-con">
+    <div class="user-main-con">
+      <div class="h-heading">ADOORN</div>
+    </div>
+    <% if user_signed_in? %>
+        <div id="closet_bkbtn" class="backBtn" style="display: none;">
+          <a href="javascript:;" onclick="return_back();"><img src="/assets/setting-errow.png" alt=""></a>
+        </div>
+    <% end %>
+    <div class="clear-fix"></div>
+  </div>
+</header>
+
+<div class="animated fadeInRight">
+  <div id="idoor_part" class="w_100 padbot100 btnOut">
+    <div class="w-100">
+      <% if @blogs.length > 0 %>
+          <div id="adoorn_it">
+            <% user = @blogs.first.user %>
+            <%= render :partial => 'adoorn_it', :locals => {:user => user} %>
+          </div>
+          <% @blogs.each do |blog| %>
+              <% user = blog.user %>
+              <div id="show_partial" class="w100 mrg20 solid-line pozrel">
+
+                <%= render :partial => 'show_partial', :locals => {:@blog => blog, :user => user, :@div => 'show_partial'} %>
+              </div>
+          <% end %>
+      <% else %>
+          <div class="w100 mrg20 solid-line">
+            <div class="user-con">
+              <div class="user-name not-found">Nothing Found.</div>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!--</div>-->
+
+<script>
+    $(function () {
+        window.scrollTo(0, 0);
+    });
+
+    function adoorn_blogs(id, status) {
+        $(".background_shadow").show();
+        $.ajax({
+            url: '/user/user_blogs/blogger_adoorn?id=' + id + '&status=' + status + '&we=1',
+            processData: false,
+            success: function (data) {
+                if (data != 'error') {
+                    $("#adoorn_it").html(data);
+                    $(".background_shadow").hide();
+                }
+            },
+            error: function (data) {
+                $(".background_shadow").hide();
+            }
+        });
+    }
+</script>

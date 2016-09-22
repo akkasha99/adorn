@@ -1,0 +1,50 @@
+<header>
+  <div class="h-con">
+    <div class="user-main-con">
+      <div class="h-heading">ADOORN</div>
+    </div>
+    <div class="backBtn">
+      <a href="#" onclick="back_to_setting()"><img src="/assets/setting-errow.png" alt=""></a>
+    </div>
+    <div class="clear-fix"></div>
+  </div>
+</header>
+<div class="acc-main-con w_100 padbot100">
+  <div class="account-h-con">
+    <div class="heading">Share Settings</div>
+  </div>
+  <% accounts.each_with_index do |media, i| %>
+      <div class="w_100" onclick="linking(<%= i %>)">
+        <a href="#">
+          <% linked = check_connection(media) %>
+          <div class="inner-h-con acc-share-link <%= linked ? 'active' : '' %>" id="media_<%= i %>">
+            <img class="acimg" src="/assets/<%= media %>.png" alt="">
+
+            <div class="pro"><%= media %></div>
+            <div class="r-erow f-r"><img src="/assets/profile-erow.png" alt=""></div>
+            <% linked ? auth = current_user.authorizations.where(:provider => media.to_s).first : auth = nil %>
+            <div class="pro f-r user-name-social"><%= auth != nil ? auth.name.to_s : '' %></div>
+          </div>
+        </a>
+      </div>
+  <% end %>
+</div>
+
+<script>
+    function linking(id) {
+        $.ajax({
+            url: '/user/users/media_detail?index=' + id,
+            success: function (data) {
+                $("#main_div").html(data)
+            }
+        });
+    }
+</script>
+
+<style>
+
+
+    @media only screen and (max-width: 480px) {
+
+    }
+</style>

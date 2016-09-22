@@ -1,0 +1,24 @@
+<div class="form-group">
+  <div class="form-group">
+    <div class="col-md-4">
+      <label>Select sub-category</label>
+      <select id="basic_subcategory" class="form-control input-medium select2me" data-placeholder="Select..." onchange="adding_item()">
+        <option value=""></option>
+        <% subcategories.each do |cat| %>
+            <option value="<%= cat.id %>"><%= cat.name %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12" style="margin-top: 2%;">
+    <button class="btn green" onclick="add_new_item();">Add New Basic Item</button>
+  </div>
+</div>
+<script>
+    function adding_item() {
+        if ($("#basic_subcategory").val() == "") {
+            $('#new_item_form').hide();
+        }
+    }
+</script>

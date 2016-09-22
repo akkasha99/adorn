@@ -1,0 +1,215 @@
+<div class="row">
+  <% if feed.present? %>
+      <div class="col-md-12" style="margin-top: 2%;">
+        <div class="portlet box grey-cascade">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-globe"></i> Blogger Info/Actions
+            </div>
+            <div class="tools">
+              <a class="collapse" href="javascript:;">
+              </a>
+              <a class="config" data-toggle="modal" href="#portlet-config">
+              </a>
+              <a class="reload" href="javascript:;">
+              </a>
+              <a class="remove" href="javascript:;">
+              </a>
+            </div>
+          </div>
+          <div class="portlet-body">
+            <!--<div class="col-md-8">-->
+            <div id="sample_1_wrapper" class="dataTables_wrapper no-footer">
+              <table id="sample_1" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="sample_1_info">
+                <thead>
+                <tr role="row">
+                  <th class="sorting_asc" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="2" style="width: 143px;" aria-sort="ascending" aria-label="Username: activate to sort column ascending">Blog
+                    Url
+                  </th>
+                  <th class="sorting_asc" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width: 143px;" aria-sort="ascending" aria-label="Username: activate to sort column ascending">Block
+                    | Unblock
+                  </th>
+                  <th class="sorting_asc" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width: 143px;" aria-sort="ascending" aria-label="Username: activate to sort column ascending">Featured
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="">
+                  <td colspan="2">
+                    <a href="<%= feed.url %>"><%= feed.url %></a>
+                  </td>
+                  <td>
+                    <% if  feed.is_active == 2 %>
+                        <button class="btn green" onclick="block_unblock_feed('0','<%= feed.id %>')">Activate</button>
+                        <button class="btn red" onclick="block_unblock_feed('1','<%= feed.id %>')">Block</button>
+                    <% else %>
+                        <button class="btn red" onclick="block_unblock_feed('<%= feed.is_active %>','<%= feed.id %>')"><%= feed.is_active == 1 ? 'Block' : 'Unblock' %></button>
+                    <% end %>
+                  </td>
+                  <td id="is_featured">
+                    <%= render :partial => 'is_featured', :locals => {:user => user} %>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+  <% else %>
+      <div class="col-md-12">
+        <h3>No Blog Found.</h3>
+      </div>
+      </div>
+  <% end %>
+  <% if blogs.length > 0 %>
+      <div class="portlet box grey-cascade">
+        <div class="portlet-title">
+          <div class="caption">
+            <i class="fa fa-globe"></i> Blog Entries
+          </div>
+          <div class="tools">
+            <a class="collapse" href="javascript:;">
+            </a>
+            <a class="config" data-toggle="modal" href="#portlet-config">
+            </a>
+            <a class="reload" href="javascript:;">
+            </a>
+            <a class="remove" href="javascript:;">
+            </a>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <div class="table-toolbar">
+            <div id="blogs_table_wrapper" class="dataTables_wrapper no-footer">
+              <table id="blogs_table" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="sample_1_info">
+                <thead>
+                <tr role="row">
+                  <th class="sorting_asc" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" style="width: 143px;" aria-sort="ascending" aria-label="Username: activate to sort column ascending">
+                    Blog Title
+                  </th>
+                  <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 248px;" aria-label="Email">
+                    Blog Url
+                  </th>
+                  <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 91px;" aria-label="Points">
+                    Action
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <% blogs.each do |blog| %>
+                    <tr class="">
+                      <td>
+                        <%= blog.title %>
+                      </td>
+                      <td>
+                        <a href="<%= blog.web_link %>"><%= blog.web_link %></a>
+                      </td>
+                      <td id="div_<%= blog.id %>">
+                        <%= render :partial => 'blog_block_button', :locals => {:blog => blog} %>
+                      </td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>
+<script>
+
+    function change_control(id) {
+        $(".background_shadow").show();
+        $.ajax({
+            url: '/admin/user_blogs/change_blog_control?id=' + id + '&user_id=' + '<%= user_id %>',
+            processData: false,
+            success: function (data) {
+                $(".background_shadow").hide();
+                $("#user_blogs_div").html(data);
+            }
+        });
+    }
+
+    function block_unblock_feed(status, feed_id) {
+        $(".background_shadow").show();
+        $.ajax({
+            url: '/admin/user_blogs/block_unblock_feed?feed_id=' + feed_id + '&user_id=' + '<%= user_id %>' + '&status=' + status + '&other=1',
+            processData: false,
+            success: function (data) {
+                $(".background_shadow").hide();
+                $("#user_blogs_div").html(data);
+            }
+        });
+    }
+
+    function block_unblock_blog(blog_id) {
+        $(".background_shadow").show();
+        $.ajax({
+            url: '/admin/user_blogs/block_unblock_blog?blog_id=' + blog_id + '&user_id=' + '<%= user_id %>',
+            processData: false,
+            success: function (data) {
+                $(".background_shadow").hide();
+                $("#div_" + blog_id).html(data);
+            }
+        });
+    }
+
+    function is_featured(user_id) {
+        $(".background_shadow").show();
+        $.ajax({
+            url: '/admin/user_blogs/is_featured?user_id=' + user_id,
+            processData: false,
+            success: function (data) {
+                $(".background_shadow").hide();
+                $("#is_featured").html(data);
+            }
+        });
+    }
+
+    var table = $('#blogs_table');
+    table.dataTable({
+        "columns": [
+            {
+                "orderable": true
+            },
+            {
+                "orderable": true
+            },
+            {
+                "orderable": false
+            }
+        ],
+        "lengthMenu": [
+            [5, 10, 15, 20, -1],
+            [5, 10, 15, 20, "All"] // change per page values here
+        ],
+        // set the initial value
+        "pageLength": 10,
+        "pagingType": "bootstrap_full_number",
+        "language": {
+            "lengthMenu": "_MENU_ records",
+            "paginate": {
+                "previous": "Prev",
+                "next": "Next",
+                "last": "Last",
+                "first": "First"
+            }
+        },
+        "columnDefs": [
+            {  // set default column settings
+                'orderable': true,
+                'targets': [1]
+            },
+            {
+                "searchable": true,
+                "targets": [1]
+            }
+        ],
+        "order": [
+            [1, "asc"]
+        ] // set first column as a default sort by asc
+    });
+
+
+</script>

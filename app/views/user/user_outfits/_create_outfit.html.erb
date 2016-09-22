@@ -1,0 +1,138 @@
+<!--<div class="row">-->
+<div class="">
+  <h2 style="float: left; font-weight: bold; margin-left: 5%;"><a href="javascript:;" onclick="close_pop()">X</a></h2>
+
+  <h2 style="text-align: center; font-weight: bold;">Create Outfit</h2>
+
+  <div>
+    <div id="outfit_canvas" style="margin-top: 2%; border: 1px solid grey; height: 300px; width: 300px; margin-left: 20%;"></div>
+  </div>
+  <div style="float: left; margin-left: 2%;">
+    <a href="javascript:;" disabled="disabled" onclick="redo_canvas()" class="btn green">redo</a>
+    <a href="javascript:;" disabled="disabled" onclick="undo_canvas()" class="btn red">undo</a>
+  </div>
+  <div style="float: right; margin-right: 5%;">
+    <a href="javascript:;" onclick="select_item()" class="btn blue">Add Items </a>
+    <a href="javascript:;" onclick="create_outfit()" class="btn green">Create</a>
+    <a href="javascript:;" onclick="close_pop()" class="btn red">Cancel</a>
+  </div>
+
+</div>
+<!--</div>-->
+
+<div id="items_select" style="z-index: 999999; border: 1px solid black; background: none repeat scroll 0% 0% white; position: fixed; left: 35%; top: 25%; height: 400px; width: 400px; display: none;">
+
+</div>
+
+<script>
+
+
+    //    window.onload = function () {
+    stage = new Kinetic.Stage({
+        container: 'outfit_canvas',
+        width: 300,
+        height: 300
+    });
+    layer = new Kinetic.Layer();
+    //    }
+
+    var startX = 0;
+    var startY = 0;
+    var item_arr = [];
+    var item_pop = [];
+    //    var c = document.getElementById("outfit_canvas");
+    //    var ctx = c.getContext("2d");
+
+
+    function close_pop() {
+        $('#add_outfit').hide();
+    }
+
+    function select_item() {
+        $.ajax({
+            url: '/user/user_outfits/items_list',
+            processData: false,
+            success: function (data) {
+                $('#items_select').show().html(data);
+            }
+        });
+    }
+
+    function create_outfit() {
+//        var canvas = document.getElementById('outfit_canvas');
+        $(".background_shadow").show()
+        html2canvas($("#outfit_canvas"), {
+            onrendered: function (canvas) {
+                var data = canvas.toDataURLHD('image/png',1.0);
+                var file = dataURLtoBlob(data);
+                var fd = new FormData();
+                fd.append("image", file);
+                $.ajax({
+                    url: '/user/user_outfits/create_outfit',
+                    type: 'POST',
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if (data != 'error')
+                            $('#add_outfit').html(data);
+                        $(".background_shadow").hide()
+                    }
+                });
+            }
+        });
+
+
+    }
+
+    function dataURLtoBlob(dataURL) {
+        var binary = atob(dataURL.split(',')[1]);
+        var array = [];
+        for (var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {type: 'image/png'});
+    }
+
+    function undo_canvas() {
+        if (item_arr.length > 0) {
+            if (startX == 0) {
+                x = startX;
+                if (startY != 0) {
+                    y = startY - 60;
+                    x = 240;
+                }
+            }
+            else if (startY == 0) {
+                x = startX - 60;
+                y = startY;
+            }
+            else {
+                x = startX - 60;
+                y = startY;
+            }
+            ctx.clearRect(x, y, 60, 60);
+            startX = x;
+            startY = y;
+            var id = item_arr.pop()
+            item_pop.push(id);
+        }
+    }
+
+    function redo_canvas() {
+        if (item_pop.length > 0) {
+            var id = item_pop.pop();
+//            item_arr.push(id)
+            $.ajax({
+                url: '/user/user_outfits/get_item_data?id=' + id,
+                processData: false,
+                success: function (data) {
+                    if (data != 'error') {
+                        selected_item(data.url, data.id)
+                    }
+                }
+            });
+        }
+    }
+
+</script>

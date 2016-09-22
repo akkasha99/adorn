@@ -1,0 +1,53 @@
+<header>
+  <div class="h-con">
+    <div class="user-main-con">
+      <div class="h-heading">Report <%#= truncate(content_type == 'user' ? content.user_name : content.title, :length => 8) %>
+      </div>
+    </div>
+    <div class="setaro">
+      <a href="javascript:;" onclick="report_user(<%= content.id %>,'<%= content_type %>')"><img src="/assets/setting-errow.png" alt=""></a>
+    </div>
+    <div class="gear">
+      <a href="javascript:;" onclick="send_report('<%= content.id %>')"><img src="/assets/confirm2.png" alt=""></a>
+    </div>
+  </div>
+</header>
+
+<div class="acc-main-con w_100 padbot100">
+  <div class="account-h-con">
+    <div class="heading">WHY ARE YOU REPORTING THIS?</div>
+  </div>
+  <div class="w_100">
+    <div class="form">
+      <textarea type="text" name="reporting_text" id="reporting_text" placeholder="Type here..."></textarea>
+    </div>
+  </div>
+</div>
+
+<script>
+    function report_user(id, content_type) {
+        $(".background_shadow").show();
+        $.ajax({
+            url: '/user/users/reporting?id=' + id + '&comment=false&content_type=' + content_type,
+            success: function (data) {
+                $('#main_div').html(data);
+                $(".background_shadow").hide();
+            }
+        });
+    }
+
+    function send_report(id) {
+        var comment = $('#reporting_text').val();
+        if (comment != '') {
+            $(".background_shadow").show();
+            $.ajax({
+                url: '/user/users/y_reporting?id=' + id + '&comment=' + comment + '&content_type=<%= content_type %>',
+                success: function (data) {
+                    $("#main_div").html(data);
+                    $(".background_shadow").hide();
+                }
+            });
+        }
+    }
+
+</script>

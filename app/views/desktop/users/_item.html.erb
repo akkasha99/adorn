@@ -1,0 +1,106 @@
+<div class="topShadow" style="display: none" id="reporting_popup">
+  <div class="topShadowIn">
+    <div class="tSIn">
+      <div class="cls"><a href="#" onclick="reporting_outfit_close()"><img src="/assets/tpClose.png"></a></div>
+      <div class="tSHed">Report <%= truncate((@item.title if @item.title.present?), :length => 20) %></div>
+      <div class="tscontns">
+        <h3>Why are you reporting this?</h3>
+
+        <div class="checBxz">
+          <div class="chBXList">
+                     <span>
+                       <input type="radio" class="radio" name="report" value="SPAM" onchange="report()">
+                         <!--<input type="radio" name="foo">-->
+                         <p>Feels like SPAM </p>
+                        </span>
+                     <span>
+                       <input type="radio" class="radio" name="report" value="Offensive" onchange="report()">
+                         <!--<input type="radio" name="foo" checked>-->
+                         <p>Inappropriate or Offensive </p>
+                        </span>
+                        <span>
+                          <input type="radio" class="radio" name="report" value="Other" onchange="report()">
+                         <!--<input type="radio" name="foo">-->
+                         <p>Other... </p>
+                        </span>
+
+          </div>
+        </div>
+        <span style="display: none;margin:0 0 0 -43px;" id="others_text">
+                    <textarea id="text_text" placeholder="Enter your message here..."></textarea>
+                    </span>
+      </div>
+      <div class="actButnz">
+        <a href="#" id="report_button" onclick="send_report('<%= @item.id %>','item')">Report It</a>
+
+        <p>Thanks</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--<div class="middle-section">-->
+<div class="wrapp">
+  <div class="w-100 mrg20">
+    <div class="desk-colllerless"><%= @item.title if @item.title.present? %></div>
+  </div>
+
+  <div class="w-100">
+    <div class="banner-con">
+      <% if @item.image? && File.exists?(@item.image.path(:medium).to_s) %>
+          <%= image_tag @item.image.url(:other) if @item.image.present? %>
+      <% else %>
+          <%= image_tag "missing_item.jpeg" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="w-100" id="item_buttons">
+    <%= render :partial => 'desktop/users/item_buttons', :locals => {:@item => @item} %>
+  </div>
+  <!--w-100 end-->
+  <div class="desk-des-multi-img">
+    <%= @item.description %>
+  </div>
+
+  <div class="desk-view-all" onclick="show_comments('item_comments')">view all comments</div>
+  <div id="item_comments" style="display: none">
+    <%= render :partial => '/desktop/users/comments', :locals => {:comment => @item.comments} %>
+  </div>
+  <%= render :partial => '/desktop/users/comment_form' %>
+  <%= render :partial => '/desktop/users/item_outfit', :locals => {:@suggested_items => suggested} %>
+  <!--w-100 end-->
+
+</div>
+<script>
+    $(document).ready(function () {
+        window.scrollTo(0, 0);
+        function myFunc() {
+            if ($("#text_text").val() == '') {
+                $("#report_button").removeClass('active');
+            }
+            else {
+                $("#report_button").addClass('active');
+            }
+        }
+
+        myFunc();
+
+        //either this
+        $('#text_text').keyup(function () {
+            myFunc();
+        });
+
+        //or this
+        $('#text_text').keyup(function () {
+            myFunc();
+        });
+
+        //and this for good measure
+        $('#text_text').change(function () {
+            myFunc(); //or direct assignment $('#txtHere').html($(this).val());
+        });
+    });
+</script>

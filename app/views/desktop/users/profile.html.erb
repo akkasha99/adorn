@@ -1,0 +1,223 @@
+<div id="desk_main_div">
+  <div class="middle-section">
+    <%= form_for @user, :url => "/desktop/users/profile_update", :html => {:id => 'accounts_form', :multipart => true, :method => 'post'} do |f| %>
+        <div class="des-acc-con">
+          <div class="desk-acc-hd">account</div>
+          <div class="des-acc-con2 acc-b-b">
+            <div class="desk-acc-h-con border-0">
+              <div class="w-100">
+                <div class="desk-acc-h-con-img"><a href="#">
+                  <!--<img alt="" src="/assets/profile-pic.jpg">-->
+                  <% if @user.avatar && File.exists?(@user.avatar.path(:thumb).to_s) %>
+                      <%= image_tag @user.avatar(:thumb), :class => 'u-img' unless f.object.new_record? %>
+                  <% else %>
+                      <%= image_tag "missing.png", :class => 'u-img' %>
+                  <% end %>
+                </a></div>
+                <div class="comments-desc">
+                  <div class="desk-acc-name">Profile Picture</div>
+                  <a href="#" onclick="browse()">
+                    <div class="desk-change-picture"><i>Change Picture</i></div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="des-acc-con2 acc-inner-p acc-b-b2">
+            <div class="acc-lable">profile info</div>
+            <div class="acc-form-con f-l">
+              <div class="w-100">
+                <div class="acc-form-con2 acc-b-b">
+                  <%= f.text_field :first_name, :placeholder => "First Name" %>
+                  <%= hidden_field_tag :user_id, current_user.id %>
+                </div>
+                <div class="acc-field-icon"><img src="/assets/acc-name.png" alt=""></div>
+              </div>
+              <div class="w-100">
+                <div class="acc-form-con2">
+                  <%= f.text_field :last_name, :placeholder => "Last Name" %>
+
+                </div>
+                <div class="acc-field-icon"></div>
+              </div>
+            </div>
+
+            <div class="acc-form-con f-r">
+              <div class="w-100">
+                <div class="acc-form-con2">
+                  <%= f.text_field :user_name, :placeholder => "User Name", :id => 'username' %>
+                </div>
+                <div class="acc-field-icon"><img src="/assets/acc-u-name.png" alt=""></div>
+              </div>
+              <div class="w-100 acc-form-con2">
+                <div class="acc-form-con2">
+                  <%= f.text_field :email, :placeholder => "Email", :class => "fixbrd" %>
+                </div>
+                <div class="acc-field-icon"><img src="/assets/acc-mail.png" alt=""></div>
+              </div>
+            </div>
+          </div>
+          <div class="des-acc-con2 acc-inner-p">
+            <div class="acc-lable">about me</div>
+            <div class="acc-form-con f-l">
+              <div class="w-100">
+                <div class="acc-form-con2 acc-b-b">
+                  <!--<textarea name="about" id="about" placeholder="140 Characters"></textarea>-->
+                  <%= f.text_area :about_me, :placeholder => "BIO Max 100 Characters", :maxlength => 100 %>
+                </div>
+              </div>
+            </div>
+            <% f.object.user_feed ||= UserFeed.new %>
+            <%= f.fields_for :user_feed do |feed| %>
+                <div class="acc-form-con f-r">
+                  <div class="w-100">
+                    <div class="acc-form-con3">
+                      <!--<input type="text" name="blogurl" id="blogurl" placeholder="Blog ULR">-->
+                      <%= feed.text_field :url, :placeholder => "BLOG URL" %>
+                      <%= feed.hidden_field :user_id, :value => current_user.id %>
+                    </div>
+                  </div>
+                </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="des-acc-con">
+          <div class="desk-acc-hd">Preferences</div>
+          <div class="des-acc-con2 acc-inner-p acc-b-b2">
+            <div class="acc-lable">Change Password</div>
+            <div class="acc-form-con f-l">
+              <div class="w-100">
+                <div class="acc-form-con3">
+                  <!--<input type="text" name="oldpw" id="oldpw" placeholder="Old Password">-->
+                  <%= password_field_tag 'Old_Password', '', :placeholder => 'Old Password' %>
+                </div>
+              </div>
+            </div>
+            <div class="acc-form-con f-r">
+              <div class="w-100">
+                <div class="acc-form-con3 acc-b-b">
+                  <!--<input type="text" name="newpw" id="newpw" placeholder="New Password">-->
+                  <%= f.password_field :password, :placeholder => "New Password", :id => "new_password" %>
+                </div>
+              </div>
+              <div class="w-100">
+                <div class="acc-form-con3">
+                  <!--<input type="text" name="rewpw" id="rewpw" placeholder="Reenter New Password">-->
+                  <%= f.password_field :password_confirmation, :placeholder => "Reenter New Password", :id => "password_confirmation" %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="des-acc-con2 acc-inner-p">
+            <div class="acc-lable">Location</div>
+            <div class="acc-form-con f-l">
+              <div class="w-100">
+                <div class="acc-form-con3">
+                  <%= f.select :location, options_for_select(['United States', 'Canada'], :selected => f.object.location) %>
+                  <%#= f.select :location, options_for_select(['United States', 'United Kingdom', 'France', 'Deutschland', 'Japan', 'Australia', 'Canada'], :selected => f.object.location) %>
+                </div>
+              </div>
+            </div>
+            <div class="acc-form-con f-r"></div>
+          </div>
+        </div>
+        <div class="acc-save-btn-con padb50">
+          <%#= f.submit "Save Changes", :class => "acc-save-btn" %>
+          <%= button_tag "Save Changes", :onclick => "submitting_form()", :class => "acc-save-btn" %>
+        </div>
+    <% end %>
+  </div>
+</div>
+<%= form_for @user, :url => "/desktop/users/profile_update", :html => {:id => 'accounts_form2', :multipart => true, :method => 'post', :onsubmit => "return true"} do |f| %>
+    <%= f.file_field :avatar, :capture => "camera", :style => "display: none;", :id => 'desk_profile_pic' %>
+    <%= hidden_field_tag :user_id, current_user.id %>
+    <%= hidden_field_tag :profile, true %>
+<% end %>
+
+<script>
+
+    $(document).ready(function () {
+        $("#wrapper").addClass('setting-bg');
+        <% if flash[:error] != nil %>
+        document.getElementById("mainpop_text").innerHTML = "<%= flash[:error] %>";
+        $("#mainapp_popup").show();
+        setTimeout(function () {
+            close_me_please();
+        }, 4000);
+        <% end %>
+//        hudMsg('error', "
+        <%#= flash[:error] %>
+//        ")
+    })
+    function browse() {
+        $("#desk_profile_pic").click();
+    }
+
+    $('#desk_profile_pic').change(function () {
+        $(".background_shadow").show();
+        $("#accounts_form2").submit();
+    });
+
+    $(function () {
+        $('#username').on('keypress', function (e) {
+            if (e.which == 32)
+                return false;
+        });
+    });
+
+    jQuery.validator.addMethod("noSpace", function (value, element) {
+        return value.indexOf(" ") < 0 && value != "";
+    }, "No space allowed.");
+
+    $("#accounts_form").validate({
+                rules: {
+                    "user[first_name]": {
+                        maxlength: 255
+                    },
+                    "user[last_name]": {
+                        maxlength: 255
+                    },
+                    "user[user_name]": {
+                        maxlength: 32,
+                        minlength: 3,
+                        required: true,
+                        noSpace: true,
+                        remote: {
+                            url: "/user/users/user_name_check?user_name=" + "user[user_name]",
+                            type: "get"
+                            //                            dataType:'html'
+                        }
+                    },
+                    "user[email]": {
+                        maxlength: 255,
+                        minlength: 1,
+                        required: true,
+                        email: true,
+                        remote: {
+                            url: "/user/users/user_email_check?email=" + "user[email]",
+                            type: "get"
+                            //                            dataType:'html'
+                        }
+                    }
+                },
+                messages: {
+                    "user[email]": {
+                        remote: "Email already exists."
+                    },
+                    "user[user_name]": {
+                        remote: "Username already exists."
+                    }
+
+                }
+
+            }
+    );
+
+    function submitting_form() {
+        if ($('#accounts_form').valid() == true) {
+            $('.background_shadow').show()
+            $('#accounts_form').submit();
+        }
+    }
+
+</script>

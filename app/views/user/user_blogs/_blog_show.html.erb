@@ -1,0 +1,31 @@
+<div id="blog_details">
+  <header>
+    <div class="h-con">
+      <div class="user-main-con">
+        <div class="h-heading3">ADOORN</div>
+      </div>
+      <% user = @blog.user %>
+      <div class="backBtn">
+        <a href="javascript:;" onclick="return_back('<%= user.id %>');"><img src="/assets/setting-errow.png" alt=""></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="btnOut w_100">
+    <!--<div class="w-100 mrg20">-->
+    <div id="show_partial" class="w100 mrg20 solid-line mrgbot100">
+      <%= render :partial => 'show_partial', :locals => {:@blog => @blog, :user => user, :@div => 'show_partial'} %>
+    </div>
+  </div>
+  <!--</div>-->
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        show_user_footer
+//        hide_footers();
+        window.scrollTo(0, 0);
+    });
+
+</script>

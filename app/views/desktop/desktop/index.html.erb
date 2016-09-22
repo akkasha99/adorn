@@ -1,0 +1,102 @@
+<div class="wrapper-desk desk-bg ">
+
+  <header>
+    <div class="desk-bg">
+      <nav>
+        <ul class="f-l">
+          <li><a href="#" class="logo-text">ADOORN</a></li>
+        </ul>
+        <ul class="f-r">
+          <li><a href="#">About Adoorn</a></li>
+          <li><a href="http://adoorninc.tumblr.com/" target="_blank">Blog</a></li>
+          <li><a class="login-btn-bdr" href="#">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container-desk">
+    <div class="desk-sec1">
+      <div class="mobile-img"><img src="/assets/mobiles-img.png" alt=""></div>
+      <!--mobile-img end-->
+    </div>
+    <!--desk-sec1 end-->
+    <div class="desk-sec1">
+      <div class="follow-txt">create and share follow bloggers shop sales</div>
+      <div class="app-img"><a href="#"><img src="/assets/app-store-btn.png" alt=""></a></div>
+      <!--app-store-btn end-->
+      <div class="google-app-btn"><a href="#"><img src="/assets/google-play-btn.png" alt=""></a></div>
+      <!--google-play-btn end-->
+
+    </div>
+  </div>
+  <!--container-deskend-->
+</div><!--wrapper-desk end-->
+
+<div id="openModal" class="modalDialog">
+  <div class="login-popup">
+    <div class="popp-hd-login">Login <a href="#" id="closeme" title="Close" class="close">X</a></div>
+    <div class="login-box">
+      <% resource = User.new %>
+      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:id => 'signin_form'}) do |f| %>
+          <!--<input type="text" name="uname" id="uname" placeholder="Username"/>-->
+          <%= f.text_field :user_name, :placeholder => "Username" %>
+          <!--<input type="password" name="pw" id="pw" placeholder="Password"/>-->
+          <%= f.password_field :password, :placeholder => "Password", :id => "password" %>
+          <!--<input type="submit" name="submit" class="popup-login-btn" value="Submit"/>-->
+
+          <a href="javascript:;" onclick="submit_form();">
+            <div class="desk-login-box-btn">SUBMIT</div>
+          </a>
+
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //    $(function () {
+        <% if flash[:error] != nil %>
+        document.getElementById("mainpop_text").innerHTML = "<%= flash[:error] %>";
+        $("#mainapp_popup").show();
+        setTimeout(function () {
+            close_me_please();
+        }, 4000);
+        <% elsif flash[:alert] != nil %>
+        document.getElementById("mainpop_text").innerHTML = "<%= flash[:alert] %>";
+        $("#mainapp_popup").show();
+        setTimeout(function () {
+            close_me_please();
+        }, 4000);
+        <% end %>
+        //    });
+    })
+
+    function swapStyleSheet(sheet) {
+        document.getElementById('pagestyle').setAttribute('href', sheet);
+    }
+
+    function submit_form() {
+        $("#signin_form").submit();
+    }
+
+    $("#password").keyup(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which)
+        if (code == 13) {
+            submit_form();
+        }
+    });
+    //    $(document).ready(function () {
+
+    //    });
+    $("#openModal").hide();
+    $(".popp-hd-login a").click(function () {
+        $("#openModal").hide();
+    })
+    $(".login-btn-bdr").click(function () {
+        $("#openModal").show();
+    })
+
+
+</script>

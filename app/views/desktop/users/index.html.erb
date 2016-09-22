@@ -1,0 +1,111 @@
+<div id="desk_main_div" class="padb50">
+  <% if @feeds.size > 0 %>
+      <% @feeds.each do |feed| %>
+          <div class="middle-section ">
+            <div class=" wrapp">
+              <div class="w-100 mrg20">
+                <div style="border:none;" class="inner-h-con desk-h-con p0">
+                  <a href="#" onclick="closet('<%= feed.user.id %>')">
+                    <% if feed.user.avatar? %>
+                        <%= image_tag feed.user.avatar(:thumb), :class => 'thumbnail', :style => "width :41px;height:41px;margin:14px 3% 0 0 " %>
+                    <% else %>
+                        <%= image_tag "missing.png", :class => 'thumbnail', :style => "width:41px;height:41px;margin:14px 3% 0 0 " %>
+                    <% end %>
+                  </a>
+
+                  <a href="#" class="pro low_cas_desk" style="color: #000;padding: 16px 0 0 0" onclick="closet('<%= feed.user.id %>')"><%= feed.user.user_name %></a>
+
+                  <div class="desk-top-time" style="clear: both;display: table;padding-left: 62px;margin: 0;line-height: 0;"><%= time_ago_in_words(feed.created_at) %>
+                    ago
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100">
+                <div class="banner-con" style="border: solid 1px #ccc;" onclick="item_detail('<%= feed.id %>', '<%= feed.class.name=='UserItem' ? '/user/user_items/show' : '/user/user_outfits/show' %>')">
+                  <%= image_tag feed.image.url(:other) if feed.image.present? %>
+                  <% if feed.image? %>
+                  <% else %>
+                      <%= image_tag "missing_item.jpeg" %>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="w-100 mrg20" id="<%= feed.class.name + feed.id.to_s %>">
+                <%= render :partial => '/desktop/users/feed_buttons', :locals => {:feed => feed} %>
+
+              </div>
+              <div class="desk-view-all" onclick="show_comments('<%= 'comments_' + feed.class.name + '_' + feed.id.to_s %>')">view
+                all comments
+              </div>
+              <%= hidden_field_tag :com_div, 'comments_' + feed.class.name + '_' + feed.id.to_s %>
+              <div id="comments_<%= feed.class.name + '_' + feed.id.to_s %>" class="w-100" style="display: none;">
+                <%= render :partial => "/desktop/users/all_comments", :locals => {:@comments => feed.comments, :@feed => feed} %>
+              </div>
+              <div class="w-100 mrg20 mid-brd">
+                <div class="desk-add-com-box">
+                  <% @comment = Comment.new %>
+                  <%= form_for @comment, :url => feed.class.name == "UserOutfit" ? "/user/user_outfits/add_comments?item_id=#{feed.id}" : "/user/user_items/add_comments?item_id=#{feed.id}", :html => {:multipart => true, :onsubmit => 'return false', :id => 'comment_form', :method => 'post'} do |comment| %>
+                      <%= comment.text_field :text, :placeholder => "Add a comment", :class => 'comment_text' %>
+                      <%= comment.hidden_field :user_outfit_id, :value => (feed.class.name == "UserOutfit" ? feed.id : nil) %>
+                      <%= comment.hidden_field :user_item_id, :value => (feed.class.name == "UserItem" ? feed.id : nil) %>
+                      <%= comment.hidden_field :user_id, :value => current_user.id %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+      <% end %>
+  <% else %>
+      <div class="middle-section">
+        <div class="desk-n-f-con">
+          <div class="w-100 mrg20">
+            <div class="desk-not-found">Nothing Found.</div>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>
+<script>
+    //    $("#comment_form").validate({
+    //                rules: {
+    //                    "comment[text]": {
+    //                    }
+    //
+    //                }
+    //            }
+    //    );
+
+    $('.comment_text').keyup(function (e) {
+        if (e.keyCode == 13) {
+//            if ($('#comment_form').valid() == true) {
+            var form = $(this).parent();
+            $(".background_shadow").show();
+            form.ajaxSubmit({
+                success: function (data) {
+                    $('.comment_text').val('');
+                    $(".background_shadow").hide();
+                    $('#' + data.div).html(data.partial);
+                },
+                error: function (data) {
+                    $(".background_shadow").hide();
+                }
+            });
+//            }
+        }
+    });
+
+    function item_detail(id, action) {
+        $.ajax({
+            url: action + '?id=' + id,
+            processData: false,
+            success: function (data) {
+                scroll(0, 0)
+                $("#desk_main_div").html(data)
+
+            }
+        });
+
+    }
+
+</script>

@@ -1,0 +1,100 @@
+<div class="w_100">
+  <div id="page-wrap">
+    <div class="buttons two-btn buttons-mrg-b">
+      <label id="user_tab" class="active" for="tab1" onclick="show_users();"><span>Users</span></label>
+      <label id="item_tab" class="" for="tab2" onclick="show_search_items();"><span>Items</span></label>
+    </div>
+  </div>
+</div>
+
+<div class="TabBar">
+  <ul class="tabs">
+    <li>
+      <input type="radio" checked name="tabs" id="tab1_search">
+      <label for="tab1_search"></label>
+
+      <div id="tab-content1_search" class="tab-content">
+        <div class="animated  fadeInRight">
+          <div class="w_100 mrgbot100">
+            <div id="result_user" class="w_100">
+              <% if @recent.size > 0 %>
+                  <div class="re-post-hd stwm" style="margin: 5px 0 0 0">Recent Searches</div>
+                  <div class="w_100">
+                    <div class="post-con">
+                      <% @recent.each do |recent| %>
+                          <a href="javascript:;" onclick="search_text('<%= recent.search %>', 'user')">
+                            <div class="re-post"><%= recent.search %></div>
+                          </a>
+                      <% end %>
+                    </div>
+                    <div class="w_100">
+                      <div class="w_100 padbot100"></div>
+                    </div>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <li>
+      <input type="radio" name="tabs" id="tab2_search">
+      <label for="tab2_search"></label>
+
+      <div id="tab-content2_search" class="tab-content">
+        <div class="animated  fadeInRight">
+          <div class="w_100 mrgbot100">
+            <div id="result_item" class="w_100">
+              <% if @recent.size > 0 %>
+                  <div class="re-post-hd stwm" style="margin: 5px 0 0 0">Recent Searches</div>
+                  <div class="w_100">
+                    <div class="post-con">
+                      <% @recent.each do |recent| %>
+                          <a href="javascript:;" onclick="search_text('<%= recent.search %>', 'item')">
+                            <div class="re-post"><%= recent.search %></div>
+                          </a>
+                      <% end %>
+                    </div>
+                    <div class="w_100">
+                      <div class="w_100 padbot100"></div>
+                    </div>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<script>
+    function show_users() {
+        document.getElementById("user_tab").className = "active";
+        document.getElementById("item_tab").className = "";
+        var name = $('#search').val();
+        search_text(name, 'user');
+    }
+
+    function show_search_items() {
+        document.getElementById("item_tab").className = "active";
+        document.getElementById("user_tab").className = "";
+        var name = $('#search').val();
+        search_text(name, 'item');
+    }
+
+    function search_text(name, type) {
+        if (name != '') {
+            $('#search').val(name);
+            $.ajax({
+                url: '/user/users/search_users?key=' + name + '&type=' + type,
+                processData: false,
+                success: function (data) {
+                    $("#result_" + type).html(data);
+                }
+            });
+        }
+    }
+
+</script>
