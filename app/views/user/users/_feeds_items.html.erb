@@ -10,7 +10,6 @@
             <% end %>
           </div>
           <div id="textid_<%= i %>" class="user-name">
-            <%#= truncate(feed.user.user_name, :length => 12) %>
             <%= feed.user.user_name %>
           </div>
         </div>
@@ -19,7 +18,6 @@
       <div class="time-con">
         <p><%= time_ago_in_words(feed.created_at) %> ago</p>
       </div>
-      <!--time-con end-->
 
       <a href="javascript:;" onclick="get_partial('<%= feed.id %>', '<%= feed.class.name=='UserItem' ? '/user/user_items/show' : '/user/user_outfits/show' %>')">
         <div class="banner-con">

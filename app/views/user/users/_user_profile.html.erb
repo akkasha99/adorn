@@ -121,7 +121,6 @@
     </div>
     <div class="w_100">
       <a href="mailto:feedback@adoorn.com">
-        <!--<a href="mailto:feedback@adoorn.com?subject=Your feedback is important to us.">-->
         <div class="inner-h-con">
           <div class="pro">Feedback</div>
           <div class="r-erow"><img src="/assets/profile-erow.png" alt=""></div>
@@ -243,61 +242,6 @@
             }
         });
     }
-    //
-    //    function update_user_feed(id, user_id) {
-    //        apprise("Are you sure You want to Delete this Url", {'verify': true}, function (r) {
-    //            if (r == true) {
-    //                $.ajax({
-    //                    url: '/user/users/update_user_feed?id=' + id + '&user_id=' + user_id,
-    //                    processData: false,
-    //                    success: function (data) {
-    //                        $("#main_div").html(data);
-    //                        $("#settings_div").hide()
-    //                        $("#user_feed_div").show()
-    //                    }
-    //                });
-    //            }
-    //        });
-    //    }
-    //    $(document).ready(function () {
-    //        $("#user_feed_div").hide()
-    //    });
-    //    function user_feed_edit() {
-    //        $("#settings_div").hide()
-    //        $("#user_feed_div").show()
-    //    }
-    //
-    //    function user_feed_t0_settings() {
-    //        $("#settings_div").show()
-    //        $("#user_feed_div").hide()
-    //    }
-    //    $("#user_feed_form").validate({
-    //                rules: {
-    //                    "user_feed[url]": {
-    //                        url: true
-    //                    }
-    //                }
-    //            }
-    //    );
-
-
-    //    function add_feed_url() {
-    ////        if ($('#user_feed_form').valid() == true) {
-    //        $('.background_shadow').show()
-    //        $("#user_feed_form").ajaxSubmit({
-    //            success: function (data) {
-    //                if (data != 'error')
-    //                    $('.background_shadow').hide()
-    //                $('#main_div').html(data);
-    //                $("#settings_div").show()
-    //                $("#user_feed_div").hide()
-    //            },
-    //            error: function (data) {
-    //
-    //            }
-    //        });
-    ////        }
-    //    }
 
     function back_to_setting() {
         $.ajax({
@@ -315,7 +259,6 @@
         if (!window.Android) {
             document.getElementById('profile_pic').click();
         }
-//        document.getElementById('my_file').click();
         if (window.Android) {
             Android.image_upload()
         }

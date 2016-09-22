@@ -26,14 +26,12 @@
       </div>
 
       <div class="row">
-        <%# unless users.blank? %>
         <div class="form-group">
           <div class="col-md-6">
             <label>User Blogger/Adoorn Internal Blogger Details</label>
             <select id="user_select" class="form-control input-medium select2me" data-placeholder="Select..." onchange="get_user_blogs();">
               <option value=""></option>
               <% users.each do |user| %>
-                  <%# if user.user_feed.present? && user.user_feed.is_active != 2 %>
                   <% if user.user_feed.present? %>
                       <option value="<%= user.id %>"><%= user.user_name %></option>
                   <% end %>
@@ -41,11 +39,6 @@
             </select>
           </div>
         </div>
-        <%# end %>
-
-        <!--<div class="col-md-12" style="margin-top: 2%;">-->
-        <!--<button class="btn green" onclick="get_user_blogs();">Show User Blogs</button>-->
-        <!--</div>-->
       </div>
 
       <div id="user_blogs_div" class="row" style="margin-top: 2%;">

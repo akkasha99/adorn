@@ -3,7 +3,6 @@
     <div class="col-md-12">
       <div class="row">
         <div class="col-md-12">
-          <!-- BEGIN PAGE TITLE & BREADCRUMB-->
           <h3 class="page-title">Basic SubCategories</h3>
           <ul class="page-breadcrumb breadcrumb">
             <li>
@@ -26,12 +25,10 @@
               </div>
             </li>
           </ul>
-          <!-- END PAGE TITLE & BREADCRUMB-->
         </div>
       </div>
 
       <div class="row">
-        <%# unless categories.blank? %>
         <div class="form-group">
           <div class="col-md-4">
             <label>Select Category</label>
@@ -43,7 +40,6 @@
             </select>
           </div>
         </div>
-        <%# end %>
 
         <div class="col-md-12" style="margin-top: 2%;">
           <button class="btn green" onclick="add_new_subcategory();">Add New Basic SubCategory</button>
@@ -69,7 +65,6 @@
               </div>
             </div>
             <div id="sub_panel" class="portlet-body">
-              <%#= render "form", :locals => {:@subategory => @subcategory} %>
             </div>
           </div>
         </div>

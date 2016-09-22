@@ -1,27 +1,9 @@
 <%= form_for @item, :url => '/admin/basic_items/', :html => {:multipart => true, :onsubmit => "return false", :id => 'item_form', :method => 'post'} do |f| %>
 <div class="errD">
-    <!--<div class="clearfix">-->
-    <!--<%#= f.label :title %>-->
-    <!--<%#= f.text_field :title, :class => "form-control placeholder-no-fix", :placeholder => "Item Name" %>-->
-    <!--<%#= f.hidden_field :basic_subcategory_id, :value => (f.object.new_record? ? subcategory_id : @item.basic_subcategory_id) %>-->
-    <!--</div>-->
-
-    <!--<div class="clearfix">-->
-    <!--<%#= f.label :price %>-->
-    <!--<%#= f.text_field :price, :class => "form-control placeholder-no-fix", :placeholder => "Item Price" %>-->
-    <!--</div>-->
-
     <div class="clearfix">
       <%= f.label :color %>
       <%= select_tag("basic_item[color]", options_for_select(BasicItem.colours, :selected => ""), :id => "state_dropdown", :style => "height:35px;width:275px; margin:5px 50px 0 0") %>
-      <%#= f.text_field :color, :class => "form-control placeholder-no-fix", :placeholder => "Item Color" %>
     </div>
-
-    <!--<div class="clearfix">-->
-    <!--<%#= f.label :description %>-->
-    <!--<%#= f.text_area :description, :class => "form-control placeholder-no-fix", :placeholder => "Enter Description ..." %>-->
-    <!--</div>-->
-
     <div class="clearfix">
       <%= f.label :image %>
       <%= image_tag @item.image.url(:thumb), :class => 'thumbnail' unless f.object.new_record? %>
@@ -35,8 +17,6 @@
       <% else %>
           <%= link_to "submit", "javascript:;", :onclick => "submit_item('update', '#{@item.id}');", :class => "btn green pull-left" %>
       <% end %>
-      <%#= link_to "submit", "javascript:;", :onclick => "submit_brand('#{f.object.new_record? ? 'create' : 'update'}', '#{f.object.new_record? ? nil : @brand.id}');", :class => "btn green pull-left" %>
-      <%#= link_to "Back", admin_brands_path, :class => "btn green", :style=> "margin:0 0 0 10px;" %>
     </div>
 </div>
 <% end %>
@@ -63,16 +43,6 @@
 
     $('#item_form').validate({
                 rules: {
-//                    "basic_item[title]": {
-//                        maxlength: 255,
-//                        minlength: 3,
-//                        required: true
-//                    },
-//                    "basic_item[price]": {
-//                        maxlength: 255,
-//                        minlength: 1,
-//                        required: true
-//                    },
                     "basic_item[image]": {
                         required: true
                     }

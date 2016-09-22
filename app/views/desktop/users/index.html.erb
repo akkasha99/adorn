@@ -67,18 +67,9 @@
   <% end %>
 </div>
 <script>
-    //    $("#comment_form").validate({
-    //                rules: {
-    //                    "comment[text]": {
-    //                    }
-    //
-    //                }
-    //            }
-    //    );
 
     $('.comment_text').keyup(function (e) {
         if (e.keyCode == 13) {
-//            if ($('#comment_form').valid() == true) {
             var form = $(this).parent();
             $(".background_shadow").show();
             form.ajaxSubmit({
@@ -91,7 +82,6 @@
                     $(".background_shadow").hide();
                 }
             });
-//            }
         }
     });
 

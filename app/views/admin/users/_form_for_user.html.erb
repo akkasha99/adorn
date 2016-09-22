@@ -28,10 +28,6 @@
         <label>About me:</label>
         <%= f.text_area :about_me, :placeholder => "About me", :class => "form-control placeholder-no-fix" %>
       </div>
-      <!--<div class="clearfix">-->
-      <!--<label>Hide as user:</label>-->
-      <!--<%#= f.check_box :hide_as_user, :class => "ss-checkbox lrg" %>-->
-      <!--</div>-->
       <%= f.hidden_field :hide_as_user, :value => 0 %>
       <div class="clearfix">
         <label>Location:</label>
@@ -40,7 +36,6 @@
           <div class="form-group">
             <div class="col-md-10">
               <%= f.select :location, options_for_select(['United States', 'Canada'], :selected => f.object.location) %>
-              <%#= f.select :location, options_for_select(['United States', 'United Kingdom', 'France', 'Deutschland', 'Japan', 'Australia', 'Canada'], :selected => f.object.location) %>
             </div>
           </div>
         </div>
@@ -108,9 +103,6 @@
                     },
                     "user[email]": {
                         maxlength: 255,
-//                        minlength: 1,
-//                        required: true,
-//                        email: true,
                         remote: {
                             url: "/user/users/check_email_admin?email=" + "user[email]",
                             type: "get"
@@ -135,7 +127,6 @@
                     },
                     "user[about_me]": {
                         maxlength: 100
-                        //                        required: true
                     }
                 },
                 messages: {

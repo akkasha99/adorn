@@ -2,7 +2,6 @@
 
   <div class="row">
     <div class="col-md-12">
-      <!-- BEGIN PAGE TITLE & BREADCRUMB-->
       <h3 class="page-title">
         Brands
       </h3>
@@ -27,7 +26,6 @@
           </div>
         </li>
       </ul>
-      <!-- END PAGE TITLE & BREADCRUMB-->
     </div>
   </div>
 
@@ -52,7 +50,6 @@
         <div class="portlet-body">
           <div class="table-toolbar">
             <div class="btn-group">
-              <%#= link_to "Create User", :class => "btn green" %>
               <a href="javascript:;" onclick="partial_call('brands/new');" class="btn green">Add New</a>
             </div>
 
@@ -81,7 +78,6 @@
                         </td>
                         <td>
                           <%= image_tag brand.logo.url(:medium), :style => "width: 100%; height: 175px;" %>
-                          <!--<a href="<%#= blog.web_link %>"><%#= blog.web_link %></a>-->
                         </td>
                         <td id="div_<%#= blog.id %>">
                           <%= link_to "edit", 'javascript:;', :class => 'btn blue', :onclick => "edit_brand('#{brand.id}');" %>
@@ -98,41 +94,9 @@
         </div>
       </div>
     </div>
-    <!--<div class="image_gallery col-md-12">-->
-    <!--<%# if brands.size > 0 %>-->
-    <!--<%# brands.each do |brand| %>-->
-    <!--<div class="col-sm-4">-->
-    <!--<div class="thumbnail">-->
-    <!--<%#= image_tag brand.logo.url(:medium), :style => "width: 100%; height: 175px;" %>-->
-    <!--<div class="caption">-->
-    <!--<p style="font-weight: bold; word-wrap: break-word;"> <%#= brand.name.capitalize! %> </p>-->
-
-    <!--<p>-->
-    <!--<%#= link_to "edit", 'javascript:;', :class => 'btn blue', :onclick => "edit_brand('#{brand.id}');" %>-->
-    <!--<%#= link_to "Delete", 'javascript:;', :class => 'btn red', :onclick => "del_brand('#{brand.id}');" %>-->
-    <!--</p>-->
-    <!--</div>-->
-    <!--</div>-->
-
-    <!--</div>-->
-    <!--<%# end %>-->
-    <!--<%# else %>-->
-    <!--<h3>No Brands Found!</h3>-->
-    <!--<%# end %>-->
-    <!--</div>-->
   </div>
 </div>
 <script>
-
-    //    function partial_call(action) {
-    //        $.ajax({
-    //            url: '/admin/' + action,
-    //            processData: false,
-    //            success: function (data) {
-    //                $("#panel_body").html(data);
-    //            }
-    //        });
-    //    }
 
     function edit_brand(id) {
         $.ajax({

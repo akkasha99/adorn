@@ -83,22 +83,6 @@
         });
     }
 
-    //    window.onload = function () {
-    //        WebPullToRefresh.init({
-    //            loadingFunction: refresh_feed
-    //        });
-    //    };
-
-
-    //    $('#content').xpull({
-    //        'callback': function () {
-    ////           console.log('Released...');
-    //            alert("yes");
-    //        }
-    //    });
-
-    //    $(document).ready(function () {
-
     $(window).bind("load", function () {
         // code here
 
@@ -123,43 +107,11 @@
                         }
                     });
                     resolve();
-                    //            if (true/* if the loading worked */) {
-                    //                resolve();
-                    //            } else {
-                    //                reject();
-                    //            }
                 });
             }
         });
 //    })
 
     });
-
-    //    var refresh_feed = function () {
-    //        return new Promise(function (resolve, reject) {
-    //            // Run some async loading code here
-    //            $.ajax({
-    //                url: '/user/users/update_newsfeed',
-    //                processData: false,
-    //                async: true,
-    //                success: function (data) {
-    //                    if (data == 'error') {
-    //                        reject();
-    //                    }
-    //                    else {
-    //                        resolve();
-    //                        $("#content").prepend(data);
-    //                        window.scrollTo(0, 0);
-    //                    }
-    //                }
-    //            });
-    //            resolve();
-    ////            if (true/* if the loading worked */) {
-    ////                resolve();
-    ////            } else {
-    ////                reject();
-    ////            }
-    //        });
-    //    };
 
 </script>

@@ -12,11 +12,9 @@
                       <% else %>
                           <%= image_tag "missing_item.jpeg" %>
                       <% end %>
-                      <!--<img src="/assets/multi-product.jpg" alt="">-->
                     </div>
                   </div>
                 </div>
-                <!--pro-con end-->
                 <div class="desk-days"><%= time_ago_in_words(item.created_at) %> ago</div>
                 <div class="des-quantity"><%= number_to_human(item.adorns.length) %>
                   <img src="/assets/desk-ro-avi-img.png" alt=""></div>

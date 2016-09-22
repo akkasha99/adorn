@@ -18,19 +18,13 @@
   <div class="container-desk">
     <div class="desk-sec1">
       <div class="mobile-img"><img src="/assets/mobiles-img.png" alt=""></div>
-      <!--mobile-img end-->
     </div>
-    <!--desk-sec1 end-->
     <div class="desk-sec1">
       <div class="follow-txt">create and share follow bloggers shop sales</div>
       <div class="app-img"><a href="#"><img src="/assets/app-store-btn.png" alt=""></a></div>
-      <!--app-store-btn end-->
       <div class="google-app-btn"><a href="#"><img src="/assets/google-play-btn.png" alt=""></a></div>
-      <!--google-play-btn end-->
-
     </div>
   </div>
-  <!--container-deskend-->
 </div><!--wrapper-desk end-->
 
 <div id="openModal" class="modalDialog">
@@ -39,12 +33,8 @@
     <div class="login-box">
       <% resource = User.new %>
       <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:id => 'signin_form'}) do |f| %>
-          <!--<input type="text" name="uname" id="uname" placeholder="Username"/>-->
           <%= f.text_field :user_name, :placeholder => "Username" %>
-          <!--<input type="password" name="pw" id="pw" placeholder="Password"/>-->
           <%= f.password_field :password, :placeholder => "Password", :id => "password" %>
-          <!--<input type="submit" name="submit" class="popup-login-btn" value="Submit"/>-->
-
           <a href="javascript:;" onclick="submit_form();">
             <div class="desk-login-box-btn">SUBMIT</div>
           </a>
@@ -87,9 +77,6 @@
             submit_form();
         }
     });
-    //    $(document).ready(function () {
-
-    //    });
     $("#openModal").hide();
     $(".popp-hd-login a").click(function () {
         $("#openModal").hide();

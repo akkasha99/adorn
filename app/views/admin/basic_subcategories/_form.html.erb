@@ -17,8 +17,6 @@
       <% else %>
           <%= link_to "submit", "javascript:;", :onclick => "submit_subcategory('update', '#{@subcategory.id}');", :class => "btn green pull-left" %>
       <% end %>
-      <%#= link_to "submit", "javascript:;", :onclick => "submit_brand('#{f.object.new_record? ? 'create' : 'update'}', '#{f.object.new_record? ? nil : @brand.id}');", :class => "btn green pull-left" %>
-      <%#= link_to "Back", admin_brands_path, :class => "btn green", :style=> "margin:0 0 0 10px;" %>
     </div>
   </div>
 <% end %>
@@ -51,7 +49,6 @@
                         required: true
                     },
                     "basic_subcategory[logo]": {
-//                        required: true
                     }
                 }
 

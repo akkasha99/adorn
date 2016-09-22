@@ -44,16 +44,6 @@
       <!--<div style="border:none;" class="inner-h-con desk-h-con p0">-->
       <div class="desk-colllerless"><%= @outfit.title if @outfit.title.present? %></div>
       <% user = @outfit.user %>
-      <!--<div onclick="closet(<%#= user.id %>)">-->
-      <!--<%# if user.avatar? && File.exists?(user.avatar.path(:thumb).to_s) %>-->
-      <!--<%#= image_tag user.avatar(:thumb) %>-->
-      <!--<%# else %>-->
-      <!--<%#= image_tag "missing.png" %>-->
-      <!--<%# end %>-->
-      <!--</div>-->
-      <!--<div class="pro low_cas_desk" onclick="closet(<%#= user.id %>)"><%#= @outfit.user.user_name %></div>-->
-      <!--<div class="desk-top-time"><%#= time_ago_in_words(@outfit.created_at) %> ago</div>-->
-      <!--</div>-->
     </div>
     <div class="w-100">
       <div class="banner-con" style="border: solid 1px #ccc;">
@@ -101,32 +91,7 @@
     <%= render :partial => '/desktop/users/item_outfit', :locals => {:@suggested_items => suggested} %>
   </div>
 </div>
-
-<!--<div class="report-popup" id="reporting_popup" style="display: none">-->
-<!--<p>Reporting</p>-->
-
-<!--<div><input type="radio" class="radio" name="report" value="SPAM" onchange="report()"> Spam</div>-->
-<!--<div><input type="radio" class="radio" name="report" value="Offensive" onchange="report()">Offensive</div>-->
-<!--<div><input type="radio" class="radio" name="report" value="Other" onchange="report()">Other-->
-<!--<input type="text" id="others_text" style="display: none"></div>-->
-<!--<input type="button" id="report_button" style="background-color:#000 " value="report" disabled onclick="send_report('<%= @outfit.id %>','outfit')">-->
-<!--</div>-->
-
-
-
-
-<!--reporting_pop_up-->
-
 <script>
-
-    //    function report_outfit(id) {
-    //        $.ajax({
-    //            url: '/user/users/reporting?id=' + id + '&comment=false&content_type=outfit',
-    //            success: function (data) {
-    //                $('#main_div').html(data);
-    //            }
-    //        });
-    //    }
 
     $(document).ready(function () {
         window.scrollTo(0, 0);
@@ -141,17 +106,14 @@
 
         myFunc();
 
-        //either this
         $('#text_text').keyup(function () {
             myFunc();
         });
 
-        //or this
         $('#text_text').keyup(function () {
             myFunc();
         });
 
-        //and this for good measure
         $('#text_text').change(function () {
             myFunc(); //or direct assignment $('#txtHere').html($(this).val());
         });

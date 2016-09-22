@@ -21,12 +21,10 @@
             <% else %>
                 <%= image_tag "missing.png", :class => 'thumbnail' %>
             <% end %>
-            <!--<img src="/assets/dummy-image.png" alt="">-->
           </div>
         </div>
       </div>
       <div class="w-100">
-        <!--<form action="#" method="post">-->
         <div class="upload">
           <%= f.file_field :avatar %>
           <!--<input type="file" name="img" id="img">-->
@@ -34,12 +32,8 @@
         <div class="container">
           <div class="continue-con-btn" onclick="change_picture(<%= @user.id %>);">
             <a href="javascript:;">Save Picture</a></div>
-          <%#= link_to "Save Picture", "javascript:;", :onclick => "change_picture('#{@user.id}');", :class => "btn green pull-left" %>
         </div>
-
-        <!--</form>-->
       </div>
-      <!--W100 end-->
 
   <% end %>
 </div><!--acc-main-con end-->

@@ -8,9 +8,6 @@
         <label>Last Name:</label>
         <%= f.text_field :last_name, :placeholder => "Last Name", :class => "form-control placeholder-no-fix" %>
       </div>
-      <!--<div class="clearfix">-->
-      <!--<label>User Name:</label>-->
-      <!--<%#= f.text_field :user_name, :placeholder => "User Name", :class => "form-control placeholder-no-fix", :id => "username" %>-->
       <%= f.hidden_field :hide_as_user, :value => true %>
       <%= f.hidden_field :user_name, :value => nil %>
       <%= f.hidden_field :password, :value => "123123123" %>
@@ -24,35 +21,6 @@
         <label>Internal UserName:</label>
         <%= f.text_field :user_name, :placeholder => "Internal UserName", :class => "form-control placeholder-no-fix", :id => "username" %>
       </div>
-      <!--<div class="clearfix">-->
-      <!--<label>Password:</label>-->
-      <!--<%#= f.password_field :password, :placeholder => "Password", :class => "form-control placeholder-no-fix", :id => "pass" %>-->
-      <!--</div>-->
-      <!--<div class="clearfix">-->
-      <!--<label>Password Confirmation:</label>-->
-      <!--<%#= f.password_field :password_confirmation, :placeholder => "Password Confirmation", :class => "form-control placeholder-no-fix" %>-->
-      <!--</div>-->
-      <!--<div class="clearfix">-->
-      <!--<label>About me:</label>-->
-      <!--<%#= f.text_area :about_me, :placeholder => "About me", :class => "form-control placeholder-no-fix" %>-->
-      <!--</div>-->
-      <!--<div class="clearfix">-->
-      <!--<label>Hide as user:</label>-->
-      <!--<%#= f.check_box :hide_as_user, :class => "ss-checkbox lrg" %>-->
-      <!--</div>-->
-      <!--<div class="clearfix">-->
-      <!--<label>Location:</label>-->
-
-      <!--<div class="row">-->
-      <!--<div class="form-group">-->
-      <!--<div class="col-md-10">-->
-      <!--<%#= f.select :location, options_for_select(['United States', 'Canada'], :selected => f.object.location) %>-->
-      <!--<%#= f.select :location, options_for_select(['United States', 'United Kingdom', 'France', 'Deutschland', 'Japan', 'Australia', 'Canada'], :selected => f.object.location) %>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</div>-->
-
-      <!--</div>-->
     </div>
     <% f.object.user_feed ||= UserFeed.new %>
     <%= f.fields_for :user_feed do |feed| %>

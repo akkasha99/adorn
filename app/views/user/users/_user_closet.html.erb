@@ -9,14 +9,11 @@
           <div id="closet_bkbtn" class="backBtn" style="display: none;">
             <a href="javascript:;" onclick="return_back('closet');"><img src="/assets/setting-errow.png" alt=""></a>
           </div>
-          <!--<div class="setaro"><a href="/user"><img src="/assets/setting-errow.png" alt=""></a></div>-->
           <% if @user == current_user %>
               <div class="gear">
                 <a href="javascript:;" onclick="get_partial('<%= current_user.id %>', '/user/users/profile');"><img src="/assets/gear.png" alt=""></a>
               </div>
           <% else %>
-              <!--<div class="gear" id="user_dots" onclick="share_user('<%#= @user.user_name %>', '<%#= @user.avatar.url(:other) %>')">-->
-              <!--<div class="gear mbnn" id="user_dots" onclick="report_user('<%#= @user.id %>','user')">-->
               <div class="gear mbnn" id="user_dots" onclick="report_user1('<%= @user.id %>','user')">
                 <div class="black-built-con mbnn0">
                   <a href="#">
@@ -37,8 +34,6 @@
   </header>
 
   <div id="">
-    <!--<div id="ptr" style="display: none;">-->
-    <!--</div>-->
     <%= render :partial => '/user/users/user_details', :locals => {:@user => @user} %>
   </div>
   <%= render :partial => '/user/users/index_tabs', :locals => {:@user => @user} %>
@@ -62,9 +57,6 @@
 
     function share_user(title, url) {
         var updateNativeBtn = document.getElementById('user_dots');
-//        var clickevent = window.ontouchend ? 'touchend' : 'click';
-//        updateNativeBtn.addEventListener(clickevent, function (evt) {
-//            evt.preventDefault();
         sharebridge.invoke('ShareItem', {
             text: title,
             url: 'http://54.207.73.170' + url
