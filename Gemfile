@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-
+ruby '2.2.4'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.0.beta1'
 
@@ -16,7 +16,7 @@ group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
-gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
+gem 'activerecord-session_store', :github => 'rails/activerecord-session_store'
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
@@ -41,10 +41,10 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', group: :doc, require: false
+gem 'sdoc', :group => :doc, :require => false
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/jonleighton/spring
-gem 'spring', group: :development
+gem 'spring', :group => :development
 
 gem 'devise' #, :github => 'idl3/devise', :branch => 'rails4'
 
